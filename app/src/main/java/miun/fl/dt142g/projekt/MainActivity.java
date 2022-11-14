@@ -11,15 +11,6 @@ public class MainActivity extends AppCompatActivity {
     private Button button_servitor;
     private Button button_kok;
 
-    private void NextActivity() {
-        Intent activity_servitor = new Intent(this, ActivityServitor.class);
-        startActivity(activity_servitor);
-    }
-    public class ButtonListener implements View.OnClickListener {
-        @Override
-        public void onClick(View view){ NextActivity(); }
-    }
-
     /**
      * on startup
      * @param savedInstanceState - temp
@@ -28,8 +19,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent activity_servitor = new Intent(this, ActivityServitor.class);
         button_servitor = findViewById(R.id.button_servitor);
         button_kok = findViewById(R.id.button_kok);
-        button_servitor.setOnClickListener(new ButtonListener());
+        button_servitor.setOnClickListener(new SwitchActivity(activity_servitor));
     }
 }
