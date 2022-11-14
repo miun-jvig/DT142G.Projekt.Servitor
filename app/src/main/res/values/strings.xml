@@ -4,4 +4,11 @@
     <string name="button_servitor">Servitörsläge</string>
     <string name="button_kok">Köksläge</string>
     <string name="name">NAMN</string>
+    <string name="amount">ANTAL</string>
+    <string name="time">ANKOMSTTID</string>
+    <string name="notes">NOTERING</string>
+    <string name="createBookingButton_id">SKAPA BOKNING</string>
+    <string name="dropInButton_id">DROP IN</string>
+    <string name="exitButton_id">AVBRYT</string>
+
 </resources>
