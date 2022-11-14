@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,9 +18,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent activity_servitor = new Intent(this, ActivityServitor.class);
+        Intent activity_log_in = new Intent(this, LogInActivity.class);
         button_servitor = findViewById(R.id.button_servitor);
         button_kok = findViewById(R.id.button_kok);
-        button_servitor.setOnClickListener(new SwitchActivity(activity_servitor));
+        button_servitor.setOnClickListener(new SwitchActivity(activity_log_in));
     }
 }
