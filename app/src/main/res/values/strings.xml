@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">DT142G.Projekt</string>
+    <string name="main_title">Antons\nSkafferi</string>
+    <string name="button_servitor">Servitörsläge</string>
+    <string name="button_kok">Köksläge</string>
+</resources>
