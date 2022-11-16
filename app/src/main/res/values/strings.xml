@@ -10,5 +10,13 @@
     <string name="createBookingButton_id">SKAPA BOKNING</string>
     <string name="dropInButton_id">DROP IN</string>
     <string name="exitButton_id">AVBRYT</string>
+<!-- Tables -->
+    <string name="table_1">Bord 1</string>
+    <string name="table_2">Bord 2</string>
+    <string name="table_3">Bord 3</string>
+    <string name="table_4">Bord 4</string>
+    <string name="table_5">Bord 5</string>
+    <string name="table_6">Bord 6</string>
+    <string name="table_7">Bord 7</string>
 
 </resources>
