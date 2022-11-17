@@ -1,25 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingStart="100dp"
+    android:paddingEnd="100dp"
+    android:paddingTop="220dp"
     tools:context=".LogInActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/view_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="78dp"
-        android:layout_marginTop="321dp"
-        android:layout_marginEnd="296dp"
-        android:layout_marginBottom="391dp"
         android:alpha="1"
-        android:text="@string/name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="@string/log_in_name"
+        android:layout_marginBottom="10dp" />
+
+    <EditText
+        android:id="@+id/edit_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_name"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:ems="10"
+        android:hint="@string/log_in_username"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:autofillHints="username"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/view_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_username"
+        android:text="@string/log_in_losenord"
+        android:layout_marginBottom="10dp" />
+
+    <EditText
+        android:id="@+id/edit_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_password"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:ems="10"
+        android:hint="@string/log_in_password"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:autofillHints="password"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/button_log_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_password"
+        android:text="@string/log_in" />
+</RelativeLayout>

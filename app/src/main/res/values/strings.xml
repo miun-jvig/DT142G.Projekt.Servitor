@@ -3,5 +3,9 @@
     <string name="main_title">Antons\nSkafferi</string>
     <string name="button_servitor">Servitörsläge</string>
     <string name="button_kok">Köksläge</string>
-    <string name="name">NAMN</string>
+    <string name="log_in_name">NAMN</string>
+    <string name="log_in_losenord">LÖSENORD</string>
+    <string name="log_in_username">Username</string>
+    <string name="log_in_password">********</string>
+    <string name="log_in">LOGGA IN</string>
 </resources>
