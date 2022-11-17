@@ -1,64 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="100dp"
-    android:paddingEnd="100dp"
-    android:paddingTop="220dp"
     tools:context=".LogInActivity">
+
+    <View
+        android:id="@+id/rectangle_at_the_top3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/appBlue"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_log_in"
+        android:paddingStart="@dimen/padding_edit_text"
+        android:paddingEnd="@dimen/padding_edit_text"
+        android:autofillHints="username"
+        android:background="@drawable/edit_text_background"
+        android:ems="10"
+        android:hint="@string/log_in_username"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/view_password"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/view_name" />
+
+    <Button
+        android:id="@+id/button_log_in"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_log_in"
+        android:text="@string/log_in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/edit_password" />
 
     <TextView
         android:id="@+id/view_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_log_in"
         android:alpha="1"
         android:text="@string/log_in_name"
-        android:layout_marginBottom="10dp" />
-
-    <EditText
-        android:id="@+id/edit_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view_name"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:ems="10"
-        android:hint="@string/log_in_username"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:autofillHints="username"
-        android:background="@drawable/edit_text_background"
-        android:layout_marginBottom="10dp"/>
+        app:layout_constraintBottom_toTopOf="@+id/edit_username"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/view_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edit_username"
+        android:layout_marginBottom="@dimen/padding_log_in"
         android:text="@string/log_in_losenord"
-        android:layout_marginBottom="10dp" />
+        app:layout_constraintBottom_toTopOf="@+id/edit_password"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/edit_username" />
 
     <EditText
         android:id="@+id/edit_password"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/view_password"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:layout_marginBottom="@dimen/padding_log_in"
+        android:paddingStart="@dimen/padding_edit_text"
+        android:paddingEnd="@dimen/padding_edit_text"
+        android:autofillHints="password"
+        android:background="@drawable/edit_text_background"
         android:ems="10"
         android:hint="@string/log_in_password"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        android:autofillHints="password"
-        android:background="@drawable/edit_text_background"
-        android:layout_marginBottom="10dp"/>
+        app:layout_constraintBottom_toTopOf="@+id/button_log_in"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/view_password" />
 
-    <Button
-        android:id="@+id/button_log_in"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edit_password"
-        android:text="@string/log_in" />
-</RelativeLayout>
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="30dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="374dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
