@@ -80,7 +80,7 @@
         android:layout_height="70dp"
         android:layout_marginTop="430dp"
         android:text="@string/createBookingButton_id"
-        android:background="@color/blue"
+        android:background="@color/appBlue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

@@ -27,7 +27,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@color/purple_700"
+            android:background="@color/appBlue"
             android:onClick="onClick"
             android:text="@string/table_1" />
 
@@ -37,7 +37,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@color/purple_700"
+            android:background="@color/appBlue"
             android:onClick="onClick"
             android:text="@string/table_2" />
 
@@ -47,7 +47,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@color/purple_700"
+            android:background="@color/appBlue"
             android:onClick="onClick"
             android:text="@string/table_3" />
 
@@ -57,7 +57,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@color/purple_700"
+            android:background="@color/appBlue"
             android:onClick="onClick"
             android:text="@string/table_4" />
 
@@ -67,7 +67,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@color/purple_700"
+            android:background="@color/appBlue"
             android:onClick="onClick"
             android:text="@string/table_5" />
 
@@ -77,7 +77,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@color/purple_700"
+            android:background="@color/appBlue"
             android:onClick="onClick"
             android:text="@string/table_6" />
 
@@ -87,7 +87,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@color/purple_700"
+            android:background="@color/appBlue"
             android:onClick="onClick"
             android:text="@string/table_7" />
     </LinearLayout>
