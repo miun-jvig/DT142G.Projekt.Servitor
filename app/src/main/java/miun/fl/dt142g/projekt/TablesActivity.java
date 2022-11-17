@@ -2,6 +2,7 @@ package miun.fl.dt142g.projekt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 public class TablesActivity extends AppCompatActivity {
     private Button button_table1, button_table2, Button_table3, button_table4, button_table5, button_table6, button_table7; //Tablebuttons
+    private Button button_back;
     private int current_table = 0;
 
     @Override
@@ -16,7 +18,9 @@ public class TablesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tables);
 
-        //button_table1 = findViewById(R.id.button_table1);
+        Intent activity_back = new Intent(this, MainActivity.class);
+        button_back = findViewById(R.id.button_back);
+        button_back.setOnClickListener(new SwitchActivity(activity_back));
 
     }
     public void onClick(View view){
