@@ -11,7 +11,7 @@ import android.widget.TextView;
 public class TablesActivity extends AppCompatActivity {
     private Button button_table1, button_table2, Button_table3, button_table4, button_table5, button_table6, button_table7; //Tablebuttons
     private Button button_back;
-    private int current_table = 0;
+    public int current_table = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

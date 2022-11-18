@@ -2,4 +2,5 @@
 <resources>
     <dimen name="padding_log_in">10dp</dimen>
     <dimen name="padding_edit_text">10dp</dimen>
+    <dimen name="padding_order">137dp</dimen>
 </resources>

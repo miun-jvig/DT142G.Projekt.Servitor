@@ -19,7 +19,7 @@ public class LogInActivity extends AppCompatActivity {
         Intent activity_tables = new Intent(this, TablesActivity.class);
         Intent activity_main = new Intent(this, MainActivity.class);
         button_log_in = findViewById(R.id.button_log_in);
-        button_back = findViewById(R.id.button_back_2);
+        button_back = findViewById(R.id.button_back_log_in);
         button_log_in.setOnClickListener(new SwitchActivity(activity_tables));
         button_back.setOnClickListener(new SwitchActivity(activity_main));
     }

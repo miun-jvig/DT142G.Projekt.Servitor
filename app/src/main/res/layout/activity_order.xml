@@ -6,4 +6,207 @@
     android:layout_height="match_parent"
     tools:context=".OrderActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topbarLayout"
+        android:layout_width="409dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:background="@color/appBlue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/button_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/appOrange"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.949"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.444" />
+
+        <Button
+            android:id="@+id/button_back_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/appOrange"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.049"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.444" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TableLayout
+        android:layout_width="410dp"
+        android:layout_height="704dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topbarLayout">
+
+        <TableRow
+            android:id="@+id/TableRow_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ToggleButton
+                android:id="@+id/button_order_r1p1"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:checked="false"
+                android:textOff="@string/menu_r1p1"
+                android:textOn="@string/menu_r1p1"
+                app:backgroundTint="@color/foodYellow" />
+
+            <ToggleButton
+                android:id="@+id/button_order_r1p2"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r1p2"
+                android:textOn="@string/menu_r1p2"
+                app:backgroundTint="@color/foodYellow" />
+
+            <ToggleButton
+                android:id="@+id/button_order_r1p3"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r1p3"
+                android:textOn="@string/menu_r1p3"
+                app:backgroundTint="@color/foodYellow" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/TableRow_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ToggleButton
+                android:id="@+id/button_order_r2p1"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r2p1"
+                android:textOn="@string/menu_r2p1"
+                app:backgroundTint="@color/foodBlue"/>
+
+            <ToggleButton
+                android:id="@+id/button_order_r2p2"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r2p2"
+                android:textOn="@string/menu_r2p2"
+                app:backgroundTint="@color/foodBlue" />
+
+            <ToggleButton
+                android:id="@+id/button_order_r2p3"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r2p3"
+                android:textOn="@string/menu_r2p3"
+                app:backgroundTint="@color/foodBlue" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/TableRow_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ToggleButton
+                android:id="@+id/button_order_r3p1"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r3p1"
+                android:textOn="@string/menu_r3p1"
+                app:backgroundTint="@color/foodBlue" />
+
+            <ToggleButton
+                android:id="@+id/button_order_r3p2"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r3p2"
+                android:textOn="@string/menu_r3p2"
+                app:backgroundTint="@color/foodBlue" />
+
+            <ToggleButton
+                android:id="@+id/button_order_r3p3"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r3p3"
+                android:textOn="@string/menu_r3p3"
+                app:backgroundTint="@color/foodBlue" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/TableRow_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ToggleButton
+                android:id="@+id/button_order_r4p1"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r4p1"
+                android:textOn="@string/menu_r4p1"
+                app:backgroundTint="@color/foodPurple" />
+
+            <ToggleButton
+                android:id="@+id/button_order_r4p2"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r4p2"
+                android:textOn="@string/menu_r4p2"
+                app:backgroundTint="@color/foodPurple" />
+
+            <ToggleButton
+                android:id="@+id/button_order_r4p3"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r4p1"
+                android:textOn="@string/menu_r4p1"
+                app:backgroundTint="@color/foodPurple" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/TableRow_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ToggleButton
+                android:id="@+id/button_order_r5p1"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r5p1"
+                android:textOn="@string/menu_r5p1"
+                app:backgroundTint="@color/foodGreen" />
+
+            <ToggleButton
+                android:id="@+id/button_order_r5p2"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r5p2"
+                android:textOn="@string/menu_r5p2"
+                app:backgroundTint="@color/foodGreen" />
+
+            <ToggleButton
+                android:id="@+id/button_order_r5p3"
+                android:layout_width="@dimen/padding_order"
+                android:layout_height="@dimen/padding_order"
+                android:textOff="@string/menu_r5p3"
+                android:textOn="@string/menu_r5p3"
+                app:backgroundTint="@color/foodGreen" />
+        </TableRow>
+    </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
