@@ -12,7 +12,7 @@
     <string name="exitButton_id">AVBRYT</string>
     <string name="back">BACK</string>
     <!-- Booking -->
-    <string name="current_table">temp</string>
+    <string name="booking_current_table">temp</string>
     <!-- Tables -->
     <string name="table_1">Bord 1</string>
     <string name="table_2">Bord 2</string>
@@ -29,6 +29,7 @@
     <string name="log_in">LOGGA IN</string>
     <!-- ORDER -->
     <string name="menu">MENU</string>
+    <string name="order_current_table">temp</string>
     <string-array name="ratter">
         <item>Vanliga rätter</item>
         <item>Förätter</item>

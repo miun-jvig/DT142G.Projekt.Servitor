@@ -7,12 +7,11 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class OrderActivity extends AppCompatActivity {
     private Button button_back;
     private Spinner spinner_order;
-    // GET FROM SQL
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +19,7 @@ public class OrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order);
         button_back = findViewById(R.id.button_back_order);
         spinner_order = findViewById(R.id.order_spinner);
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ratter, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner_order.setAdapter(adapter);

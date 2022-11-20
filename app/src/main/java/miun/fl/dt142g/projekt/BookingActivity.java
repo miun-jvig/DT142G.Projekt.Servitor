@@ -17,8 +17,8 @@ public class BookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
         button_back = findViewById(R.id.button_back_booking);
-        TextView current_table = (TextView) findViewById(R.id.view_current_table);
         table = (Table) getIntent().getSerializableExtra("Table");
+        TextView current_table = (TextView) findViewById(R.id.booking_current_table);
 
         Booking new_book = new Booking("Alex Triceps", "Joel");
         table.setBooking(new_book);

@@ -57,30 +57,30 @@ public class TablesActivity extends AppCompatActivity {
     public void onClick(@NonNull View view){
         switch(view.getId()) {
             case R.id.button_table1:
-                switchActivityIfBooked(table1, R.id.button_table1);
+                switchActivityIfBooked(table1);
             break;
             case R.id.button_table2:
-                switchActivityIfBooked(table2, R.id.button_table2);
+                switchActivityIfBooked(table2);
             break;
             case R.id.button_table3:
-                switchActivityIfBooked(table3, R.id.button_table3);
+                switchActivityIfBooked(table3);
             break;
             case R.id.button_table4:
-                switchActivityIfBooked(table4, R.id.button_table4);
+                switchActivityIfBooked(table4);
             break;
             case R.id.button_table5:
-                switchActivityIfBooked(table5, R.id.button_table6);
+                switchActivityIfBooked(table5);
             break;
             case R.id.button_table6:
-                switchActivityIfBooked(table6, R.id.button_table6);
+                switchActivityIfBooked(table6);
             break;
             case R.id.button_table7:
-                switchActivityIfBooked(table7, R.id.button_table7);
+                switchActivityIfBooked(table7);
             break;
         }
     }
 
-    public void switchActivityIfBooked(Table table, int identifier){
+    public void switchActivityIfBooked(Table table){
         Intent activity_order = new Intent(this, OrderActivity.class);
         Intent activity_booking = new Intent(this, BookingActivity.class);
         activity_booking.putExtra("Table", table);
