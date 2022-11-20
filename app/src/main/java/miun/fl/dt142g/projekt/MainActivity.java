@@ -10,8 +10,6 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
     private Button button_servitor;
     private Button button_kok;
-    private Button button_tempAlex;
-    private Button button_tempOrder;
 
     /**
      * on startup
@@ -24,17 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
         Intent activity_log_in = new Intent(this, LogInActivity.class);
         Intent activity_booking = new Intent(this, BookingActivity.class);
-        Intent activity_tables = new Intent(this, TablesActivity.class);
-        Intent activity_order = new Intent(this, OrderActivity.class);
 
         button_servitor = findViewById(R.id.button_servitor);
         button_kok = findViewById(R.id.button_kok);
-        button_tempAlex = findViewById(R.id.button_tempAlex);
-        button_tempOrder = findViewById(R.id.button_tempOrder);
 
         button_servitor.setOnClickListener(new SwitchActivity(activity_log_in));
         button_kok.setOnClickListener(new SwitchActivity(activity_booking));
-        button_tempAlex.setOnClickListener(new SwitchActivity(activity_tables));
-        button_tempOrder.setOnClickListener(new SwitchActivity(activity_order));
     }
 }

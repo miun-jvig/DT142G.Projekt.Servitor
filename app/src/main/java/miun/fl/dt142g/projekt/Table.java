@@ -1,10 +1,12 @@
 package miun.fl.dt142g.projekt;
 
-import android.widget.Button;
 
-public class Table {
+import java.io.Serializable;
+
+public class Table implements Serializable {
     private int id;
     private boolean status;
+    private Booking booking;
 
     Table(int new_id){
         id = new_id;
@@ -14,6 +16,10 @@ public class Table {
     public void setStatus(boolean set_status){
         status = set_status;
     }
+    public void setBooking(Booking new_booking){
+        booking = new_booking;
+    }
+    public Booking getBooking() { return booking; }
 
     public int getID(){
         return id;

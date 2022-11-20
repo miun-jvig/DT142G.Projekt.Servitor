@@ -11,6 +11,8 @@
     <string name="dropInButton_id">DROP IN</string>
     <string name="exitButton_id">AVBRYT</string>
     <string name="back">BACK</string>
+    <!-- Booking -->
+    <string name="current_table">temp</string>
     <!-- Tables -->
     <string name="table_1">Bord 1</string>
     <string name="table_2">Bord 2</string>

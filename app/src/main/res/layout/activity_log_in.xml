@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" >
 
         <Button
-            android:id="@+id/button_back_log_in"
+            android:id="@+id/button_back_booking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/back"

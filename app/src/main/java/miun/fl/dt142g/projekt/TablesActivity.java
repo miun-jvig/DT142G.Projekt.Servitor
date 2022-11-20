@@ -1,5 +1,6 @@
 package miun.fl.dt142g.projekt;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -30,18 +31,20 @@ public class TablesActivity extends AppCompatActivity {
          * TEMP - incoming "data" from SQL new_book. Containing zero orders, add using new_book.addOrderItem(order) will be used in OrderActivity
          * Perhaps use a for each loop from data from SQL after, below is only example
          */
+        Booking new_book = new Booking("Nikki sur", "Alex"); // "acquired" from SQL
+        Booking new_book2 = new Booking("Alex Bicep", "Joel"); // "acquired" from SQL
+        table1.setBooking(new_book);
+        table3.setBooking(new_book2);
         table1.setStatus(true);
         table3.setStatus(true);
-        Booking new_book = new Booking(table3, "Nikki sur", "Alex"); // "acquired" from SQL
-        Booking new_book2 = new Booking(table1, "Alex Bicep", "Joel"); // "acquired" from SQL
 
-        ArrayList<Booking> all_bookings = new ArrayList<>(); // all bookings for the date to be added to this
-        all_bookings.add(new_book); // acting as added from SQL
-        all_bookings.add(new_book2); // acting as added from SQL
+        ArrayList<Table> all_tables = new ArrayList<>(); // all bookings for the date to be added to this
+        all_tables.add(table1); // acting as added from SQL
+        all_tables.add(table3); // acting as added from SQL
 
-        for(Booking booking : all_bookings){
+        for(Table table : all_tables){
             Button tmp;
-            int button_identifier = getResources().getIdentifier("button_table" + booking.getTableID(), "id", getPackageName());
+            int button_identifier = getResources().getIdentifier("button_table" + table.getID(), "id", getPackageName());
             tmp = findViewById(button_identifier);
             tmp.setBackgroundResource(R.drawable.selected_table);
         }
@@ -51,7 +54,7 @@ public class TablesActivity extends AppCompatActivity {
         button_back.setOnClickListener(new SwitchActivity(activity_back));
     }
 
-    public void onClick(View view){
+    public void onClick(@NonNull View view){
         switch(view.getId()) {
             case R.id.button_table1:
                 switchActivityIfBooked(table1, R.id.button_table1);
@@ -80,6 +83,7 @@ public class TablesActivity extends AppCompatActivity {
     public void switchActivityIfBooked(Table table, int identifier){
         Intent activity_order = new Intent(this, OrderActivity.class);
         Intent activity_booking = new Intent(this, BookingActivity.class);
+        activity_booking.putExtra("Table", table);
         View view = this.getWindow().findViewById(android.R.id.content);
 
         if(table.getStatus()){
