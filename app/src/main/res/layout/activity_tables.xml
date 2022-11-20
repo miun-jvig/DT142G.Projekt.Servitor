@@ -35,6 +35,7 @@
         android:background="@color/appBlue"
         android:onClick="onClick"
         android:text="@string/table_1"
+        app:backgroundTint="@null"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="@+id/guideline_top" />
@@ -50,7 +51,8 @@
         android:text="@string/table_2"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/button_table1" />
+        app:layout_constraintTop_toBottomOf="@+id/button_table1"
+        app:backgroundTint="@null" />
 
     <Button
         android:id="@+id/button_table3"
@@ -63,7 +65,8 @@
         android:text="@string/table_3"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/button_table2"/>
+        app:layout_constraintTop_toBottomOf="@+id/button_table2"
+        app:backgroundTint="@null" />
     <Button
         android:id="@+id/button_table4"
         android:layout_width="300dp"
@@ -75,7 +78,8 @@
         android:text="@string/table_4"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/button_table3" />
+        app:layout_constraintTop_toBottomOf="@+id/button_table3"
+        app:backgroundTint="@null" />
 
     <Button
         android:id="@+id/button_table5"
@@ -88,7 +92,8 @@
         android:text="@string/table_5"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/button_table4" />
+        app:layout_constraintTop_toBottomOf="@+id/button_table4"
+        app:backgroundTint="@null" />
     <Button
         android:id="@+id/button_table6"
         android:layout_width="300dp"
@@ -100,7 +105,8 @@
         android:text="@string/table_6"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/button_table5" />
+        app:layout_constraintTop_toBottomOf="@+id/button_table5"
+        app:backgroundTint="@null" />
 
     <Button
         android:id="@+id/button_table7"
@@ -113,19 +119,8 @@
         android:text="@string/table_7"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/button_table6" />
-
-    <TextView
-        android:id="@+id/textViewTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="177dp"
-        android:layout_marginEnd="177dp"
-        android:layout_marginBottom="20dp"
-        android:text="Chosen table"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/button_table6"
+        app:backgroundTint="@null" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topbarLayout"

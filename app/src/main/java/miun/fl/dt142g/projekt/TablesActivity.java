@@ -3,51 +3,90 @@ package miun.fl.dt142g.projekt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class TablesActivity extends AppCompatActivity {
-    private Button button_table1, button_table2, Button_table3, button_table4, button_table5, button_table6, button_table7; //Tablebuttons
     private Button button_back;
-    public int current_table = 0;
+    private Table table1 = new Table(1);
+    private Table table2 = new Table(2);
+    private Table table3 = new Table(3);
+    private Table table4 = new Table(4);
+    private Table table5 = new Table(5);
+    private Table table6 = new Table(6);
+    private Table table7 = new Table(7);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tables);
 
+        /*
+         * TEMP - incoming "data" from SQL new_book. Containing zero orders, add using new_book.addOrderItem(order) will be used in OrderActivity
+         * Perhaps use a for each loop from data from SQL after, below is only example
+         */
+        table1.setStatus(true);
+        table3.setStatus(true);
+        Booking new_book = new Booking(table3, "Nikki sur", "Alex"); // "acquired" from SQL
+        Booking new_book2 = new Booking(table1, "Alex Bicep", "Joel"); // "acquired" from SQL
+
+        ArrayList<Booking> all_bookings = new ArrayList<>(); // all bookings for the date to be added to this
+        all_bookings.add(new_book); // acting as added from SQL
+        all_bookings.add(new_book2); // acting as added from SQL
+
+        for(Booking booking : all_bookings){
+            Button tmp;
+            int button_identifier = getResources().getIdentifier("button_table" + booking.getTableID(), "id", getPackageName());
+            tmp = findViewById(button_identifier);
+            tmp.setBackgroundResource(R.drawable.selected_table);
+        }
+
         Intent activity_back = new Intent(this, MainActivity.class);
         button_back = findViewById(R.id.button_back);
         button_back.setOnClickListener(new SwitchActivity(activity_back));
-
     }
+
     public void onClick(View view){
-        TextView text = findViewById(R.id.textViewTemp);
         switch(view.getId()) {
             case R.id.button_table1:
-                current_table = 1;
+                switchActivityIfBooked(table1, R.id.button_table1);
             break;
             case R.id.button_table2:
-                current_table = 2;
+                switchActivityIfBooked(table2, R.id.button_table2);
             break;
             case R.id.button_table3:
-                current_table = 3;
+                switchActivityIfBooked(table3, R.id.button_table3);
             break;
             case R.id.button_table4:
-                current_table = 4;
+                switchActivityIfBooked(table4, R.id.button_table4);
             break;
             case R.id.button_table5:
-                current_table = 5;
+                switchActivityIfBooked(table5, R.id.button_table6);
             break;
             case R.id.button_table6:
-                current_table = 6;
+                switchActivityIfBooked(table6, R.id.button_table6);
             break;
             case R.id.button_table7:
-                current_table = 7;
+                switchActivityIfBooked(table7, R.id.button_table7);
             break;
         }
-        text.setText("Valt bord: "+current_table);
+    }
+
+    public void switchActivityIfBooked(Table table, int identifier){
+        Intent activity_order = new Intent(this, OrderActivity.class);
+        Intent activity_booking = new Intent(this, BookingActivity.class);
+        View view = this.getWindow().findViewById(android.R.id.content);
+
+        if(table.getStatus()){
+            view.getContext().startActivity(activity_order);
+        }
+        else{
+            view.getContext().startActivity(activity_booking);
+        }
     }
 }

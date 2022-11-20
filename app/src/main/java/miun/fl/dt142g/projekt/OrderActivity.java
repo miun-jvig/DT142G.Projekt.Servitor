@@ -24,7 +24,7 @@ public class OrderActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner_order.setAdapter(adapter);
 
-        Intent activity_booking = new Intent(this, MainActivity.class);
+        Intent activity_booking = new Intent(this, TablesActivity.class);
         button_back.setOnClickListener(new SwitchActivity(activity_booking));
 
     }
