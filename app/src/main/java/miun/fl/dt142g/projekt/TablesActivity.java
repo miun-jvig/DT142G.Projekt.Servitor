@@ -28,7 +28,7 @@ public class TablesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tables);
 
         /*
-         * TEMP - incoming "data" from SQL new_book. Containing zero orders, add using new_book.addOrderItem(order) will be used in OrderActivity
+         * TEMP - incoming "data" from SQL table. Containing zero orders, add using new_book.addOrderItem(order) will be used in OrderActivity
          * Perhaps use a for each loop from data from SQL after, below is only example
          */
         Booking new_book = new Booking("Nikki sur", "Alex"); // "acquired" from SQL
@@ -81,9 +81,11 @@ public class TablesActivity extends AppCompatActivity {
     }
 
     public void switchActivityIfBooked(Table table){
-        Intent activity_order = new Intent(this, OrderActivity.class);
         Intent activity_booking = new Intent(this, BookingActivity.class);
+        Intent activity_order = new Intent(this, OrderActivity.class);
+        activity_order.putExtra("Table", table);
         activity_booking.putExtra("Table", table);
+
         View view = this.getWindow().findViewById(android.R.id.content);
 
         if(table.getStatus()){

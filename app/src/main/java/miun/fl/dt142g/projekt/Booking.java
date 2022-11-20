@@ -1,8 +1,9 @@
 package miun.fl.dt142g.projekt;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Booking {
+public class Booking implements Serializable {
     private String note;
     private String servitor;
     private ArrayList<Order> orders = new ArrayList<>();

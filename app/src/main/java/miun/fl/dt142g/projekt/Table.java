@@ -19,7 +19,6 @@ public class Table implements Serializable {
     public void setBooking(Booking new_booking){
         booking = new_booking;
     }
-    public Booking getBooking() { return booking; }
 
     public int getID(){
         return id;
