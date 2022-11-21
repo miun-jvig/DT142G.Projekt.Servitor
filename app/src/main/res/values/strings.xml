@@ -7,9 +7,7 @@
     <string name="amount">ANTAL</string>
     <string name="time">ANKOMSTTID</string>
     <string name="notes">NOTERING</string>
-    <string name="createBookingButton_id">SKAPA BOKNING</string>
-    <string name="dropInButton_id">DROP IN</string>
-    <string name="exitButton_id">AVBRYT</string>
+    <string name="createButton_id">SKAPA BOKNING</string>
     <string name="back">BACK</string>
     <!-- Booking -->
     <string name="booking_current_table">temp</string>
@@ -37,26 +35,26 @@
         <item>Efterrätter</item>
         <item>Dryck</item>
     </string-array>
-        <!-- ROW 1, POS 1-3 -->
-        <string name="menu_r1p1">TEMP_ROW1</string>
-        <string name="menu_r1p2">TEMP_ROW1</string>
-        <string name="menu_r1p3">TEMP_ROW1</string>
-        <!-- ROW 2, POS 1-3 -->
-        <string name="menu_r2p1">TEMP_ROW2</string>
-        <string name="menu_r2p2">TEMP_ROW2</string>
-        <string name="menu_r2p3">TEMP_ROW2</string>
-        <!-- ROW 3, POS 1-3 -->
-        <string name="menu_r3p1">TEMP_ROW3</string>
-        <string name="menu_r3p2">TEMP_ROW3</string>
-        <string name="menu_r3p3">TEMP_ROW3</string>
-        <!-- ROW 4, POS 1-3 -->
-        <string name="menu_r4p1">TEMP_ROW4</string>
-        <string name="menu_r4p2">TEMP_ROW4</string>
-        <string name="menu_r4p3">TEMP_ROW4</string>
-        <!-- ROW 5, POS 1-3 -->
-        <string name="menu_r5p1">TEMP_ROW5</string>
-        <string name="menu_r5p2">TEMP_ROW5</string>
-        <string name="menu_r5p3">TEMP_ROW5</string>
+    <!-- ROW 1, POS 1-3 -->
+    <string name="menu_r1p1">TEMP_ROW1</string>
+    <string name="menu_r1p2">TEMP_ROW1</string>
+    <string name="menu_r1p3">TEMP_ROW1</string>
+    <!-- ROW 2, POS 1-3 -->
+    <string name="menu_r2p1">TEMP_ROW2</string>
+    <string name="menu_r2p2">TEMP_ROW2</string>
+    <string name="menu_r2p3">TEMP_ROW2</string>
+    <!-- ROW 3, POS 1-3 -->
+    <string name="menu_r3p1">TEMP_ROW3</string>
+    <string name="menu_r3p2">TEMP_ROW3</string>
+    <string name="menu_r3p3">TEMP_ROW3</string>
+    <!-- ROW 4, POS 1-3 -->
+    <string name="menu_r4p1">TEMP_ROW4</string>
+    <string name="menu_r4p2">TEMP_ROW4</string>
+    <string name="menu_r4p3">TEMP_ROW4</string>
+    <!-- ROW 5, POS 1-3 -->
+    <string name="menu_r5p1">TEMP_ROW5</string>
+    <string name="menu_r5p2">TEMP_ROW5</string>
+    <string name="menu_r5p3">TEMP_ROW5</string>
 
 
 </resources>
