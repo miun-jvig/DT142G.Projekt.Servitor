@@ -1,14 +1,14 @@
 package miun.fl.dt142g.projekt;
 
-public class Order {
-    private String dish;
-    private String category;
-    private double price;
+import java.util.ArrayList;
 
-    // TEMP UNTIL SQL IS HERE
-    Order(String ordered_dish, String ordered_type, double ordered_price){
-        dish = ordered_dish;
-        category = ordered_type;
-        price = ordered_price;
+public class Order {
+    private ArrayList<Item> dishes = new ArrayList<>();
+    private double orderTotal;
+
+    // Temporary until SQL is implemented
+    Order(Item ordered_dish){
+        dishes.add(ordered_dish);
     }
+
 }

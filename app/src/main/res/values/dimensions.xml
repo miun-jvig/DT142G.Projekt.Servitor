@@ -2,5 +2,6 @@
 <resources>
     <dimen name="padding_log_in">10dp</dimen>
     <dimen name="padding_edit_text">10dp</dimen>
-    <dimen name="padding_order">137dp</dimen>
+    <dimen name="padding_order">127dp</dimen>
+    <dimen name="horizontal_margin_order">5dp</dimen>
 </resources>

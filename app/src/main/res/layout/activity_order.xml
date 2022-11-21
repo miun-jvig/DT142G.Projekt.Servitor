@@ -60,6 +60,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TableLayout
+        android:id="@+id/TableLayout"
         android:layout_width="410dp"
         android:layout_height="704dp"
         android:layout_marginTop="60dp"
@@ -73,30 +74,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r1p1"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:checked="false"
-                android:textOff="@string/menu_r1p1"
-                android:textOn="@string/menu_r1p1"
-                app:backgroundTint="@color/foodYellow" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r1p2"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r1p2"
-                android:textOn="@string/menu_r1p2"
-                app:backgroundTint="@color/foodYellow" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r1p3"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r1p3"
-                android:textOn="@string/menu_r1p3"
-                app:backgroundTint="@color/foodYellow" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
 
         </TableRow>
 
@@ -105,29 +99,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r2p1"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r2p1"
-                android:textOn="@string/menu_r2p1"
-                app:backgroundTint="@color/foodBlue"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r2p2"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r2p2"
-                android:textOn="@string/menu_r2p2"
-                app:backgroundTint="@color/foodBlue" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r2p3"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r2p3"
-                android:textOn="@string/menu_r2p3"
-                app:backgroundTint="@color/foodBlue" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
         </TableRow>
 
         <TableRow
@@ -135,29 +123,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r3p1"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r3p1"
-                android:textOn="@string/menu_r3p1"
-                app:backgroundTint="@color/foodBlue" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r3p2"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r3p2"
-                android:textOn="@string/menu_r3p2"
-                app:backgroundTint="@color/foodBlue" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r3p3"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r3p3"
-                android:textOn="@string/menu_r3p3"
-                app:backgroundTint="@color/foodBlue" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order" />
         </TableRow>
 
         <TableRow
@@ -165,29 +147,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r4p1"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r4p1"
-                android:textOn="@string/menu_r4p1"
-                app:backgroundTint="@color/foodPurple" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r4p2"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r4p2"
-                android:textOn="@string/menu_r4p2"
-                app:backgroundTint="@color/foodPurple" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r4p3"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r4p1"
-                android:textOn="@string/menu_r4p1"
-                app:backgroundTint="@color/foodPurple" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
 
         </TableRow>
 
@@ -196,29 +172,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r5p1"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r5p1"
-                android:textOn="@string/menu_r5p1"
-                app:backgroundTint="@color/foodGreen" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r5p2"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r5p2"
-                android:textOn="@string/menu_r5p2"
-                app:backgroundTint="@color/foodGreen" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
 
-            <ToggleButton
+            <Button
                 android:id="@+id/button_order_r5p3"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:textOff="@string/menu_r5p3"
-                android:textOn="@string/menu_r5p3"
-                app:backgroundTint="@color/foodGreen" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
         </TableRow>
     </TableLayout>
 

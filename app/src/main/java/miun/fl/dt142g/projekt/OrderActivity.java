@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
     private Button button_back;
@@ -20,16 +25,27 @@ public class OrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order);
         button_back = findViewById(R.id.button_back_order);
 
-        /*
-         * TEMP - incoming "data" from SQL table about Al Carté items
-         * Perhaps use a for each loop from data from SQL after, below is only example
-         */
-        Order order_starter1 = new Order("Skagen Toast", "Förrätt", 30);
-        Order order_starter2 = new Order("Halstrad tartar", "Förrätt", 35);
-        Order order_starter3 = new Order("Husets soppa", "Förrätt", 20);
-        Order order_main_course1 = new Order("Pizza", "Varmrätt", 70);
-        Order order_dessert1 = new Order("Glass med kolasås", "Efterrätt", 45);
-        Order order_drink1 = new Order("Cola", "Drink", 19);
+
+        // Temporary exampledishes until SQL is implemented
+        Item tartar = new Item("Halstrad tartar", "Lättstekt tartar", "starter", 79.90, 1);
+        Item curryChicken = new Item("Currykyckling", "Kyckling med curry", "main", 109.90, 2);
+        Item carrotcake = new Item("Morotskaka", "Saftig morotskaka", "dessert", 54.90, 3);
+        Item sprite = new Item("Sprite", "40cl Sprite", "beverage", 109.90, 4);
+
+        ArrayList<Item> menuitems = new ArrayList<>();
+        menuitems.add(tartar);
+        menuitems.add(curryChicken);
+        menuitems.add(carrotcake);
+        menuitems.add(sprite);
+
+        TableLayout layout = findViewById(R.id.TableLayout);
+        for(int i = 0; i < layout.getChildCount(); i++){
+            TableRow row = (TableRow) layout.getChildAt(i);
+            for(int j = 0; j < row.getChildCount(); j++){
+                Button button = (Button)row.getChildAt(j);
+                button.setBackgroundColor(getResources().getColor(R.color.appOrange));
+            }
+        }
 
 
         // INFO ABOUT TABLE

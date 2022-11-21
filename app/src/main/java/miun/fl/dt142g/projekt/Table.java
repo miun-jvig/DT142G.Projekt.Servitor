@@ -8,16 +8,16 @@ public class Table implements Serializable {
     private boolean status;
     private Booking booking;
 
-    Table(int new_id){
-        id = new_id;
+    Table(int id){
+        this.id = id;
         status = false;
     }
 
-    public void setStatus(boolean set_status){
-        status = set_status;
+    public void setStatus(boolean status){
+        this.status = status;
     }
-    public void setBooking(Booking new_booking){
-        booking = new_booking;
+    public void setBooking(Booking booking){
+        this.booking = booking;
     }
 
     public int getID(){

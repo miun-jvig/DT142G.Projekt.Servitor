@@ -7,10 +7,11 @@ public class Booking implements Serializable {
     private String note;
     private String servitor;
     private ArrayList<Order> orders = new ArrayList<>();
+    private int total;
 
-    Booking(String booking_note, String booking_servitor){
-        note = booking_note;
-        servitor = booking_servitor;
+    Booking(String note, String servitor){
+        this.note = note;
+        this.servitor = servitor;
     }
 
     public void addOrderItem(Order order){
