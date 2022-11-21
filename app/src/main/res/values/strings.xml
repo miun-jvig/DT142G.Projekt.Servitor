@@ -7,9 +7,7 @@
     <string name="amount">ANTAL</string>
     <string name="time">ANKOMSTTID</string>
     <string name="notes">NOTERING</string>
-    <string name="createBookingButton_id">SKAPA BOKNING</string>
-    <string name="dropInButton_id">DROP IN</string>
-    <string name="exitButton_id">AVBRYT</string>
+    <string name="createButton_id">SKAPA BOKNING</string>
     <string name="back">BACK</string>
     <!-- Booking -->
     <string name="booking_current_table">temp</string>
