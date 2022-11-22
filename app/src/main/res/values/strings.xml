@@ -37,6 +37,7 @@
         <item>Varmrätter</item>
         <item>Efterrätter</item>
         <item>Dryck</item>
+        <item>Beställning</item>
     </string-array>
     <!-- ROW 1, POS 1-3 -->
     <string name="menu_r1p1">TEMP_ROW1</string>
