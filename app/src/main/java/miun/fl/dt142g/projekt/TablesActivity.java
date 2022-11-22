@@ -31,8 +31,8 @@ public class TablesActivity extends AppCompatActivity {
          * TEMP - incoming "data" from SQL table. Containing zero orders, add using new_book.addOrderItem(order) will be used in OrderActivity
          * Perhaps use a for each loop from data from SQL after, below is only example
          */
-        Booking new_book = new Booking("Nikki sur", "Alex"); // "acquired" from SQL
-        Booking new_book2 = new Booking("Alex Bicep", "Joel"); // "acquired" from SQL
+        Booking new_book = new Booking("Nikki sur", "Alex", "t", "note"); // "acquired" from SQL
+        Booking new_book2 = new Booking("Alex Bicep", "Joel", "t", "note"); // "acquired" from SQL
         table1.setBooking(new_book);
         table3.setBooking(new_book2);
         table1.setStatus(true);

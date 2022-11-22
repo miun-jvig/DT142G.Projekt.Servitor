@@ -11,6 +11,9 @@
     <string name="back">BACK</string>
     <!-- Booking -->
     <string name="booking_current_table">temp</string>
+    <string name="error">temp</string>
+    <string name="errorMessage">Fyll i alla fält</string>
+    <string name="table">Bord </string>
     <!-- Tables -->
     <string name="table_1">Bord 1</string>
     <string name="table_2">Bord 2</string>

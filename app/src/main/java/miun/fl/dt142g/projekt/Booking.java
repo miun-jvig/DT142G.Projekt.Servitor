@@ -2,16 +2,20 @@ package miun.fl.dt142g.projekt;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Booking implements Serializable {
     private String note;
-    private String servitor;
+    private String name;
+    private String time;
+    private String amount;
     private ArrayList<Order> orders = new ArrayList<>();
-    private int total;
 
-    Booking(String note, String servitor){
+    Booking(String name, String amount, String time, String note){
         this.note = note;
-        this.servitor = servitor;
+        this.name = name;
+        this.time = time;
+        this.amount = amount;
     }
 
     public void addOrderItem(Order order){
