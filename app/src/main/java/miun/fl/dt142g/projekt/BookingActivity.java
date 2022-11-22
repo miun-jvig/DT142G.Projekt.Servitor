@@ -3,26 +3,24 @@ package miun.fl.dt142g.projekt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class BookingActivity extends AppCompatActivity {
-    private EditText editName;
-    private EditText editAmount;
-    private EditText editTime;
-    private EditText editNote;
+    private EditText editName, editAmount, editTime, editDate, editNote;
     private TextView error;
+    private int mYear, mMonth, mDay, mHour, mMinute;
     Table table;
-    final Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,43 +35,70 @@ public class BookingActivity extends AppCompatActivity {
         Button button_create_booking = (Button) findViewById(R.id.createBookingButton_id);
         editName = (EditText)findViewById(R.id.name_id);
         editAmount = (EditText)findViewById(R.id.amount_id);
-        editTime = (EditText)findViewById(R.id.arrivalTime_id);
+        editTime = (EditText)findViewById(R.id.time_id);
+        editDate = (EditText)findViewById(R.id.date_id);
         editNote = (EditText)findViewById(R.id.notes_id);
         error = findViewById(R.id.testText_id);
 
         // Default values
         error.setText(null);
-        Calendar calendar = Calendar.getInstance();
-        int mHour = calendar.get(Calendar.HOUR);
-        int mMinute = calendar.get(Calendar.MINUTE);
-        editTime.setText("Idag kl. "+ mHour +":"+ mMinute);
 
-        // calendar popup picker
-        DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH,month);
-                myCalendar.set(Calendar.DAY_OF_MONTH,day);
-                updateLabel();
-            }
-        };
-        editTime.setOnClickListener(new View.OnClickListener() {
+        editDate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(BookingActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                // Get Current Date
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(BookingActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                editDate.setText(dayOfMonth + " - " + (monthOfYear + 1) + " - " + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
             }
         });
 
-        // inputs from form creates a booking
-        button_create_booking.setOnClickListener(new View.OnClickListener() {
+        editTime.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get Current Time
+                final Calendar c = Calendar.getInstance();
+                mHour = c.get(Calendar.HOUR_OF_DAY);
+                mMinute = c.get(Calendar.MINUTE);
+
+                // Launch Time Picker Dialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(BookingActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+
+                                editTime.setText(hourOfDay + ":" + minute);
+                            }
+                        }, mHour, mMinute, false);
+                timePickerDialog.show();
+            }
+        });
+
+        // inputs from form creates a booking ------------------------------------------------
+        button_create_booking.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String currentTime = mHour +":"+ mMinute;
                 if (editTime.getText().toString().compareTo(currentTime) != 0 ){
                     if (editName.getText().toString().isEmpty() || editAmount.getText().toString().isEmpty()){
-                        error.setText("Fyll i namn och antal fält");
+                        error.setText("Fyll i namn och antal");
                     }
                 }
                 else if (editName.getText().toString().isEmpty() || editAmount.getText().toString().isEmpty() || editTime.getText().toString().isEmpty() || editNote.getText().toString().isEmpty()) {// if the user missed filling a block
@@ -92,11 +117,4 @@ public class BookingActivity extends AppCompatActivity {
         Intent activity_tables = new Intent(this, TablesActivity.class);
         button_back.setOnClickListener(new SwitchActivity(activity_tables));
     }
-
-    private void updateLabel(){
-        String myFormat="MM/dd/yy";
-        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.getDefault());
-        editTime.setText(dateFormat.format(myCalendar.getTime()));
-    }
-
 }
