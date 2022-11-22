@@ -36,6 +36,7 @@
             android:id="@+id/order_spinner"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:height="500dp"
             android:contentDescription="@string/menu"
             android:popupBackground="@color/appOrange"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -76,30 +77,15 @@
             android:layout_height="match_parent">
             <Button
                 android:id="@+id/button_order_r1p1"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
 
             <Button
                 android:id="@+id/button_order_r1p2"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons" />
 
             <Button
                 android:id="@+id/button_order_r1p3"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
 
         </TableRow>
 
@@ -110,30 +96,15 @@
 
             <Button
                 android:id="@+id/button_order_r2p1"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
 
             <Button
                 android:id="@+id/button_order_r2p2"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
 
             <Button
                 android:id="@+id/button_order_r2p3"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
         </TableRow>
 
         <TableRow
@@ -143,30 +114,15 @@
 
             <Button
                 android:id="@+id/button_order_r3p1"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
 
             <Button
                 android:id="@+id/button_order_r3p2"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
 
             <Button
                 android:id="@+id/button_order_r3p3"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
         </TableRow>
 
         <TableRow
@@ -176,30 +132,15 @@
 
             <Button
                 android:id="@+id/button_order_r4p1"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
 
             <Button
                 android:id="@+id/button_order_r4p2"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
 
             <Button
                 android:id="@+id/button_order_r4p3"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
 
         </TableRow>
 
@@ -210,30 +151,15 @@
 
             <Button
                 android:id="@+id/button_order_r5p1"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
 
             <Button
                 android:id="@+id/button_order_r5p2"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
 
             <Button
                 android:id="@+id/button_order_r5p3"
-                android:layout_width="@dimen/padding_order"
-                android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
-                android:gravity="center|top"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                style="@style/foodButtons"/>
         </TableRow>
     </TableLayout>
 
