@@ -43,24 +43,28 @@ public class BookingActivity extends AppCompatActivity {
         // Default values
         error.setText(null);
 
+        // Get and set Current Date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        editDate.setText(mDay + " - " + (mMonth + 1) + " - " + mYear);
+
+        // Get and set Current Time
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+        editTime.setText(mHour + ":" + mMinute);
+
         editDate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get Current Date
-                final Calendar c = Calendar.getInstance();
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(BookingActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 editDate.setText(dayOfMonth + " - " + (monthOfYear + 1) + " - " + year);
-
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -70,19 +74,13 @@ public class BookingActivity extends AppCompatActivity {
         editTime.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get Current Time
-                final Calendar c = Calendar.getInstance();
-                mHour = c.get(Calendar.HOUR_OF_DAY);
-                mMinute = c.get(Calendar.MINUTE);
 
                 // Launch Time Picker Dialog
                 TimePickerDialog timePickerDialog = new TimePickerDialog(BookingActivity.this,
                         new TimePickerDialog.OnTimeSetListener() {
 
                             @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay,
-                                                  int minute) {
-
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 editTime.setText(hourOfDay + ":" + minute);
                             }
                         }, mHour, mMinute, false);
@@ -95,8 +93,8 @@ public class BookingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String currentTime = mHour +":"+ mMinute;
-                if (editTime.getText().toString().compareTo(currentTime) != 0 ){
+                String currentDay = mDay + " - " + mMonth + " - " + mYear;
+                if (editDate.getText().toString().compareTo(currentDay) != 0 ){
                     if (editName.getText().toString().isEmpty() || editAmount.getText().toString().isEmpty()){
                         error.setText("Fyll i namn och antal");
                     }
