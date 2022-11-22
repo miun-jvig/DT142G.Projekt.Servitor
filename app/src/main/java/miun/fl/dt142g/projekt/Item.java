@@ -1,5 +1,4 @@
 package miun.fl.dt142g.projekt;
-
 public class Item {
     private String name;
     private String description;
@@ -20,4 +19,7 @@ public class Item {
         this.price = price;
         this.id = id;
     }
+    String getName(){return name;}
+    String getCategory(){return category;}
+    double getPrice(){return price;}
 }

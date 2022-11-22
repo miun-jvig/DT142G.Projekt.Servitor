@@ -67,30 +67,39 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topbarLayout">
+        app:layout_constraintTop_toBottomOf="@+id/topbarLayout"
+        >
 
         <TableRow
             android:id="@+id/TableRow_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <Button
                 android:id="@+id/button_order_r1p1"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button_order_r1p2"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button_order_r1p3"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
         </TableRow>
 
@@ -103,19 +112,28 @@
                 android:id="@+id/button_order_r2p1"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button_order_r2p2"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button_order_r2p3"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
         </TableRow>
 
         <TableRow
@@ -127,19 +145,28 @@
                 android:id="@+id/button_order_r3p1"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button_order_r3p2"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button_order_r3p3"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order" />
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
         </TableRow>
 
         <TableRow
@@ -151,19 +178,28 @@
                 android:id="@+id/button_order_r4p1"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button_order_r4p2"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button_order_r4p3"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
         </TableRow>
 
@@ -176,19 +212,28 @@
                 android:id="@+id/button_order_r5p1"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button_order_r5p2"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button_order_r5p3"
                 android:layout_width="@dimen/padding_order"
                 android:layout_height="@dimen/padding_order"
-                android:layout_marginHorizontal="@dimen/horizontal_margin_order"/>
+                android:layout_marginHorizontal="@dimen/horizontal_margin_order"
+                android:gravity="center|top"
+                android:textSize="12sp"
+                android:visibility="invisible" />
         </TableRow>
     </TableLayout>
 
