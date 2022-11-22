@@ -7,14 +7,14 @@ import java.util.Date;
 public class Booking implements Serializable {
     private String note;
     private String name;
-    private String time;
+    private Date time;
     private String amount;
     private ArrayList<Order> orders = new ArrayList<>();
 
-    Booking(String name, String amount, String time, String note){
+    Booking(String name, String amount, String note){
         this.note = note;
         this.name = name;
-        this.time = time;
+//        this.time = time;
         this.amount = amount;
     }
 
