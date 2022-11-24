@@ -76,10 +76,14 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner_order.setAdapter(adapter);
         spinner_order.setOnItemSelectedListener(this);
+
     }
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        String selected = (String)parent.getItemAtPosition(pos);
-        Toast.makeText(getApplicationContext(), selected , Toast.LENGTH_LONG).show();
+        String selected = (String) parent.getItemAtPosition(pos);
+        Intent activity_sendOrder = new Intent(this, SendOrderActivity.class);
+        if(selected.equals("Beställning")){
+            startActivity(activity_sendOrder);
+        }
     }
     public void onNothingSelected(AdapterView<?> parent) {
         Toast.makeText(getApplicationContext(),"OnNothingSelected" , Toast.LENGTH_LONG).show();
