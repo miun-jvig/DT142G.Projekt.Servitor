@@ -2,7 +2,6 @@ package miun.fl.dt142g.projekt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -73,14 +72,15 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         // DROPDOWN
         spinner_order = findViewById(R.id.order_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ratter, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_order.setAdapter(adapter);
         spinner_order.setOnItemSelectedListener(this);
-
     }
+
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         String selected = (String) parent.getItemAtPosition(pos);
         Intent activity_sendOrder = new Intent(this, SendOrderActivity.class);
+
         if(selected.equals("Beställning")){
             startActivity(activity_sendOrder);
         }
@@ -88,7 +88,6 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     public void onNothingSelected(AdapterView<?> parent) {
         Toast.makeText(getApplicationContext(),"OnNothingSelected" , Toast.LENGTH_LONG).show();
     }
-
 
     public int getColorFromCategory(String cat){
         switch(cat){
