@@ -71,7 +71,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         button_back.setOnClickListener(new SwitchActivity(activity_booking));
 
         // DROPDOWN
-        spinner_order = (Spinner)findViewById(R.id.order_spinner);
+        spinner_order = findViewById(R.id.order_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ratter, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner_order.setAdapter(adapter);

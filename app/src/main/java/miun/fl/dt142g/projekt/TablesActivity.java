@@ -21,6 +21,7 @@ public class TablesActivity extends AppCompatActivity {
     private Table table5 = new Table(5);
     private Table table6 = new Table(6);
     private Table table7 = new Table(7);
+    private ArrayList<Table> tmp = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

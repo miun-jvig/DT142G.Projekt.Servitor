@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Order {
     private ArrayList<Item> dishes = new ArrayList<>();
+    private boolean status;
     private double orderTotal;
 
     // Temporary until SQL is implemented
