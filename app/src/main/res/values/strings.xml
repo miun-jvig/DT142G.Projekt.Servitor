@@ -37,4 +37,5 @@
         <item>Dryck</item>
         <item>Beställning</item>
     </string-array>
+    <string name="send_order">Skicka beställning</string>
 </resources>
