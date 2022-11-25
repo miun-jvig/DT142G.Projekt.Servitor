@@ -59,7 +59,6 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
             added_items++;
         }
 
-
         // INFO ABOUT TABLE
         table = (Table) getIntent().getSerializableExtra("Table");
         TextView current_table = findViewById(R.id.order_current_table);
@@ -80,7 +79,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         String selected = (String) parent.getItemAtPosition(pos);
         Intent activity_sendOrder = new Intent(this, SendOrderActivity.class);
-
+        activity_sendOrder.putExtra("Table", table);
         if(selected.equals("Beställning")){
             startActivity(activity_sendOrder);
         }

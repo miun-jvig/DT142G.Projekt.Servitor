@@ -23,10 +23,8 @@
     <string name="table_6">Bord 6</string>
     <string name="table_7">Bord 7</string>
     <!-- Log in -->
-    <string name="log_in_name">NAMN</string>
-    <string name="log_in_losenord">LÖSENORD</string>
-    <string name="log_in_username">Username</string>
-    <string name="log_in_password">********</string>
+    <string name="log_in_name">Personnummer</string>
+    <string name="log_in_username">19900412XXXX</string>
     <string name="log_in">LOGGA IN</string>
     <!-- ORDER -->
     <string name="menu">MENU</string>

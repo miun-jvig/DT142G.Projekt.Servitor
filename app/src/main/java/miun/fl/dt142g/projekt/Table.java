@@ -19,6 +19,7 @@ public class Table implements Serializable {
     public void setBooking(Booking booking){
         this.booking = booking;
     }
+    public Booking getBooking(){return booking;}
 
     public int getID(){
         return id;
