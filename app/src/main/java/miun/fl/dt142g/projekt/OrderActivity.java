@@ -14,12 +14,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class OrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Button button_back;
     private Spinner spinner_order;
     Table table;
+    ArrayList<Item> order = new ArrayList<Item>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +30,11 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         button_back = findViewById(R.id.button_back_order);
 
         // Temporary exampledishes until SQL is implemented
-        Item tartar = new Item("Halstrad tartar", "Lättstekt tartar", "starter", 79.90, 1);
-        Item curryChicken = new Item("Currykyckling", "Kyckling med curry", "main", 109.90, 2);
-        Item carrotcake = new Item("Morotskaka", "Saftig morotskaka", "dessert", 54.90, 3);
-        Item sprite = new Item("Sprite", "40cl Sprite", "beverage", 29.90, 4);
-        Item monster = new Item("Monster", "50cl Monster", "beverage", 5.90, 5);
+        Item tartar = new Item("Halstrad tartar", "Lättstekt", "starter", 79.90, 1);
+        Item curryChicken = new Item("Currykyckling", "Lite curry", "main", 109.90, 2);
+        Item carrotcake = new Item("Morotskaka", "Utan morot", "dessert", 54.90, 3);
+        Item sprite = new Item("Sprite", "Utan is", "beverage", 29.90, 4);
+        Item monster = new Item("Monster", "Sockerfri Monster", "beverage", 5.90, 5);
 
         Stack<Item> menuitems = new Stack<>();
         menuitems.add(tartar);
@@ -42,17 +44,22 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         menuitems.add(monster);
 
         /*
-        * Adds all items and styles them accordingly
+        * Adds all items, styles them accordingly & connect every button with its own item.
         * */
         TableLayout layout = findViewById(R.id.TableLayout);
         int added_items = 0;
         while(!menuitems.empty() && added_items < 15){
             Item item = menuitems.pop(); //Item to be added to the view
-
             TableRow row = (TableRow)layout.getChildAt((added_items)/3); //The row for the item to be added to
             Button button = (Button)row.getChildAt((added_items)%3); //The cell the item will be added to
 
-        // Makes the button visible and styles it accordingly
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemButtonPress(item);
+                }
+            });
+        // Makes the buttons visible and styles it accordingly
             button.setVisibility(View.VISIBLE);
             button.setBackgroundColor(getResources().getColor(getColorFromCategory(item.getCategory())));
             button.setText(item.getName()+"\n"+item.getPrice()+":-");
@@ -64,6 +71,11 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         TextView current_table = findViewById(R.id.order_current_table);
         current_table.setText("Bord: "+table.getID());
 
+        // IF ORDER IS ALREADY STARTED
+        if(getIntent().getSerializableExtra("Order") != null) {
+        ArrayList<Item> oldOrder = (ArrayList<Item>) getIntent().getSerializableExtra("Order");
+            order = oldOrder;
+        }
         // BACK ACTIVITY
         Intent activity_booking = new Intent(this, TablesActivity.class);
         button_back.setOnClickListener(new SwitchActivity(activity_booking));
@@ -80,12 +92,13 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         String selected = (String) parent.getItemAtPosition(pos);
         Intent activity_sendOrder = new Intent(this, SendOrderActivity.class);
         activity_sendOrder.putExtra("Table", table);
+        activity_sendOrder.putExtra("Order", order);
         if(selected.equals("Beställning")){
             startActivity(activity_sendOrder);
         }
     }
     public void onNothingSelected(AdapterView<?> parent) {
-        Toast.makeText(getApplicationContext(),"OnNothingSelected" , Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"OnNothingSelected" , Toast.LENGTH_LONG).show();
     }
 
     public int getColorFromCategory(String cat){
@@ -100,5 +113,8 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
                 return R.color.foodGreen;
         }
         return R.color.black;
+    }
+    public void onItemButtonPress(Item item){
+        order.add(item);
     }
 }

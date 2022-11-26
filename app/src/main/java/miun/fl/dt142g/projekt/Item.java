@@ -1,5 +1,8 @@
 package miun.fl.dt142g.projekt;
-public class Item {
+
+import java.io.Serializable;
+
+public class Item implements Serializable {
     private String name;
     private String note;
     private String category;
@@ -22,4 +25,5 @@ public class Item {
     String getName(){return name;}
     String getCategory(){return category;}
     double getPrice(){return price;}
+    String getNote(){return note;}
 }

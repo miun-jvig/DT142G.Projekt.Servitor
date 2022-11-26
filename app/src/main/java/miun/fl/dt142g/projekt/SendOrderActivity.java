@@ -23,29 +23,17 @@ public class SendOrderActivity extends AppCompatActivity {
     private TextView text;
     private LinearLayout mLayout;
     Table table;
-
-    String[][] exampleData = {{"Data1", "Data2", "Data3"}, {"Data4","Data5", "Data6"}, {"Data4","Data5", "Data6"}, {"Data4","Data5", "Data6"}};
+    ArrayList<Item> order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_order);
 
-        // List of items in the order
         //ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_order_list_view, exampleData);
         ListView list = (ListView) findViewById(R.id.listView_order);
-        //list.setAdapter(adapter);
-        list.setAdapter(new OrderListAdapter(this, exampleData));
-
-
-
-
-
-
-
-
-
-
+        order = (ArrayList<Item>) getIntent().getSerializableExtra("Order");
+        list.setAdapter(new OrderListAdapter(this, order));
 
         // INFO ABOUT TABLE
         table = (Table) getIntent().getSerializableExtra("Table");
@@ -55,6 +43,7 @@ public class SendOrderActivity extends AppCompatActivity {
         // Back button
         Intent activity_order = new Intent(this, OrderActivity.class);
         activity_order.putExtra("Table", table);
+        activity_order.putExtra("Order", order);
         button_back = findViewById(R.id.button_back_listOfOrder);
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override

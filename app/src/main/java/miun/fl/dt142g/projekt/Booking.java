@@ -9,7 +9,6 @@ public class Booking implements Serializable {
     private String name;
     private Date time;
     private String amount;
-    private ArrayList<Order> orders = new ArrayList<>();
 
     Booking(String name, String amount, String note){
         this.note = note;
@@ -18,10 +17,4 @@ public class Booking implements Serializable {
         this.amount = amount;
     }
 
-    public void addOrderItem(Order order){
-        orders.add(order);
-    }
-    public ArrayList<Order> getOrders(){
-        return orders;
-    }
 }

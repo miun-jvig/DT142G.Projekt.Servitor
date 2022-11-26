@@ -7,14 +7,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class OrderListAdapter extends ArrayAdapter<String[]> {
-    private final Context context;
-    private final String[][] values;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
-    public OrderListAdapter(Context context, String[][] values) {
-        super(context, R.layout.activity_order_list_view, values);
+public class OrderListAdapter extends ArrayAdapter<Item> {
+
+    private final Context context;
+    private final ArrayList<Item> order;
+
+    public OrderListAdapter(Context context, ArrayList<Item> order) {
+        super(context, R.layout.activity_order_list_view, order);
         this.context = context;
-        this.values = values;
+        this.order = order;
     }
 
     @Override
@@ -23,11 +27,11 @@ public class OrderListAdapter extends ArrayAdapter<String[]> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.activity_order_list_view, parent, false);
         TextView textView1 = (TextView) rowView.findViewById(R.id.dish_name);
-        TextView textView2 = (TextView) rowView.findViewById(R.id.dish_note);
-        TextView textView3 = (TextView) rowView.findViewById(R.id.dish_price);
-        textView1.setText(values[position][0]);
-        textView2.setText(values[position][1]);
-        textView3.setText(values[position][2]);
+        TextView textView2 = (TextView) rowView.findViewById(R.id.dish_price);
+        TextView textView3 = (TextView) rowView.findViewById(R.id.dish_note);
+        textView1.setText(order.get(position).getName());
+        textView2.setText(Double.toString(order.get(position).getPrice())+"kr");
+        textView3.setText("- "+order.get(position).getNote());
         return rowView;
     }
 }
