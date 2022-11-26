@@ -1,7 +1,7 @@
 package miun.fl.dt142g.projekt;
 public class Item {
     private String name;
-    private String description;
+    private String note;
     private String category;
     private double price;
     private int id;
@@ -12,9 +12,9 @@ public class Item {
         // GET DISH WITH ID ... FROM DATABASE And set other attributes.
     }
     // Temporary constructor
-    Item(String name, String description, String category, double price, int id){
+    Item(String name, String note, String category, double price, int id){
         this.name = name;
-        this.description = description;
+        this.note = note;
         this.category = category;
         this.price = price;
         this.id = id;
