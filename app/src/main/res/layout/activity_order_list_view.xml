@@ -32,7 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"></TextView>
+        tools:ignore="MissingConstraints">
+    </TextView>
     <TextView
         android:id="@+id/dish_note"
         android:layout_width="fill_parent"
@@ -47,5 +48,19 @@
         app:layout_constraintTop_toBottomOf="@+id/dish_name"
         tools:ignore="MissingConstraints">
     </TextView>
+
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="5sp"
+        android:text="Ta bort"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/appRed"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dish_price"
+        tools:ignore="MissingConstraints"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
