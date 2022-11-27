@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     private Spinner spinner_order;
     Table table;
     ArrayList<Item> order = new ArrayList<Item>();
+    String chosenCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,27 +31,58 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_order);
         button_back = findViewById(R.id.button_back_order);
 
-        // Temporary exampledishes until SQL is implemented
+    // Temporary exampledishes until SQL is implemented - Will be replaced with something like getAllDishes ...
         Item tartar = new Item("Halstrad tartar", "Lättstekt", "starter", 79.90, 1);
-        Item curryChicken = new Item("Currykyckling", "Lite curry", "main", 109.90, 2);
-        Item carrotcake = new Item("Morotskaka", "Utan morot", "dessert", 54.90, 3);
-        Item sprite = new Item("Sprite", "Utan is", "beverage", 29.90, 4);
-        Item monster = new Item("Monster", "Sockerfri Monster", "beverage", 5.90, 5);
+        Item chips = new Item("Chipstalrik", "Saltade chips med dip", "starter", 59.90, 2);
+        Item wings = new Item("Kycklingvingar", "Utan  het sås", "starter", 69.90, 3);
+        Item curryChicken = new Item("Currykyckling", "Lite curry", "main", 109.90, 4);
+        Item steak = new Item("Stek med pommes", "+Bea", "main", 159.90, 5);
+        Item soup = new Item("Potatissoppa", "Med bröd att doppa", "main", 99.90, 6);
+        Item carrotcake = new Item("Morotskaka", "Utan morot", "dessert", 54.90, 7);
+        Item bun = new Item("Kanelbulle", "Extra socker", "dessert", 34.90, 8);
+        Item cremebrulee = new Item("Créme Brûlée", "Med bär", "dessert", 109.90, 9);
+        Item sprite = new Item("Sprite", "Utan is", "beverage", 29.90, 10);
+        Item monster = new Item("Monster", "Sockerfri Monster", "beverage", 34.90, 11);
+        Item beer = new Item("Öl", "Gärna avslagen öl", "beverage", 79.90, 12);
 
-        Stack<Item> menuitems = new Stack<>();
-        menuitems.add(tartar);
-        menuitems.add(curryChicken);
-        menuitems.add(carrotcake);
-        menuitems.add(sprite);
-        menuitems.add(monster);
-
+        Stack<Item> allItems = new Stack<>();
+        allItems.add(tartar);
+        allItems.add(chips);
+        allItems.add(wings);
+        allItems.add(curryChicken);
+        allItems.add(steak);
+        allItems.add(soup);
+        allItems.add(carrotcake);
+        allItems.add(bun);
+        allItems.add(cremebrulee);
+        allItems.add(sprite);
+        allItems.add(monster);
+        allItems.add(beer);
+    //
+        /*
+        * If a category is selected, display only the dishes with that category
+        * */
+        if(getIntent().getSerializableExtra("chosenCategory") != null){
+            chosenCategory = (String)getIntent().getSerializableExtra("chosenCategory");
+        }
+        Stack<Item> dispItems = new Stack<>();
+        if(chosenCategory == null){
+            dispItems = allItems;
+        }
+        else {
+            for (Item i : allItems) {
+                if(i.getCategory().equals(chosenCategory)){
+                    dispItems.add(i);
+                }
+            }
+        }
         /*
         * Adds all items, styles them accordingly & connect every button with its own item.
         * */
         TableLayout layout = findViewById(R.id.TableLayout);
         int added_items = 0;
-        while(!menuitems.empty() && added_items < 15){
-            Item item = menuitems.pop(); //Item to be added to the view
+        while(!dispItems.empty() && added_items < 15){
+            Item item = dispItems.pop(); //Item to be added to the view
             TableRow row = (TableRow)layout.getChildAt((added_items)/3); //The row for the item to be added to
             Button button = (Button)row.getChildAt((added_items)%3); //The cell the item will be added to
 
@@ -90,11 +123,38 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         String selected = (String) parent.getItemAtPosition(pos);
-        Intent activity_sendOrder = new Intent(this, SendOrderActivity.class);
-        activity_sendOrder.putExtra("Table", table);
-        activity_sendOrder.putExtra("Order", order);
-        if(selected.equals("Beställning")){
-            startActivity(activity_sendOrder);
+        Intent activity_order = new Intent(this, OrderActivity.class);
+        switch(selected){
+            case "Förrätter":
+                activity_order.putExtra("chosenCategory", "starter");
+                activity_order.putExtra("Table", table);
+                activity_order.putExtra("Order", order);
+                startActivity(activity_order);
+                break;
+            case "Varmrätter":
+                activity_order.putExtra("chosenCategory", "main");
+                activity_order.putExtra("Table", table);
+                activity_order.putExtra("Order", order);
+                startActivity(activity_order);
+                break;
+            case "Efterrätter":
+                activity_order.putExtra("chosenCategory", "dessert");
+                activity_order.putExtra("Table", table);
+                activity_order.putExtra("Order", order);
+                startActivity(activity_order);
+                break;
+            case "Dryck":
+                activity_order.putExtra("chosenCategory", "beverage");
+                activity_order.putExtra("Table", table);
+                activity_order.putExtra("Order", order);
+                startActivity(activity_order);
+                break;
+            case "Beställning":
+                Intent activity_sendOrder = new Intent(this, SendOrderActivity.class);
+                activity_sendOrder.putExtra("Table", table);
+                activity_sendOrder.putExtra("Order", order);
+                startActivity(activity_sendOrder);
+                break;
         }
     }
     public void onNothingSelected(AdapterView<?> parent) {

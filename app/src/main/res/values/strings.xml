@@ -32,7 +32,7 @@
     <string name="order_current_table">temp</string>
     <string-array name="ratter">
         <item>Vanliga rätter</item>
-        <item>Förätter</item>
+        <item>Förrätter</item>
         <item>Varmrätter</item>
         <item>Efterrätter</item>
         <item>Dryck</item>
