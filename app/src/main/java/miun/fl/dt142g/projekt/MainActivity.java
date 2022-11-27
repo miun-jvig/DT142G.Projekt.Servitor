@@ -21,12 +21,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent activity_log_in = new Intent(this, LogInActivity.class);
-        Intent activity_booking = new Intent(this, SendOrderActivity.class); //TEMP
 
         button_servitor = findViewById(R.id.button_servitor);
         button_kok = findViewById(R.id.button_kok);
 
         button_servitor.setOnClickListener(new SwitchActivity(activity_log_in));
-        button_kok.setOnClickListener(new SwitchActivity(activity_booking));
     }
 }

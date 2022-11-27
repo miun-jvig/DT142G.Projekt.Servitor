@@ -26,6 +26,7 @@
     <string name="log_in_name">Personnummer</string>
     <string name="log_in_username">19900412XXXX</string>
     <string name="log_in">LOGGA IN</string>
+    <string name="log_in_error"></string>
     <!-- ORDER -->
     <string name="menu">MENU</string>
     <string name="order_current_table">temp</string>
