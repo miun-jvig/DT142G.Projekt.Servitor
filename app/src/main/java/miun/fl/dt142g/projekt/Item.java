@@ -26,4 +26,7 @@ public class Item implements Serializable {
     String getCategory(){return category;}
     double getPrice(){return price;}
     String getNote(){return note;}
+
+    void setNote(String note){this.note = note;}
+    void resetNote(){this.note = "";}
 }

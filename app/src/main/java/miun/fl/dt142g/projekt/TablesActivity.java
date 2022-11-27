@@ -4,24 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class TablesActivity extends AppCompatActivity {
-    private Button button_back;
-    private Table table1 = new Table(1);
-    private Table table2 = new Table(2);
-    private Table table3 = new Table(3);
-    private Table table4 = new Table(4);
-    private Table table5 = new Table(5);
-    private Table table6 = new Table(6);
-    private Table table7 = new Table(7);
-    private ArrayList<Table> tmp = new ArrayList<>();
+    private final Table table1 = new Table(1);
+    private final Table table2 = new Table(2);
+    private final Table table3 = new Table(3);
+    private final Table table4 = new Table(4);
+    private final Table table5 = new Table(5);
+    private final Table table6 = new Table(6);
+    private final Table table7 = new Table(7);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +47,7 @@ public class TablesActivity extends AppCompatActivity {
         }
 
         Intent activity_back = new Intent(this, MainActivity.class);
-        button_back = findViewById(R.id.button_back);
+        Button button_back = findViewById(R.id.button_back);
         button_back.setOnClickListener(v -> startActivity(activity_back));
     }
 

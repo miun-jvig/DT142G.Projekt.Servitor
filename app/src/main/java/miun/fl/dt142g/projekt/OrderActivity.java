@@ -2,34 +2,38 @@ package miun.fl.dt142g.projekt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class OrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private Button button_back;
-    private Spinner spinner_order;
     Table table;
-    ArrayList<Item> order = new ArrayList<Item>();
+    ArrayList<Item> order = new ArrayList<>();
     String chosenCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-        button_back = findViewById(R.id.button_back_order);
+        Button button_back = findViewById(R.id.button_back_order);
 
     // Temporary exampledishes until SQL is implemented - Will be replaced with something like getAllDishes ...
         Item tartar = new Item("Halstrad tartar", "Lättstekt", "starter", 79.90, 1);
@@ -85,24 +89,22 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
             Item item = dispItems.pop(); //Item to be added to the view
             TableRow row = (TableRow)layout.getChildAt((added_items)/3); //The row for the item to be added to
             Button button = (Button)row.getChildAt((added_items)%3); //The cell the item will be added to
+            String text = item.getName()+"\n"+item.getPrice()+":-";
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemButtonPress(item);
-                }
-            });
+            button.setOnClickListener(v -> onItemButtonPress(item, button));
+            button.setOnLongClickListener(v -> onItemHoldPress(item, button));
         // Makes the buttons visible and styles it accordingly
             button.setVisibility(View.VISIBLE);
             button.setBackgroundColor(getResources().getColor(getColorFromCategory(item.getCategory())));
-            button.setText(item.getName()+"\n"+item.getPrice()+":-");
+            button.setText(text);
             added_items++;
         }
 
         // INFO ABOUT TABLE
         table = (Table) getIntent().getSerializableExtra("Table");
         TextView current_table = findViewById(R.id.order_current_table);
-        current_table.setText("Bord: "+table.getID());
+        String current_table_number = "Bord: " + table.getID();
+        current_table.setText(current_table_number);
 
         // IF ORDER IS ALREADY STARTED
         if(getIntent().getSerializableExtra("Order") != null) {
@@ -114,7 +116,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         button_back.setOnClickListener(v -> startActivity(activity_booking));
 
         // DROPDOWN
-        spinner_order = findViewById(R.id.order_spinner);
+        Spinner spinner_order = findViewById(R.id.order_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ratter, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_order.setAdapter(adapter);
@@ -157,6 +159,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
                 break;
         }
     }
+
     public void onNothingSelected(AdapterView<?> parent) {
         //Toast.makeText(getApplicationContext(),"OnNothingSelected" , Toast.LENGTH_LONG).show();
     }
@@ -174,7 +177,48 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         }
         return R.color.black;
     }
-    public void onItemButtonPress(Item item){
+
+    /**
+     * Creates a new VIEW containing a pop-up window for the user to write a note to an item.
+     * @param item The item to add the note to.
+     * @param button The button that was pressed.
+     * @return returns true as event has been handled
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    public boolean onItemHoldPress(Item item, Button button) {
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View parent = this.getWindow().findViewById(android.R.id.content);
+        View popupView = inflater.inflate(R.layout.popup_add_note, (ViewGroup) parent, false);
+        EditText note_user = popupView.findViewById(R.id.popup_add_note);
+        TextView title_text = popupView.findViewById(R.id.note_title);
+        Button button_add_note = popupView.findViewById(R.id.button_add_note);
+        String title = "Notering till beställning \"" + item.getName() + "\".";
+
+        // CREATE THE POPUP WINDOW
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+        // SHOW THE POPUP WINDOW
+        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+
+        // SHOW TITLE
+        title_text.setText(title);
+
+        // ON BUTTON PRESS, SET NOTE AND DISMISS VIEW
+        button_add_note.setOnClickListener(v -> {
+            item.setNote(note_user.getText().toString());
+            popupWindow.dismiss();
+        });
+
+        // PROCEED AS REGULAR WITH onItemButtonPress
+        onItemButtonPress(item, button);
+        return true; // EVENT HAS BEEN HANDLED
+    }
+
+    @SuppressLint("UseCompatLoadingForColorStateLists")
+    public void onItemButtonPress(Item item, Button button){
         order.add(item);
+        button.setBackgroundTintList(getResources().getColorStateList(R.color.appBlue));
+        item.resetNote(); // RESET NOTE
     }
 }

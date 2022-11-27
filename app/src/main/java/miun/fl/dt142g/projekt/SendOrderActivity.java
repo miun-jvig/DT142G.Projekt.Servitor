@@ -19,11 +19,8 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class SendOrderActivity extends AppCompatActivity {
-    private Button button_back;
     private TextView text;
     private LinearLayout mLayout;
-    Table table;
-    ArrayList<Item> order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +29,11 @@ public class SendOrderActivity extends AppCompatActivity {
 
         // LISTVIEW
         ListView list = (ListView) findViewById(R.id.listView_order);
-        order = (ArrayList<Item>) getIntent().getSerializableExtra("Order");
+        ArrayList<Item> order = (ArrayList<Item>) getIntent().getSerializableExtra("Order");
         list.setAdapter(new OrderListAdapter(this, order));
 
         // INFO ABOUT TABLE
-        table = (Table) getIntent().getSerializableExtra("Table");
+        Table table = (Table) getIntent().getSerializableExtra("Table");
         TextView current_table = findViewById(R.id.booking_current_table);
         current_table.setText("Bord: "+table.getID());
 
@@ -44,7 +41,7 @@ public class SendOrderActivity extends AppCompatActivity {
         Intent activity_order = new Intent(this, OrderActivity.class);
         activity_order.putExtra("Table", table);
         activity_order.putExtra("Order", order);
-        button_back = findViewById(R.id.button_back_listOfOrder);
+        Button button_back = findViewById(R.id.button_back_listOfOrder);
         button_back.setOnClickListener(view -> startActivity(activity_order));
     }
 }

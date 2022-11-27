@@ -40,4 +40,7 @@
     </string-array>
     <string name="send_order">Skicka beställning</string>
     <string name="order">Beställning</string>
+    <!-- POP UP -->
+    <string name="pop_up_hint">Ange notering...</string>
+    <string name="pop_up_ok_button">Lägg till notering!</string>
 </resources>

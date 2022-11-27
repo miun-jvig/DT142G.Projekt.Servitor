@@ -48,8 +48,8 @@ public class LogInActivity extends AppCompatActivity {
 
     /**
      *  Function to log in only once using SharedPreferences.
-     * @param - List of all personal numbers taken from a database
-     * @param - A SharedPreference containing a value, whether or not user has logged in previously
+     * @param all_employees List of all personal numbers taken from a database
+     * @param settings A SharedPreference containing a value, whether or not user has logged in previously
      */
     public void log_in(ArrayList<String> all_employees, SharedPreferences settings){
         settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);

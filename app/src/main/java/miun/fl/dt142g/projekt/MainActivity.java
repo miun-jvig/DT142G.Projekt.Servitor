@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    private Button button_servitor;
-    private Button button_kok;
 
     /**
      * on startup
@@ -22,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
         Intent activity_tables = new Intent(this, TablesActivity.class);
 
-        button_servitor = findViewById(R.id.button_servitor);
-        button_kok = findViewById(R.id.button_kok);
+        Button button_servitor = findViewById(R.id.button_servitor);
+        Button button_kok = findViewById(R.id.button_kok);
 
         button_servitor.setOnClickListener(v -> startActivity(activity_tables));
     }
