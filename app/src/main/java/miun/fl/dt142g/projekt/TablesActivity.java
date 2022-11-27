@@ -52,7 +52,7 @@ public class TablesActivity extends AppCompatActivity {
 
         Intent activity_back = new Intent(this, MainActivity.class);
         button_back = findViewById(R.id.button_back);
-        button_back.setOnClickListener(new SwitchActivity(activity_back));
+        button_back.setOnClickListener(v -> startActivity(activity_back));
     }
 
     public void onClick(@NonNull View view){

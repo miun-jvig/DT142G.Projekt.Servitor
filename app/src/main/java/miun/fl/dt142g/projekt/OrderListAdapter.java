@@ -32,12 +32,7 @@ public class OrderListAdapter extends ArrayAdapter<Item>{
         TextView textView2 = (TextView) rowView.findViewById(R.id.dish_price);
         TextView textView3 = (TextView) rowView.findViewById(R.id.dish_note);
         Button deleteButton = (Button) rowView.findViewById(R.id.delete_button);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                order.remove(position);
-            }
-        });
+        deleteButton.setOnClickListener(view -> order.remove(position));
         textView1.setText(order.get(position).getName());
         textView2.setText(Double.toString(order.get(position).getPrice())+"kr");
         textView3.setText("- "+order.get(position).getNote());

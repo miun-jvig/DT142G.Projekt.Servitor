@@ -78,7 +78,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         }
         // BACK ACTIVITY
         Intent activity_booking = new Intent(this, TablesActivity.class);
-        button_back.setOnClickListener(new SwitchActivity(activity_booking));
+        button_back.setOnClickListener(v -> startActivity(activity_booking));
 
         // DROPDOWN
         spinner_order = findViewById(R.id.order_spinner);

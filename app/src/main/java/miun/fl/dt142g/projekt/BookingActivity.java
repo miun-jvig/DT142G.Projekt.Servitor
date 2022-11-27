@@ -113,6 +113,6 @@ public class BookingActivity extends AppCompatActivity {
 
         // Back button
         Intent activity_tables = new Intent(this, TablesActivity.class);
-        button_back.setOnClickListener(new SwitchActivity(activity_tables));
+        button_back.setOnClickListener(v -> startActivity(activity_tables));
     }
 }

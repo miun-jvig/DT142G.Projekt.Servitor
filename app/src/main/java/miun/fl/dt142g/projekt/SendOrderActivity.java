@@ -45,11 +45,6 @@ public class SendOrderActivity extends AppCompatActivity {
         activity_order.putExtra("Table", table);
         activity_order.putExtra("Order", order);
         button_back = findViewById(R.id.button_back_listOfOrder);
-        button_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(activity_order);
-            }
-        });
+        button_back.setOnClickListener(view -> startActivity(activity_order));
     }
 }
