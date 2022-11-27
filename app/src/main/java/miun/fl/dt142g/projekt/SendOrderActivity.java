@@ -30,7 +30,7 @@ public class SendOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_order);
 
-        //ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_order_list_view, exampleData);
+        // LISTVIEW
         ListView list = (ListView) findViewById(R.id.listView_order);
         order = (ArrayList<Item>) getIntent().getSerializableExtra("Order");
         list.setAdapter(new OrderListAdapter(this, order));

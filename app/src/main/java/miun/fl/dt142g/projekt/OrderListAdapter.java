@@ -36,6 +36,7 @@ public class OrderListAdapter extends ArrayAdapter<Item>{
             @Override
             public void onClick(View view) {
                 order.remove(position);
+                notifyDataSetChanged();
             }
         });
         textView1.setText(order.get(position).getName());
