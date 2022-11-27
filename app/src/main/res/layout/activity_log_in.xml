@@ -26,7 +26,7 @@
         android:background="@drawable/edit_text_background"
         android:ems="10"
         android:hint="@string/log_in_username"
-        android:inputType="numberPassword"
+        android:inputType="number"
         android:minHeight="48dp"
         android:paddingStart="@dimen/padding_edit_text"
         android:paddingEnd="@dimen/padding_edit_text"

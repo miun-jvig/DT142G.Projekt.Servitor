@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent activity_log_in = new Intent(this, LogInActivity.class);
+        Intent activity_log_in = new Intent(this, TablesActivity.class);
 
         button_servitor = findViewById(R.id.button_servitor);
         button_kok = findViewById(R.id.button_kok);

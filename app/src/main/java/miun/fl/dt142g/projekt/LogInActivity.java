@@ -24,7 +24,7 @@ public class LogInActivity extends AppCompatActivity {
         // TEMP, IMAGINE PERSONAL NUMBER IS FROM SQL
         ArrayList<String> all_employees = new ArrayList<>();
         String temp_personal_joel = "199408175397";
-        String temp_personal_alex = "";
+        String temp_personal_alex = "1337";
         all_employees.add(temp_personal_alex);
         all_employees.add(temp_personal_joel);
 
@@ -37,20 +37,23 @@ public class LogInActivity extends AppCompatActivity {
 
     public void log_in(ArrayList<String> all_employees){
         SharedPreferences pref = getSharedPreferences("Activity", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edt = pref.edit();
+        edt.putBoolean("log_in_success", false);
+        edt.apply();
         String user_input = user_input_pn.getText().toString();
         String error_msg = "Personnumret \"" + user_input + "\" finns ej. Kontakta Anders!";
         Intent activity_main = new Intent(this, MainActivity.class);
         // CHECK IF PERSONAL NUMBER EXISTS IN DB
         for(String pn : all_employees){
-            if(!user_input.equals(pn)){
-                SharedPreferences.Editor edt = pref.edit();
-                edt.putBoolean("log_in_success", false);
+            if(user_input.equals(pn)){
+                edt.putBoolean("log_in_success", true);
                 edt.apply();
+                startActivity(activity_main);
             }
         }
 
         if(pref.getBoolean("log_in_success", true)){
-            startActivity(activity_main);
+            log_in_error_msg.setText("");
         }
         else{
             log_in_error_msg.setText(error_msg);
