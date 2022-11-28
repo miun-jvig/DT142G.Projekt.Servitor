@@ -110,19 +110,26 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
      */
     public void createTableRowTableButtons(ArrayList<Item> allItems){
         TableLayout tableLayout = findViewById(R.id.table_layout);
+        // REMOVES ALL BUTTONS ON CALL TO MAKE DROPDOWN MENU WORK CORRECT
         tableLayout.removeAllViews();
 
         final int ROW_SIZE = 3;
         double temp = (double) allItems.size() / ROW_SIZE;
+        /* columnSize uses Math.ceil in case value of temp is a non-integer. In this case will
+        *  round up to create an additional row.
+        */
         double columnSize = Math.ceil(temp);
         int itemCounter = 0;
+        // WIDTH = THREE ITEMS
         final int WIDTH = getResources().getDisplayMetrics().widthPixels/3;
         final int HEIGHT = 400;
+        // PARAMETERS FOR THE TableRow
         TableRow.LayoutParams params = new TableRow.LayoutParams(WIDTH, HEIGHT);
 
+        // CREATE ROW
         for(int i = 0; i < columnSize; i++){
-            // CREATE ROW
             TableRow tableRow = new TableRow(this);
+            // CREATE BUTTONS IN ROW
             for(int j = 0; j < ROW_SIZE; j++) {
                 if(itemCounter < allItems.size()) {
                     // VARIABLES
