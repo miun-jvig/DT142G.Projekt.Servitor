@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,18 +20,14 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.Comparator;
 
 public class OrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    Table table;
-    ArrayList<Item> order = new ArrayList<>();
-    String chosenCategory;
-    Spinner spinner_order;
+    private Table table;
+    private ArrayList<Item> order = new ArrayList<>();
+    private final ArrayList<Item> allItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +49,6 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         Item monster = new Item("Monster", "Sockerfri Monster", "beverage", 34.90, 11);
         Item beer = new Item("Öl", "Gärna avslagen öl", "beverage", 79.90, 12);
 
-        Stack<Item> allItems = new Stack<>();
         allItems.add(tartar);
         allItems.add(chips);
         allItems.add(wings);
@@ -67,45 +61,19 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         allItems.add(sprite);
         allItems.add(monster);
         allItems.add(beer);
-    //
-        /*
-        * If a category is selected, display only the dishes with that category
-        * */
-        if(getIntent().getSerializableExtra("chosenCategory") != null){
-            chosenCategory = (String)getIntent().getSerializableExtra("chosenCategory");
-        }
-        Stack<Item> dispItems = new Stack<>();
-        if(chosenCategory == null){
-            dispItems = allItems;
-        }
-        else {
-            for (Item i : allItems) {
-                if(i.getCategory().equals(chosenCategory)){
-                    dispItems.add(i);
-                }
-            }
-        }
-        /*
-        * Adds all items, styles them accordingly & connect every button with its own item.
-        * */
-        TableLayout layout = findViewById(R.id.TableLayout);
-        int added_items = 0;
-        while(!dispItems.empty() && added_items < 15){
-            Item item = dispItems.pop(); //Item to be added to the view
-            TableRow row = (TableRow)layout.getChildAt((added_items)/3); //The row for the item to be added to
-            Button button = (Button)row.getChildAt((added_items)%3); //The cell the item will be added to
-            String text = item.getName()+"\n"+item.getPrice()+":-";
 
-            // ON BUTTON PRESS, ADD TO ORDER
-            button.setOnClickListener(v -> onItemButtonPress(item, button));
-            // ON BUTTON HOLD, LET USER CREATE NOTE THEN ADD TO ORDER
-            button.setOnLongClickListener(v -> onItemHoldPress(item, button));
-        // Makes the buttons visible and styles it accordingly
-            button.setVisibility(View.VISIBLE);
-            button.setBackgroundColor(getResources().getColor(getColorFromCategory(item.getCategory())));
-            button.setText(text);
-            added_items++;
-        }
+        // CREATE THE ORDER VIEW
+        // Comparator that compares two items categories
+        Comparator<? super Item> comparator = (Comparator<Item>) (item1, item2) -> {
+            String category1 = item1.getCategory();
+            String category2 = item2.getCategory();
+            return category1.compareTo(category2);
+        };
+        // Sort allItems to be able to add new items, this will add it in order according to category
+        Collections.sort(allItems, comparator);
+
+
+        createTableRowTableButtons(allItems);
 
         // INFO ABOUT TABLE
         table = (Table) getIntent().getSerializableExtra("Table");
@@ -115,7 +83,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
         // IF ORDER IS ALREADY STARTED
         if(getIntent().getSerializableExtra("Order") != null) {
-        ArrayList<Item> oldOrder = (ArrayList<Item>) getIntent().getSerializableExtra("Order");
+            ArrayList<Item> oldOrder = (ArrayList<Item>) getIntent().getSerializableExtra("Order");
             order = oldOrder;
         }
         // BACK ACTIVITY
@@ -123,59 +91,113 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         button_back.setOnClickListener(v -> startActivity(activity_booking));
 
         // DROPDOWN
-        spinner_order = findViewById(R.id.order_spinner);
+        Spinner spinner_order = findViewById(R.id.order_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ratter, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_order.setAdapter(adapter);
-        spinner_order.setSelected(false);
-        spinner_order.setSelection(0, false);
         spinner_order.setOnItemSelectedListener(this);
     }
 
-    public void putExtra(Intent intent){
-        intent.putExtra("Table", table);
-        intent.putExtra("Order", order);
+    /**
+     * Creates TableRows with the length 3 (ROW_SIZE) and fill the TableRows with Buttons. The
+     * buttons will have a functionality on item press to add an item to Order, and on button hold
+     * add a comment to an item and then add it to Order.
+     *
+     * Also used in onItemSelected().
+     * @param allItems List of all the items/dishes that are available. Taken from database.
+     */
+    public void createTableRowTableButtons(ArrayList<Item> allItems){
+        TableLayout tableLayout = findViewById(R.id.table_layout);
+        tableLayout.removeAllViews();
+
+        final int ROW_SIZE = 3;
+        double temp = (double) allItems.size() / ROW_SIZE;
+        double columnSize = Math.ceil(temp);
+        int itemCounter = 0;
+        final int width = getResources().getDisplayMetrics().widthPixels/3;
+        final int height = 400;
+        TableRow.LayoutParams params = new TableRow.LayoutParams(width, height);
+
+        for(int i = 0; i < columnSize; i++){
+            // CREATE ROW
+            TableRow tableRow = new TableRow(this);
+            for(int j = 0; j < ROW_SIZE; j++) {
+                if(itemCounter < allItems.size()) {
+                    // VARIABLES
+                    Item item = allItems.get(itemCounter++);
+                    String text = item.getName() + "\n" + item.getPrice() + ":-";
+                    int color = getResources().getColor(getColorFromCategory(item.getCategory()));
+                    // CREATES BUTTON
+                    Button button = new Button(this);
+                    button.setText(text);
+                    button.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    button.setTextSize(12);
+                    button.setBackgroundColor(color);
+                    button.setLayoutParams(params);
+                    tableRow.addView(button);
+
+                    // ON BUTTON PRESS, ADD TO ORDER
+                    button.setOnClickListener(v -> onItemButtonPress(item, button));
+                    // ON BUTTON HOLD, LET USER CREATE NOTE THEN ADD TO ORDER
+                    button.setOnLongClickListener(v -> onItemHoldPress(item, button));
+                }
+            }
+            tableLayout.addView(tableRow);
+        }
     }
 
+    /**
+     * Checks the value of the selected item in dropdown menu of the spinner. If "Beställning", then
+     * send to activity_sendOrder. If "Vanliga rätter" then show all items in the TableLayout. If any
+     * other then show that specific category only.
+     * @param parent Parent of the spinner.
+     * @param view Current view.
+     * @param pos Position of the mouse.
+     * @param id Spinner ID.
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         String selected = (String) parent.getItemAtPosition(pos);
-        Intent activity_order = new Intent(this, OrderActivity.class);
+        String category = getTypeOfFood(selected);
+        Intent activity_sendOrder = new Intent(this, SendOrderActivity.class);
+
         switch(selected){
-            case "Förrätter":
-                activity_order.putExtra("chosenCategory", "starter");
-                activity_order.putExtra("Table", table);
-                activity_order.putExtra("Order", order);
-                startActivity(activity_order);
-                break;
-            case "Varmrätter":
-                activity_order.putExtra("chosenCategory", "main");
-                activity_order.putExtra("Table", table);
-                activity_order.putExtra("Order", order);
-                startActivity(activity_order);
-                break;
-            case "Efterrätter":
-                activity_order.putExtra("chosenCategory", "dessert");
-                activity_order.putExtra("Table", table);
-                activity_order.putExtra("Order", order);
-                startActivity(activity_order);
-                break;
-            case "Dryck":
-                activity_order.putExtra("chosenCategory", "beverage");
-                activity_order.putExtra("Table", table);
-                activity_order.putExtra("Order", order);
-                startActivity(activity_order);
-                break;
             case "Beställning":
-                Intent activity_sendOrder = new Intent(this, SendOrderActivity.class);
                 activity_sendOrder.putExtra("Table", table);
                 activity_sendOrder.putExtra("Order", order);
                 startActivity(activity_sendOrder);
                 break;
+            case "Vanliga rätter":
+                createTableRowTableButtons(this.allItems);
+                break;
+            default:
+                ArrayList<Item> itemsWithSelectedCategory = new ArrayList<>();
+                for(Item i : this.allItems) {
+                    String tmp = i.getCategory();
+                    if (tmp.equals(category)) {
+                        itemsWithSelectedCategory.add(i);
+                    }
+                }
+                createTableRowTableButtons(itemsWithSelectedCategory);
         }
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
         //Toast.makeText(getApplicationContext(),"OnNothingSelected" , Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Translates from Swedish to English.
+     * @param selected Selected option of the spinner dropdown menu.
+     * @return The name of the category of food in English.
+     */
+    String getTypeOfFood(String selected){
+        switch(selected){
+            case "Förrätter":         return "starter";
+            case "Varmrätter":        return "main";
+            case "Efterrätter":       return "dessert";
+            case "Dryck":             return "beverage";
+        }
+        return "Vanliga rätter";
     }
 
     public int getColorFromCategory(String cat){

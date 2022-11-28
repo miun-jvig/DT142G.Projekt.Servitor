@@ -10,9 +10,8 @@
         android:id="@+id/topbarLayout"
         android:layout_width="409dp"
         android:layout_height="57dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
         android:background="@color/appBlue"
+        app:layout_constraintBottom_toTopOf="@+id/scroll_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,107 +59,22 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TableLayout
-        android:id="@+id/TableLayout"
-        android:layout_width="410dp"
-        android:layout_height="704dp"
-        android:layout_marginTop="60dp"
+    <ScrollView
+        android:id="@+id/scroll_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topbarLayout"
-        >
+        tools:ignore="SpeakableTextPresentCheck">
 
-        <TableRow
-            android:id="@+id/TableRow_1"
+        <TableLayout
+            android:id="@+id/table_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:id="@+id/button_order_r1p1"
-                style="@style/foodButtons"/>
-
-            <Button
-                android:id="@+id/button_order_r1p2"
-                style="@style/foodButtons" />
-
-            <Button
-                android:id="@+id/button_order_r1p3"
-                style="@style/foodButtons"/>
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/TableRow_2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/button_order_r2p1"
-                style="@style/foodButtons"/>
-
-            <Button
-                android:id="@+id/button_order_r2p2"
-                style="@style/foodButtons"/>
-
-            <Button
-                android:id="@+id/button_order_r2p3"
-                style="@style/foodButtons"/>
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/TableRow_3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/button_order_r3p1"
-                style="@style/foodButtons"/>
-
-            <Button
-                android:id="@+id/button_order_r3p2"
-                style="@style/foodButtons"/>
-
-            <Button
-                android:id="@+id/button_order_r3p3"
-                style="@style/foodButtons"/>
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/TableRow_4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/button_order_r4p1"
-                style="@style/foodButtons"/>
-
-            <Button
-                android:id="@+id/button_order_r4p2"
-                style="@style/foodButtons"/>
-
-            <Button
-                android:id="@+id/button_order_r4p3"
-                style="@style/foodButtons"/>
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/TableRow_5"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/button_order_r5p1"
-                style="@style/foodButtons"/>
-
-            <Button
-                android:id="@+id/button_order_r5p2"
-                style="@style/foodButtons"/>
-
-            <Button
-                android:id="@+id/button_order_r5p3"
-                style="@style/foodButtons"/>
-        </TableRow>
-    </TableLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="577dp" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
