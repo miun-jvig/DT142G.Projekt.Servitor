@@ -116,9 +116,9 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         double temp = (double) allItems.size() / ROW_SIZE;
         double columnSize = Math.ceil(temp);
         int itemCounter = 0;
-        final int width = getResources().getDisplayMetrics().widthPixels/3;
-        final int height = 400;
-        TableRow.LayoutParams params = new TableRow.LayoutParams(width, height);
+        final int WIDTH = getResources().getDisplayMetrics().widthPixels/3;
+        final int HEIGHT = 400;
+        TableRow.LayoutParams params = new TableRow.LayoutParams(WIDTH, HEIGHT);
 
         for(int i = 0; i < columnSize; i++){
             // CREATE ROW
