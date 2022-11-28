@@ -71,8 +71,10 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         };
         // Sort allItems to be able to add new items, this will add it in order according to category
         Collections.sort(allItems, comparator);
-
-
+        /* Creates TableRows with the length 3 (ROW_SIZE) and fill the TableRows with Buttons. The
+        * buttons will have a functionality on item press to add an item to Order, and on button hold
+        * add a comment to an item and then add it to Order. Also used in onItemSelected().
+        */
         createTableRowTableButtons(allItems);
 
         // INFO ABOUT TABLE
