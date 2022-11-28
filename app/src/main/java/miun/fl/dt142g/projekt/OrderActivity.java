@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,12 +23,16 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 public class OrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Table table;
     ArrayList<Item> order = new ArrayList<>();
     String chosenCategory;
+    Spinner spinner_order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +96,9 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
             Button button = (Button)row.getChildAt((added_items)%3); //The cell the item will be added to
             String text = item.getName()+"\n"+item.getPrice()+":-";
 
+            // ON BUTTON PRESS, ADD TO ORDER
             button.setOnClickListener(v -> onItemButtonPress(item, button));
+            // ON BUTTON HOLD, LET USER CREATE NOTE THEN ADD TO ORDER
             button.setOnLongClickListener(v -> onItemHoldPress(item, button));
         // Makes the buttons visible and styles it accordingly
             button.setVisibility(View.VISIBLE);
@@ -116,11 +123,18 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         button_back.setOnClickListener(v -> startActivity(activity_booking));
 
         // DROPDOWN
-        Spinner spinner_order = findViewById(R.id.order_spinner);
+        spinner_order = findViewById(R.id.order_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ratter, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_order.setAdapter(adapter);
+        spinner_order.setSelected(false);
+        spinner_order.setSelection(0, false);
         spinner_order.setOnItemSelectedListener(this);
+    }
+
+    public void putExtra(Intent intent){
+        intent.putExtra("Table", table);
+        intent.putExtra("Order", order);
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -198,6 +212,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
         // SHOW THE POPUP WINDOW
         popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 
