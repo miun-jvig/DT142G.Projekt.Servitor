@@ -18,11 +18,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent activity_tables = new Intent(this, TablesActivity.class);
+        Intent activityTables = new Intent(this, TablesActivity.class);
 
-        Button button_servitor = findViewById(R.id.button_servitor);
-        Button button_kok = findViewById(R.id.button_kok);
+        Button buttonServitor = findViewById(R.id.button_servitor);
+        Button buttonKok = findViewById(R.id.button_kok);
 
-        button_servitor.setOnClickListener(v -> startActivity(activity_tables));
+        buttonServitor.setOnClickListener(v -> startActivity(activityTables));
     }
 }

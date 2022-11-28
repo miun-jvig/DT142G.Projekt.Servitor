@@ -33,7 +33,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-        Button button_back = findViewById(R.id.button_back_order);
+        Button buttonBack = findViewById(R.id.button_back_order);
 
     // Temporary exampledishes until SQL is implemented - Will be replaced with something like getAllDishes ...
         Item tartar = new Item("Halstrad tartar", "Lättstekt", "starter", 79.90, 1);
@@ -79,9 +79,9 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
         // INFO ABOUT TABLE
         table = (Table) getIntent().getSerializableExtra("Table");
-        TextView current_table = findViewById(R.id.order_current_table);
-        String current_table_number = "Bord: " + table.getID();
-        current_table.setText(current_table_number);
+        TextView currentTable = findViewById(R.id.order_current_table);
+        String currentTableNumber = "Bord: " + table.getID();
+        currentTable.setText(currentTableNumber);
 
         // IF ORDER IS ALREADY STARTED
         if(getIntent().getSerializableExtra("Order") != null) {
@@ -89,15 +89,15 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
             order = oldOrder;
         }
         // BACK ACTIVITY
-        Intent activity_booking = new Intent(this, TablesActivity.class);
-        button_back.setOnClickListener(v -> startActivity(activity_booking));
+        Intent activityBooking = new Intent(this, TablesActivity.class);
+        buttonBack.setOnClickListener(v -> startActivity(activityBooking));
 
         // DROPDOWN
-        Spinner spinner_order = findViewById(R.id.order_spinner);
+        Spinner spinnerOrder = findViewById(R.id.order_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ratter, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_order.setAdapter(adapter);
-        spinner_order.setOnItemSelectedListener(this);
+        spinnerOrder.setAdapter(adapter);
+        spinnerOrder.setOnItemSelectedListener(this);
     }
 
     /**
@@ -118,16 +118,17 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         /* columnSize uses Math.ceil in case value of temp is a non-integer. In this case will
         *  round up to create an additional row.
         */
-        double columnSize = Math.ceil(temp);
+        final double COLUMN_SIZE = Math.ceil(temp);
         int itemCounter = 0;
         // WIDTH = THREE ITEMS
         final int WIDTH = getResources().getDisplayMetrics().widthPixels/3;
         final int HEIGHT = 400;
-        // PARAMETERS FOR THE TableRow
+        final int TEXT_SIZE = 12;
+        // PARAMETERS FOR THE Button
         TableRow.LayoutParams params = new TableRow.LayoutParams(WIDTH, HEIGHT);
 
         // CREATE ROW
-        for(int i = 0; i < columnSize; i++){
+        for(int i = 0; i < COLUMN_SIZE; i++){
             TableRow tableRow = new TableRow(this);
             // CREATE BUTTONS IN ROW
             for(int j = 0; j < ROW_SIZE; j++) {
@@ -140,7 +141,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
                     Button button = new Button(this);
                     button.setText(text);
                     button.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    button.setTextSize(12);
+                    button.setTextSize(TEXT_SIZE);
                     button.setBackgroundColor(color);
                     button.setLayoutParams(params);
                     tableRow.addView(button);
@@ -167,13 +168,13 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         String selected = (String) parent.getItemAtPosition(pos);
         String category = getTypeOfFood(selected);
-        Intent activity_sendOrder = new Intent(this, SendOrderActivity.class);
+        Intent activitySendOrder = new Intent(this, SendOrderActivity.class);
 
         switch(selected){
             case "Beställning":
-                activity_sendOrder.putExtra("Table", table);
-                activity_sendOrder.putExtra("Order", order);
-                startActivity(activity_sendOrder);
+                activitySendOrder.putExtra("Table", table);
+                activitySendOrder.putExtra("Order", order);
+                startActivity(activitySendOrder);
                 break;
             case "Vanliga rätter":
                 createTableRowTableButtons(this.allItems);
@@ -187,6 +188,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
                     }
                 }
                 createTableRowTableButtons(itemsWithSelectedCategory);
+                break;
         }
     }
 
@@ -211,14 +213,10 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
     public int getColorFromCategory(String cat){
         switch(cat){
-            case "starter":
-                return R.color.foodYellow;
-            case "main":
-                return R.color.foodBlue;
-            case "dessert":
-                return R.color.foodPurple;
-            case "beverage":
-                return R.color.foodGreen;
+            case "starter":            return R.color.foodYellow;
+            case "main":               return R.color.foodBlue;
+            case "dessert":            return R.color.foodPurple;
+            case "beverage":           return R.color.foodGreen;
         }
         return R.color.black;
     }
@@ -234,25 +232,25 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View parent = this.getWindow().findViewById(android.R.id.content);
         View popupView = inflater.inflate(R.layout.popup_add_note, (ViewGroup) parent, false);
-        EditText note_user = popupView.findViewById(R.id.popup_add_note);
-        TextView title_text = popupView.findViewById(R.id.note_title);
-        Button button_add_note = popupView.findViewById(R.id.button_add_note);
+        EditText noteUser = popupView.findViewById(R.id.popup_add_note);
+        TextView titleText = popupView.findViewById(R.id.note_title);
+        Button buttonAddNote = popupView.findViewById(R.id.button_add_note);
         String title = "Notering till beställning \"" + item.getName() + "\".";
 
         // CREATE THE POPUP WINDOW
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+        final int WIDTH = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final int HEIGHT = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final PopupWindow popupWindow = new PopupWindow(popupView, WIDTH, HEIGHT, true);
 
         // SHOW THE POPUP WINDOW
         popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 
         // SHOW TITLE
-        title_text.setText(title);
+        titleText.setText(title);
 
         // ON BUTTON PRESS, SET NOTE AND DISMISS VIEW
-        button_add_note.setOnClickListener(v -> {
-            item.setNote(note_user.getText().toString());
+        buttonAddNote.setOnClickListener(v -> {
+            item.setNote(noteUser.getText().toString());
             popupWindow.dismiss();
         });
 

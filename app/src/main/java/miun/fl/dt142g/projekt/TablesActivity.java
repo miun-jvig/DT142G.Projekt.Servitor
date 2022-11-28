@@ -35,20 +35,20 @@ public class TablesActivity extends AppCompatActivity {
         table1.setStatus(true);
         table3.setStatus(true);
 
-        ArrayList<Table> all_tables = new ArrayList<>(); // all bookings for the date to be added to this
-        all_tables.add(table1); // acting as added from SQL
-        all_tables.add(table3); // acting as added from SQL
+        ArrayList<Table> allTables = new ArrayList<>(); // all bookings for the date to be added to this
+        allTables.add(table1); // acting as added from SQL
+        allTables.add(table3); // acting as added from SQL
 
-        for(Table table : all_tables){
+        for(Table table : allTables){
             Button tmp;
-            int button_identifier = getResources().getIdentifier("button_table" + table.getID(), "id", getPackageName());
-            tmp = findViewById(button_identifier);
+            int buttonIdentifier = getResources().getIdentifier("button_table" + table.getID(), "id", getPackageName());
+            tmp = findViewById(buttonIdentifier);
             tmp.setBackgroundResource(R.drawable.selected_table);
         }
 
-        Intent activity_back = new Intent(this, MainActivity.class);
-        Button button_back = findViewById(R.id.button_back);
-        button_back.setOnClickListener(v -> startActivity(activity_back));
+        Intent activityBack = new Intent(this, MainActivity.class);
+        Button buttonBack = findViewById(R.id.button_back);
+        buttonBack.setOnClickListener(v -> startActivity(activityBack));
     }
 
     public void onClick(@NonNull View view){
@@ -78,18 +78,18 @@ public class TablesActivity extends AppCompatActivity {
     }
 
     public void switchActivityIfBooked(Table table){
-        Intent activity_booking = new Intent(this, BookingActivity.class);
-        Intent activity_order = new Intent(this, OrderActivity.class);
-        activity_order.putExtra("Table", table);
-        activity_booking.putExtra("Table", table);
+        Intent activityBooking = new Intent(this, BookingActivity.class);
+        Intent activityOrder = new Intent(this, OrderActivity.class);
+        activityOrder.putExtra("Table", table);
+        activityBooking.putExtra("Table", table);
 
         View view = this.getWindow().findViewById(android.R.id.content);
 
         if(table.getStatus()){
-            view.getContext().startActivity(activity_order);
+            view.getContext().startActivity(activityOrder);
         }
         else{
-            view.getContext().startActivity(activity_booking);
+            view.getContext().startActivity(activityBooking);
         }
     }
 }

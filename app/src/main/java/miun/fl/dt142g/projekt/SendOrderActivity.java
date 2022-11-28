@@ -34,14 +34,14 @@ public class SendOrderActivity extends AppCompatActivity {
 
         // INFO ABOUT TABLE
         Table table = (Table) getIntent().getSerializableExtra("Table");
-        TextView current_table = findViewById(R.id.booking_current_table);
-        current_table.setText("Bord: "+table.getID());
+        TextView currentTable = findViewById(R.id.booking_current_table);
+        currentTable.setText("Bord: "+table.getID());
 
         // Back button
-        Intent activity_order = new Intent(this, OrderActivity.class);
-        activity_order.putExtra("Table", table);
-        activity_order.putExtra("Order", order);
-        Button button_back = findViewById(R.id.button_back_listOfOrder);
-        button_back.setOnClickListener(view -> startActivity(activity_order));
+        Intent activityOrder = new Intent(this, OrderActivity.class);
+        activityOrder.putExtra("Table", table);
+        activityOrder.putExtra("Order", order);
+        Button buttonBack = findViewById(R.id.button_back_listOfOrder);
+        buttonBack.setOnClickListener(view -> startActivity(activityOrder));
     }
 }
