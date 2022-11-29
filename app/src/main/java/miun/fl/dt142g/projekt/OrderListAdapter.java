@@ -39,8 +39,10 @@ public class OrderListAdapter extends ArrayAdapter<Order>{
         String price = Double.toString(orderList.get(position).getDish().getCarte().getPrice())+"kr";
         textView2.setText(price);
 
-        String note = ("- "+orderList.get(position).getNote());
-        textView3.setText(note);
+        if(orderList.get(position).getNote() != null) {
+            String note = ("- " + orderList.get(position).getNote());
+            textView3.setText(note);
+        }
         return rowView;
     }
 }
