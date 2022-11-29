@@ -153,8 +153,8 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         final double COLUMN_SIZE = Math.ceil(temp);
         int itemCounter = 0;
         // WIDTH = THREE ITEMS
-        final int WIDTH = getResources().getDisplayMetrics().widthPixels/3;
-        final int HEIGHT = 400;
+        final int WIDTH = getResources().getDisplayMetrics().widthPixels/ROW_SIZE;
+        final int HEIGHT = WIDTH;
         final int TEXT_SIZE = 12;
         // PARAMETERS FOR THE Button
         TableRow.LayoutParams params = new TableRow.LayoutParams(WIDTH, HEIGHT);
@@ -268,11 +268,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         TextView titleText = popupView.findViewById(R.id.note_title);
         Button buttonAddNote = popupView.findViewById(R.id.button_add_note);
         String title = "Notering till beställning \"" + item.getName() + "\".";
-        Order order = new Order();
-        order.setEmployee(employee);
-        order.setBooking(booking);
-        order.setDish(item);
-        order.setStatus(false);
+        Order order = createOrder(item);
 
         // CREATE THE POPUP WINDOW
         final int WIDTH = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -284,7 +280,6 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
         // SHOW TITLE
         titleText.setText(title);
-
 
         // ON BUTTON PRESS, SET NOTE AND DISMISS VIEW
         buttonAddNote.setOnClickListener(v -> {
@@ -300,12 +295,17 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
     @SuppressLint("UseCompatLoadingForColorStateLists")
     public void onItemButtonPress(Dish item, Button button){
+        Order order = createOrder(item);
+        orderList.add(order);
+        button.setBackgroundTintList(getResources().getColorStateList(R.color.appBlue));
+    }
+
+    public Order createOrder(Dish item){
         Order order = new Order();
         order.setEmployee(employee);
         order.setBooking(booking);
         order.setStatus(false);
         order.setDish(item);
-        orderList.add(order);
-        button.setBackgroundTintList(getResources().getColorStateList(R.color.appBlue));
+        return order;
     }
 }

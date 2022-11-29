@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -74,7 +73,7 @@ public class TablesActivity extends AppCompatActivity {
         }
 
         Intent activityBack = new Intent(this, MainActivity.class);
-        Button buttonBack = findViewById(R.id.button_back);
+        Button buttonBack = findViewById(R.id.button_back_summary);
         buttonBack.setOnClickListener(v -> startActivity(activityBack));
     }
 }
