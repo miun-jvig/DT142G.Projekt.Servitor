@@ -19,8 +19,10 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class SendOrderActivity extends AppCompatActivity {
+    private Button button_back;
     private TextView text;
     private LinearLayout mLayout;
+    Table table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

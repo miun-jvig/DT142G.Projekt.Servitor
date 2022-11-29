@@ -9,8 +9,20 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import miun.fl.dt142g.projekt.json.Employee;
+import miun.fl.dt142g.projekt.json.EmployeeAPI;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LogInActivity extends AppCompatActivity {
     private Button buttonLogIn;
@@ -32,26 +44,18 @@ public class LogInActivity extends AppCompatActivity {
             startActivity(activityMain);
         }
 
-        // TEMP, IMAGINE PERSONAL NUMBER IS FROM SQL
-        ArrayList<String> allEmployees = new ArrayList<>();
-        String tempPersonalJoel = "199408175397";
-        String tempPersonalAlex = "1337";
-        allEmployees.add(tempPersonalAlex);
-        allEmployees.add(tempPersonalJoel);
-
         // VIEWS
         buttonLogIn = findViewById(R.id.button_log_in);
         logInErrorMsg = findViewById(R.id.log_in_error);
         userInputPn = findViewById(R.id.edit_personal_number);
-        buttonLogIn.setOnClickListener(v -> log_in(allEmployees, settings));
+        buttonLogIn.setOnClickListener(v -> log_in(settings));
     }
 
     /**
      *  Function to log in only once using SharedPreferences.
-     * @param allEmployees List of all personal numbers taken from a database
      * @param settings A SharedPreference containing a value, whether or not user has logged in previously
      */
-    public void log_in(ArrayList<String> allEmployees, SharedPreferences settings){
+    public void log_in(SharedPreferences settings){
         settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(PREFS_NAME, false); // default value false
@@ -59,22 +63,43 @@ public class LogInActivity extends AppCompatActivity {
         String userInput = userInputPn.getText().toString();
         String errorMsg = "Personnumret \"" + userInput + "\" finns ej. Kontakta Anders!";
         Intent activityMain = new Intent(this, MainActivity.class);
-        // CHECK IF PERSONAL NUMBER EXISTS IN DB
-        for(String pn : allEmployees){
-            if(userInput.equals(pn)){
-                editor.putBoolean(PREFS_NAME, true);
-                editor.apply();
-                startActivity(activityMain);
-                finish();
-            }
-        }
 
-        // CHANGES TEXT DEPENDING IF PERSONAL NUMBER DOES NOT EXIST
-        if(settings.getBoolean(PREFS_NAME, true)){
-            logInErrorMsg.setText("");
-        }
-        else{
-            logInErrorMsg.setText(errorMsg);
-        }
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(loggingInterceptor).build();
+
+
+        String samuel = "10.82.231.15";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://" + samuel + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        EmployeeAPI employeeAPI = retrofit.create(EmployeeAPI.class);
+        Call<List<Employee>> call = employeeAPI.getEmployeeWithId(userInput);
+        call.enqueue(new Callback<List<Employee>>() {
+            @Override
+            public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
+                if(!response.isSuccessful()) {
+                    // dåligt svar
+                    return;
+                }
+                List<Employee> employee = response.body();
+                if(!employee.isEmpty()) {
+                    editor.putBoolean(PREFS_NAME, true);
+                    editor.apply();
+                    startActivity(activityMain);
+                    finish();
+                }else{
+                    logInErrorMsg.setText(errorMsg);
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Employee>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Network error." , Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
