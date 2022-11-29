@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class Carte implements Serializable {
     private String category;
     private String description;
-    private Dish dish;
     private int price;
 
     public String getCategory() {
@@ -22,14 +21,6 @@ public class Carte implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Dish getDish() {
-        return dish;
-    }
-
-    public void setDish(Dish dish) {
-        this.dish = dish;
     }
 
     public int getPrice() {

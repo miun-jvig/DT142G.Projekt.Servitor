@@ -18,13 +18,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.Carte;
+import miun.fl.dt142g.projekt.json.Order;
 
 public class SendOrderActivity extends AppCompatActivity {
     private Button button_back;
     private TextView text;
     private LinearLayout mLayout;
-    Table table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,18 +33,19 @@ public class SendOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_send_order);
 
         // LISTVIEW
-        ListView list = (ListView) findViewById(R.id.listView_order);
-        ArrayList<Carte> order = (ArrayList<Carte>) getIntent().getSerializableExtra("Order");
+        ListView list = findViewById(R.id.listView_order);
+        ArrayList<Order> order = (ArrayList<Order>) getIntent().getSerializableExtra("Order");
         list.setAdapter(new OrderListAdapter(this, order));
 
         // INFO ABOUT TABLE
-        Table table = (Table) getIntent().getSerializableExtra("Table");
+        Booking booking = (Booking) getIntent().getSerializableExtra("Booking");
         TextView currentTable = findViewById(R.id.booking_current_table);
-        currentTable.setText("Bord: "+table.getID());
+        String currentTableNumber = "Bord: " + booking.getTableNumber();
+        currentTable.setText(currentTableNumber);
 
         // Back button
         Intent activityOrder = new Intent(this, OrderActivity.class);
-        activityOrder.putExtra("Table", table);
+        activityOrder.putExtra("Booking", booking);
         activityOrder.putExtra("Order", order);
         Button buttonBack = findViewById(R.id.button_back_listOfOrder);
         buttonBack.setOnClickListener(view -> startActivity(activityOrder));

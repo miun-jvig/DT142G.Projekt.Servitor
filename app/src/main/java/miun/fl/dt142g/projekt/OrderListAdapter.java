@@ -1,46 +1,46 @@
 package miun.fl.dt142g.projekt;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import miun.fl.dt142g.projekt.json.Carte;
+import miun.fl.dt142g.projekt.json.Order;
 
-public class OrderListAdapter extends ArrayAdapter<Carte>{
+public class OrderListAdapter extends ArrayAdapter<Order>{
 
     private final Context context;
-    private final ArrayList<Carte> order;
+    private final ArrayList<Order> orderList;
 
-    public OrderListAdapter(Context context, ArrayList<Carte> order) {
+    public OrderListAdapter(Context context, ArrayList<Order> order) {
         super(context, R.layout.activity_order_list_view, order);
         this.context = context;
-        this.order = order;
+        this.orderList = order;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.activity_order_list_view, parent, false);
-        TextView textView1 = (TextView) rowView.findViewById(R.id.dish_name);
-        TextView textView2 = (TextView) rowView.findViewById(R.id.dish_price);
-        TextView textView3 = (TextView) rowView.findViewById(R.id.dish_note);
-        Button deleteButton = (Button) rowView.findViewById(R.id.delete_button);
+        TextView textView1 = rowView.findViewById(R.id.dish_name);
+        TextView textView2 = rowView.findViewById(R.id.dish_price);
+        TextView textView3 = rowView.findViewById(R.id.dish_note);
+        Button deleteButton = rowView.findViewById(R.id.delete_button);
         deleteButton.setOnClickListener(view -> {
-            order.remove(position);
+            orderList.remove(position);
             notifyDataSetChanged();
         });
-        textView1.setText(order.get(position).getDish().getName());
-        textView2.setText(Double.toString(order.get(position).getPrice())+"kr");
-        //textView3.setText("- "+order.get(position).getNote());
+        textView1.setText(orderList.get(position).getDish().getName());
+        String price = Double.toString(orderList.get(position).getDish().getCarte().getPrice())+"kr";
+        textView2.setText(price);
+
+        String note = ("- "+orderList.get(position).getNote());
+        textView3.setText(note);
         return rowView;
     }
 }

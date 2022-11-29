@@ -35,7 +35,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     private Booking booking;
     private Employee employee;
     private ArrayList<Order> orderList = new ArrayList<>();
-    private final ArrayList<Carte> allItems = new ArrayList<>();
+    private final ArrayList<Dish> allItems = new ArrayList<>();
     public final Order order = new Order();
     public final Dish dish = new Dish();
     public final Carte carte = new Carte();
@@ -77,26 +77,26 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         dish.setId(1337);
         dish.setName("Kycklingvingar");
         carte.setCategory("starter");
-        carte.setDish(dish);
         carte.setDescription("Lättstekt");
         carte.setPrice(69);
+        dish.setCarte(carte);
         Dish dish2 = new Dish();
         Carte carte2 = new Carte();
         dish2.setId(2);
         dish2.setName("Kukmacka");
         carte2.setCategory("main");
-        carte2.setDish(dish2);
         carte2.setDescription("Lätt att svälja");
         carte2.setPrice(999);
+        dish2.setCarte(carte2);
 
         // CREATE THE ORDER VIEW
         // Comparator that compares two items categories
-        allItems.add(carte);
-        allItems.add(carte2);
+        allItems.add(dish);
+        allItems.add(dish2);
 
-        Comparator<? super Carte> comparator = (Comparator<Carte>) (item1, item2) -> {
-            String category1 = item1.getCategory();
-            String category2 = item2.getCategory();
+        Comparator<? super Dish> comparator = (Comparator<Dish>) (item1, item2) -> {
+            String category1 = item1.getCarte().getCategory();
+            String category2 = item2.getCarte().getCategory();
             return category1.compareTo(category2);
         };
         // Sort allItems to be able to add new items, this will add it in order according to category
@@ -115,8 +115,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
         // IF ORDER IS ALREADY STARTED
         if(getIntent().getSerializableExtra("Order") != null) {
-            ArrayList<Order> oldOrder = (ArrayList<Order>) getIntent().getSerializableExtra("Order");
-            //orderList = oldOrder;
+            orderList = (ArrayList<Order>) getIntent().getSerializableExtra("Order");;
         }
 
         // BACK ACTIVITY
@@ -139,7 +138,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
      * Also used in onItemSelected().
      * @param allItems List of all the items/dishes that are available. Taken from database.
      */
-    public void createTableRowTableButtons(ArrayList<Carte> allItems){
+    public void createTableRowTableButtons(ArrayList<Dish> allItems){
         TableLayout tableLayout = findViewById(R.id.table_layout);
         // REMOVES ALL BUTTONS ON CALL TO MAKE DROPDOWN MENU WORK CORRECT
         tableLayout.removeAllViews();
@@ -165,9 +164,9 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
             for(int j = 0; j < ROW_SIZE; j++) {
                 if(itemCounter < allItems.size()) {
                     // VARIABLES
-                    Carte item = allItems.get(itemCounter++);
-                    String text = item.getDish().getName() + "\n" + item.getPrice() + ":-";
-                    int color = getResources().getColor(getColorFromCategory(item.getCategory()));
+                    Dish item = allItems.get(itemCounter++);
+                    String text = item.getName() + "\n" + item.getCarte().getPrice() + ":-";
+                    int color = getResources().getColor(getColorFromCategory(item.getCarte().getCategory()));
                     // CREATES BUTTON
                     Button button = new Button(this);
                     button.setText(text);
@@ -203,17 +202,17 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
         switch(selected){
             case "Beställning":
-                //activitySendOrder.putExtra("Table", table);
                 activitySendOrder.putExtra("Order", orderList);
+                activitySendOrder.putExtra("Booking", booking);
                 startActivity(activitySendOrder);
                 break;
             case "Vanliga rätter":
                 createTableRowTableButtons(this.allItems);
                 break;
             default:
-                ArrayList<Carte> itemsWithSelectedCategory = new ArrayList<>();
-                for(Carte i : this.allItems) {
-                    String tmp = i.getCategory();
+                ArrayList<Dish> itemsWithSelectedCategory = new ArrayList<>();
+                for(Dish i : this.allItems) {
+                    String tmp = i.getCarte().getCategory();
                     if (tmp.equals(category)) {
                         itemsWithSelectedCategory.add(i);
                     }
@@ -259,14 +258,14 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
      * @return returns true as event has been handled
      */
     @SuppressLint("ClickableViewAccessibility")
-    public boolean onItemHoldPress(Carte item, Button button) {
+    public boolean onItemHoldPress(Dish item, Button button) {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View parent = this.getWindow().findViewById(android.R.id.content);
         View popupView = inflater.inflate(R.layout.popup_add_note, (ViewGroup) parent, false);
         EditText noteUser = popupView.findViewById(R.id.popup_add_note);
         TextView titleText = popupView.findViewById(R.id.note_title);
         Button buttonAddNote = popupView.findViewById(R.id.button_add_note);
-        String title = "Notering till beställning \"" + item.getDish().getName() + "\".";
+        String title = "Notering till beställning \"" + item.getName() + "\".";
         Order order = new Order();
         order.setEmployee(employee);
         order.setBooking(booking);
@@ -296,12 +295,12 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     @SuppressLint("UseCompatLoadingForColorStateLists")
-    public void onItemButtonPress(Carte item, Button button){
+    public void onItemButtonPress(Dish item, Button button){
         Order order = new Order();
         order.setEmployee(employee);
         order.setBooking(booking);
         order.setStatus(false);
-        order.setDish(item.getDish());
+        order.setDish(item);
         orderList.add(order);
         button.setBackgroundTintList(getResources().getColorStateList(R.color.appBlue));
     }
