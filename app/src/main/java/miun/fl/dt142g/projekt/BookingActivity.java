@@ -16,20 +16,22 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
+import miun.fl.dt142g.projekt.json.Booking;
+
 public class BookingActivity extends AppCompatActivity {
     private EditText editName, editAmount, editTime, editDate, editNote;
     private TextView error;
     private int mYear, mMonth, mDay, mHour, mMinute;
-    Table table;
+    Booking booking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
 
-        table = (Table) getIntent().getSerializableExtra("Table");
+        booking = (Booking) getIntent().getSerializableExtra("Booking");
         TextView current_table = (TextView) findViewById(R.id.booking_current_table);
-        current_table.setText("Bord "+table.getID());
+        current_table.setText("Bord: "+ booking.getTableNumber());
 
         Button button_back = (Button) findViewById(R.id.button_back_booking);
         Button button_create_booking = (Button) findViewById(R.id.createBookingButton_id);
@@ -94,9 +96,10 @@ public class BookingActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String currentDay = mDay + " - " + mMonth + " - " + mYear;
+                String text = "Fyll i namn och antal:";
                 if (editDate.getText().toString().compareTo(currentDay) != 0 ){
                     if (editName.getText().toString().isEmpty() || editAmount.getText().toString().isEmpty()){
-                        error.setText("Fyll i namn och antal");
+                        error.setText(text);
                     }
                 }
                 else if (editName.getText().toString().isEmpty() || editAmount.getText().toString().isEmpty() || editTime.getText().toString().isEmpty() || editNote.getText().toString().isEmpty()) {// if the user missed filling a block

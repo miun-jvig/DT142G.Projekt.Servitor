@@ -6,7 +6,7 @@ import java.io.Serializable;
 public class Table implements Serializable {
     private int id;
     private boolean status;
-    private Booking booking;
+    private BookingOLD booking;
 
     Table(int id){
         this.id = id;
@@ -16,10 +16,10 @@ public class Table implements Serializable {
     public void setStatus(boolean status){
         this.status = status;
     }
-    public void setBooking(Booking booking){
+    public void setBooking(BookingOLD booking){
         this.booking = booking;
     }
-    public Booking getBooking(){return booking;}
+    public BookingOLD getBooking(){return booking;}
 
     public int getID(){
         return id;

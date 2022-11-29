@@ -1,6 +1,8 @@
 package miun.fl.dt142g.projekt.json;
 
-public class Dish {
+import java.io.Serializable;
+
+public class Dish implements Serializable {
     private int id;
     private String name;
 

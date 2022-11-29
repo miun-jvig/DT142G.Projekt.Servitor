@@ -13,12 +13,14 @@ import android.widget.Toast;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class OrderListAdapter extends ArrayAdapter<Item>{
+import miun.fl.dt142g.projekt.json.Carte;
+
+public class OrderListAdapter extends ArrayAdapter<Carte>{
 
     private final Context context;
-    private final ArrayList<Item> order;
+    private final ArrayList<Carte> order;
 
-    public OrderListAdapter(Context context, ArrayList<Item> order) {
+    public OrderListAdapter(Context context, ArrayList<Carte> order) {
         super(context, R.layout.activity_order_list_view, order);
         this.context = context;
         this.order = order;
@@ -36,9 +38,9 @@ public class OrderListAdapter extends ArrayAdapter<Item>{
             order.remove(position);
             notifyDataSetChanged();
         });
-        textView1.setText(order.get(position).getName());
+        textView1.setText(order.get(position).getDish().getName());
         textView2.setText(Double.toString(order.get(position).getPrice())+"kr");
-        textView3.setText("- "+order.get(position).getNote());
+        //textView3.setText("- "+order.get(position).getNote());
         return rowView;
     }
 }

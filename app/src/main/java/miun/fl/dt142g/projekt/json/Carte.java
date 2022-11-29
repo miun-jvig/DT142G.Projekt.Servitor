@@ -1,6 +1,8 @@
 package miun.fl.dt142g.projekt.json;
 
-public class Carte {
+import java.io.Serializable;
+
+public class Carte implements Serializable {
     private String category;
     private String description;
     private Dish dish;

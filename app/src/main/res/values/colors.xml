@@ -7,11 +7,16 @@
     <color name="teal_700">#FF03DA00</color>
     <color name="black">#FF000000</color>
     <color name="white">#EAEBEF</color>
+    <!-- APP -->
     <color name="appBlue">#2094D0</color>
     <color name="appOrange">#F8A236</color>
     <color name="appRed">#EB0D00</color>
+    <color name="appYellow">#E6B741</color>
+    <color name="appDarkBlue">#2066D0</color>
+    <!-- FOOD -->
     <color name="foodYellow">#F4D66A</color>
     <color name="foodBlue">#5CE0E5</color>
     <color name="foodPurple">#FE66C3</color>
     <color name="foodGreen">#7ED857</color>
+
 </resources>

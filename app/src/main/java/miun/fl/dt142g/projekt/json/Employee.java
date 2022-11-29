@@ -1,7 +1,9 @@
 package miun.fl.dt142g.projekt.json;
 
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable {
     private String email;
     private String firstName;
     private String lastName;

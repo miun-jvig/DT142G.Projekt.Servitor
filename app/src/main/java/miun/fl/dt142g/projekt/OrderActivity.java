@@ -20,93 +20,81 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
+import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.Carte;
-import miun.fl.dt142g.projekt.json.CarteAPI;
+import miun.fl.dt142g.projekt.json.Dish;
 import miun.fl.dt142g.projekt.json.Employee;
-import miun.fl.dt142g.projekt.json.EmployeeAPI;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import miun.fl.dt142g.projekt.json.Order;
 
 public class OrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private Table table;
-    private ArrayList<Item> order = new ArrayList<>();
-    private final ArrayList<Item> allItems = new ArrayList<>();
-    //public final Order order = new Order();
-    // public final Dish dish = new Dish();
-    // public final CarteItem c = new CarteItem()
+    private Booking booking;
+    private Employee employee;
+    private ArrayList<Order> orderList = new ArrayList<>();
+    private final ArrayList<Carte> allItems = new ArrayList<>();
+    public final Order order = new Order();
+    public final Dish dish = new Dish();
+    public final Carte carte = new Carte();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         Button buttonBack = findViewById(R.id.button_back_order);
-
-        String samuel = "10.82.231.15";
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://" + samuel + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        CarteAPI carteAPI = retrofit.create(CarteAPI.class);
-        Call<List<Carte>> call = carteAPI.getAllCarte();
-        call.enqueue(new Callback<List<Carte>>() {
-             @Override
-             public void onResponse(Call<List<Carte>> call, Response<List<Carte>> response) {
-                 if(!response.isSuccessful()) {
-                     // dåligt svar
-                     return;
-                 }
-                 List<Carte> carte = response.body();
-                for(Carte c : carte){
-
-                }
-             }
-            @Override
-            public void onFailure(Call<List<Carte>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Network error." , Toast.LENGTH_LONG).show();
-            }
-        });
+        employee = (Employee) getIntent().getSerializableExtra("Employee");
+//        String samuel = "10.82.231.15";
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("http://" + samuel + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        CarteAPI carteAPI = retrofit.create(CarteAPI.class);
+//        Call<List<Carte>> call = carteAPI.getAllCarte();
+//        call.enqueue(new Callback<List<Carte>>() {
+//            @Override
+//            public void onResponse(Call<List<Carte>> call, Response<List<Carte>> response) {
+//                if (!response.isSuccessful()) {
+//                    // dåligt svar
+//                    return;
+//                }
+//                List<Carte> carte = response.body();
+//                for (Carte c : carte) {
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Carte>> call, Throwable t) {
+//                Toast.makeText(getApplicationContext(), "Network error.", Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         // Temporary exampledishes until SQL is implemented - Will be replaced with something like getAllDishes ...
-        Item tartar = new Item("Halstrad tartar", "Lättstekt", "starter", 79.90, 1);
-        Item chips = new Item("Chipstalrik", "Saltade chips med dip", "starter", 59.90, 2);
-        Item wings = new Item("Kycklingvingar", "Utan  het sås", "starter", 69.90, 3);
-        Item curryChicken = new Item("Currykyckling", "Lite curry", "main", 109.90, 4);
-        Item steak = new Item("Stek med pommes", "+Bea", "main", 159.90, 5);
-        Item soup = new Item("Potatissoppa", "Med bröd att doppa", "main", 99.90, 6);
-        Item carrotcake = new Item("Morotskaka", "Utan morot", "dessert", 54.90, 7);
-        Item bun = new Item("Kanelbulle", "Extra socker", "dessert", 34.90, 8);
-        Item cremebrulee = new Item("Créme Brûlée", "Med bär", "dessert", 109.90, 9);
-        Item sprite = new Item("Sprite", "Utan is", "beverage", 29.90, 10);
-        Item monster = new Item("Monster", "Sockerfri Monster", "beverage", 34.90, 11);
-        Item beer = new Item("Öl", "Gärna avslagen öl", "beverage", 79.90, 12);
-
-        allItems.add(tartar);
-        allItems.add(chips);
-        allItems.add(wings);
-        allItems.add(curryChicken);
-        allItems.add(steak);
-        allItems.add(soup);
-        allItems.add(carrotcake);
-        allItems.add(bun);
-        allItems.add(cremebrulee);
-        allItems.add(sprite);
-        allItems.add(monster);
-        allItems.add(beer);
+        dish.setId(1337);
+        dish.setName("Kycklingvingar");
+        carte.setCategory("starter");
+        carte.setDish(dish);
+        carte.setDescription("Lättstekt");
+        carte.setPrice(69);
+        Dish dish2 = new Dish();
+        Carte carte2 = new Carte();
+        dish2.setId(2);
+        dish2.setName("Kukmacka");
+        carte2.setCategory("main");
+        carte2.setDish(dish2);
+        carte2.setDescription("Lätt att svälja");
+        carte2.setPrice(999);
 
         // CREATE THE ORDER VIEW
         // Comparator that compares two items categories
-        Comparator<? super Item> comparator = (Comparator<Item>) (item1, item2) -> {
+        allItems.add(carte);
+        allItems.add(carte2);
+
+        Comparator<? super Carte> comparator = (Comparator<Carte>) (item1, item2) -> {
             String category1 = item1.getCategory();
             String category2 = item2.getCategory();
             return category1.compareTo(category2);
@@ -120,16 +108,17 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         createTableRowTableButtons(allItems);
 
         // INFO ABOUT TABLE
-        table = (Table) getIntent().getSerializableExtra("Table");
+        booking = (Booking) getIntent().getSerializableExtra("Booking");
         TextView currentTable = findViewById(R.id.order_current_table);
-        String currentTableNumber = "Bord: " + table.getID();
+        String currentTableNumber = "Bord: " + booking.getTableNumber();
         currentTable.setText(currentTableNumber);
 
         // IF ORDER IS ALREADY STARTED
         if(getIntent().getSerializableExtra("Order") != null) {
-            ArrayList<Item> oldOrder = (ArrayList<Item>) getIntent().getSerializableExtra("Order");
-            order = oldOrder;
+            ArrayList<Order> oldOrder = (ArrayList<Order>) getIntent().getSerializableExtra("Order");
+            //orderList = oldOrder;
         }
+
         // BACK ACTIVITY
         Intent activityBooking = new Intent(this, TablesActivity.class);
         buttonBack.setOnClickListener(v -> startActivity(activityBooking));
@@ -150,7 +139,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
      * Also used in onItemSelected().
      * @param allItems List of all the items/dishes that are available. Taken from database.
      */
-    public void createTableRowTableButtons(ArrayList<Item> allItems){
+    public void createTableRowTableButtons(ArrayList<Carte> allItems){
         TableLayout tableLayout = findViewById(R.id.table_layout);
         // REMOVES ALL BUTTONS ON CALL TO MAKE DROPDOWN MENU WORK CORRECT
         tableLayout.removeAllViews();
@@ -176,8 +165,8 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
             for(int j = 0; j < ROW_SIZE; j++) {
                 if(itemCounter < allItems.size()) {
                     // VARIABLES
-                    Item item = allItems.get(itemCounter++);
-                    String text = item.getName() + "\n" + item.getPrice() + ":-";
+                    Carte item = allItems.get(itemCounter++);
+                    String text = item.getDish().getName() + "\n" + item.getPrice() + ":-";
                     int color = getResources().getColor(getColorFromCategory(item.getCategory()));
                     // CREATES BUTTON
                     Button button = new Button(this);
@@ -214,16 +203,16 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
         switch(selected){
             case "Beställning":
-                activitySendOrder.putExtra("Table", table);
-                activitySendOrder.putExtra("Order", order);
+                //activitySendOrder.putExtra("Table", table);
+                activitySendOrder.putExtra("Order", orderList);
                 startActivity(activitySendOrder);
                 break;
             case "Vanliga rätter":
                 createTableRowTableButtons(this.allItems);
                 break;
             default:
-                ArrayList<Item> itemsWithSelectedCategory = new ArrayList<>();
-                for(Item i : this.allItems) {
+                ArrayList<Carte> itemsWithSelectedCategory = new ArrayList<>();
+                for(Carte i : this.allItems) {
                     String tmp = i.getCategory();
                     if (tmp.equals(category)) {
                         itemsWithSelectedCategory.add(i);
@@ -270,14 +259,18 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
      * @return returns true as event has been handled
      */
     @SuppressLint("ClickableViewAccessibility")
-    public boolean onItemHoldPress(Item item, Button button) {
+    public boolean onItemHoldPress(Carte item, Button button) {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View parent = this.getWindow().findViewById(android.R.id.content);
         View popupView = inflater.inflate(R.layout.popup_add_note, (ViewGroup) parent, false);
         EditText noteUser = popupView.findViewById(R.id.popup_add_note);
         TextView titleText = popupView.findViewById(R.id.note_title);
         Button buttonAddNote = popupView.findViewById(R.id.button_add_note);
-        String title = "Notering till beställning \"" + item.getName() + "\".";
+        String title = "Notering till beställning \"" + item.getDish().getName() + "\".";
+        Order order = new Order();
+        order.setEmployee(employee);
+        order.setBooking(booking);
+        order.setStatus(false);
 
         // CREATE THE POPUP WINDOW
         final int WIDTH = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -290,21 +283,26 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         // SHOW TITLE
         titleText.setText(title);
 
+
         // ON BUTTON PRESS, SET NOTE AND DISMISS VIEW
         buttonAddNote.setOnClickListener(v -> {
-            item.setNote(noteUser.getText().toString());
+            order.setNote(noteUser.getText().toString());
             popupWindow.dismiss();
         });
 
-        // PROCEED AS REGULAR WITH onItemButtonPress
-        onItemButtonPress(item, button);
+        // PROCEED AS REGULAR WITH ADD TO orderList
+        orderList.add(order);
         return true; // EVENT HAS BEEN HANDLED
     }
 
     @SuppressLint("UseCompatLoadingForColorStateLists")
-    public void onItemButtonPress(Item item, Button button){
-        order.add(item);
+    public void onItemButtonPress(Carte item, Button button){
+        Order order = new Order();
+        order.setEmployee(employee);
+        order.setBooking(booking);
+        order.setStatus(false);
+        order.setDish(item.getDish());
+        orderList.add(order);
         button.setBackgroundTintList(getResources().getColorStateList(R.color.appBlue));
-        item.resetNote(); // RESET NOTE
     }
 }

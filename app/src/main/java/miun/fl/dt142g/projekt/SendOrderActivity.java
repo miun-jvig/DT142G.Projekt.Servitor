@@ -18,6 +18,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import miun.fl.dt142g.projekt.json.Carte;
+
 public class SendOrderActivity extends AppCompatActivity {
     private Button button_back;
     private TextView text;
@@ -31,7 +33,7 @@ public class SendOrderActivity extends AppCompatActivity {
 
         // LISTVIEW
         ListView list = (ListView) findViewById(R.id.listView_order);
-        ArrayList<Item> order = (ArrayList<Item>) getIntent().getSerializableExtra("Order");
+        ArrayList<Carte> order = (ArrayList<Carte>) getIntent().getSerializableExtra("Order");
         list.setAdapter(new OrderListAdapter(this, order));
 
         // INFO ABOUT TABLE

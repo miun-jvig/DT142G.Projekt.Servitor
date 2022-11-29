@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import miun.fl.dt142g.projekt.json.Employee;
@@ -29,7 +28,7 @@ public class LogInActivity extends AppCompatActivity {
     private TextView logInErrorMsg;
     private EditText userInputPn; // USER INPUT PERSONAL NUMBER
     public static final String PREFS_NAME = "log_in";
-    // public final Employee employee = new Employee();
+    public final Employee alex = new Employee();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +39,16 @@ public class LogInActivity extends AppCompatActivity {
         boolean hasLoggedIn = settings.getBoolean(PREFS_NAME, false); // default value false
         Intent activityMain = new Intent(this, MainActivity.class);
 
+        // TEMP
+        alex.setFirstName("Alex");
+        alex.setLastName("Frid");
+        alex.setEmail("alex.frid@hotmail.com");
+        alex.setPhoneNumber("0703911803");
+        alex.setSsn("1337");
+
         // If user has previously logged in, then continue
         if(hasLoggedIn){
+            activityMain.putExtra("Employee", alex); // work to be done
             startActivity(activityMain);
         }
 
@@ -70,7 +77,6 @@ public class LogInActivity extends AppCompatActivity {
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(loggingInterceptor).build();
 
-
         String samuel = "10.82.231.15";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://" + samuel + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/")
@@ -88,18 +94,31 @@ public class LogInActivity extends AppCompatActivity {
                     return;
                 }
                 List<Employee> employee = response.body();
+                Employee currentEmployee = employee.get(0);
                 if(!employee.isEmpty()) {
                     editor.putBoolean(PREFS_NAME, true);
                     editor.apply();
+                    activityMain.putExtra("Employee", currentEmployee);
                     startActivity(activityMain);
                     finish();
-                }else{
+                }
+                else{
                     logInErrorMsg.setText(errorMsg);
                 }
             }
             @Override
             public void onFailure(Call<List<Employee>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(),"Network error." , Toast.LENGTH_LONG).show();
+
+                // ------- I DETTA FALL HÄMTAS BARA EN EMPLOYEE
+                if(userInput.equals(alex.getSsn())) {
+                    editor.putBoolean(PREFS_NAME, true);
+                    editor.apply();
+                    activityMain.putExtra("Employee", alex);
+                    startActivity(activityMain);
+                    finish();
+                }
+                // -------
             }
         });
     }

@@ -5,6 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TablesActivity">
+
+    <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="412dp"
+        android:layout_height="580dp"
+        android:gravity="center_horizontal|top"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topbarLayout"
+        app:layout_constraintVertical_bias="0.0"></LinearLayout>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_left"
         android:layout_width="wrap_content"
@@ -25,102 +39,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="55dp" />
-
-    <Button
-        android:id="@+id/button_table1"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:background="@color/appBlue"
-        android:onClick="onClick"
-        android:text="@string/table_1"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_top" />
-
-    <Button
-        android:id="@+id/button_table2"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:background="@color/appBlue"
-        android:onClick="onClick"
-        android:text="@string/table_2"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/button_table1"
-        app:backgroundTint="@null" />
-
-    <Button
-        android:id="@+id/button_table3"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:background="@color/appBlue"
-        android:onClick="onClick"
-        android:text="@string/table_3"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/button_table2"
-        app:backgroundTint="@null" />
-    <Button
-        android:id="@+id/button_table4"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:background="@color/appBlue"
-        android:onClick="onClick"
-        android:text="@string/table_4"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/button_table3"
-        app:backgroundTint="@null" />
-
-    <Button
-        android:id="@+id/button_table5"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:background="@color/appBlue"
-        android:onClick="onClick"
-        android:text="@string/table_5"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/button_table4"
-        app:backgroundTint="@null" />
-    <Button
-        android:id="@+id/button_table6"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:background="@color/appBlue"
-        android:onClick="onClick"
-        android:text="@string/table_6"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/button_table5"
-        app:backgroundTint="@null" />
-
-    <Button
-        android:id="@+id/button_table7"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:background="@color/appBlue"
-        android:onClick="onClick"
-        android:text="@string/table_7"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/button_table6"
-        app:backgroundTint="@null" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topbarLayout"
