@@ -40,7 +40,6 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     private Employee employee;
     private ArrayList<Order> orderList = new ArrayList<>();
     private final ArrayList<Dish> allItems = new ArrayList<>();
-    public final Order order = new Order();
     public final Dish dish = new Dish();
     public final Carte carte = new Carte();
     public final Dish dish2 = new Dish();
@@ -272,6 +271,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         Order order = new Order();
         order.setEmployee(employee);
         order.setBooking(booking);
+        order.setDish(item);
         order.setStatus(false);
 
         // CREATE THE POPUP WINDOW
