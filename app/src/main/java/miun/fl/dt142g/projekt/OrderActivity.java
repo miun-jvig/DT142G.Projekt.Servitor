@@ -20,14 +20,30 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+
+import miun.fl.dt142g.projekt.json.Carte;
+import miun.fl.dt142g.projekt.json.CarteAPI;
+import miun.fl.dt142g.projekt.json.Employee;
+import miun.fl.dt142g.projekt.json.EmployeeAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Table table;
     private ArrayList<Item> order = new ArrayList<>();
     private final ArrayList<Item> allItems = new ArrayList<>();
+    //public final Order order = new Order();
+    // public final Dish dish = new Dish();
+    // public final CarteItem c = new CarteItem()
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +51,33 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_order);
         Button buttonBack = findViewById(R.id.button_back_order);
 
-    // Temporary exampledishes until SQL is implemented - Will be replaced with something like getAllDishes ...
+        String samuel = "10.82.231.15";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://" + samuel + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        CarteAPI carteAPI = retrofit.create(CarteAPI.class);
+        Call<List<Carte>> call = carteAPI.getAllCarte();
+        call.enqueue(new Callback<List<Carte>>() {
+             @Override
+             public void onResponse(Call<List<Carte>> call, Response<List<Carte>> response) {
+                 if(!response.isSuccessful()) {
+                     // dåligt svar
+                     return;
+                 }
+                 List<Carte> carte = response.body();
+                for(Carte c : carte){
+
+                }
+             }
+            @Override
+            public void onFailure(Call<List<Carte>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Network error." , Toast.LENGTH_LONG).show();
+            }
+        });
+
+        // Temporary exampledishes until SQL is implemented - Will be replaced with something like getAllDishes ...
         Item tartar = new Item("Halstrad tartar", "Lättstekt", "starter", 79.90, 1);
         Item chips = new Item("Chipstalrik", "Saltade chips med dip", "starter", 59.90, 2);
         Item wings = new Item("Kycklingvingar", "Utan  het sås", "starter", 69.90, 3);

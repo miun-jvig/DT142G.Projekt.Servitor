@@ -18,6 +18,7 @@ public class TablesActivity extends AppCompatActivity {
     private final Table table5 = new Table(5);
     private final Table table6 = new Table(6);
     private final Table table7 = new Table(7);
+    //private final Booking booking = new Booking(); hämtad från databas
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

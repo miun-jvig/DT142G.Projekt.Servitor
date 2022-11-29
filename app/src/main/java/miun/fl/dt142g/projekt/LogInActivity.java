@@ -29,6 +29,7 @@ public class LogInActivity extends AppCompatActivity {
     private TextView logInErrorMsg;
     private EditText userInputPn; // USER INPUT PERSONAL NUMBER
     public static final String PREFS_NAME = "log_in";
+    // public final Employee employee = new Employee();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
