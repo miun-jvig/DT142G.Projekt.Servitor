@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="30dp" />
+        app:layout_constraintGuide_end="374dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_right2"
@@ -22,7 +22,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topbarLayout"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"

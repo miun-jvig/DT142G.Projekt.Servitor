@@ -2,18 +2,24 @@ package miun.fl.dt142g.projekt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.Employee;
 
 public class TablesActivity extends AppCompatActivity {
+    private EditText editDate;
+    private int mYear, mMonth, mDay;
     private final Booking booking = new Booking();
 
     @Override
@@ -72,6 +78,34 @@ public class TablesActivity extends AppCompatActivity {
                 }
             }
         }
+
+        // DATE VIEW
+        // variables
+        editDate = (EditText)findViewById(R.id.date_choice); // the chosen date
+        // Get and set Current Date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        String dateText = mDay + " - " + (mMonth + 1);
+        editDate.setText(dateText);
+
+        editDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(TablesActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                String date = dayOfMonth + " - " + (monthOfYear + 1);
+                                editDate.setText(date);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
 
         Intent activityBack = new Intent(this, MainActivity.class);
         Button buttonBack = findViewById(R.id.button_back);

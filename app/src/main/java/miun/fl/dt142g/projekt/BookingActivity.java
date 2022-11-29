@@ -31,7 +31,8 @@ public class BookingActivity extends AppCompatActivity {
 
         booking = (Booking) getIntent().getSerializableExtra("Booking");
         TextView current_table = (TextView) findViewById(R.id.booking_current_table);
-        current_table.setText("Bord: "+ booking.getTableNumber());
+        String tableNumber = "Bord: "+ booking.getTableNumber();
+        current_table.setText(tableNumber);
 
         Button button_back = (Button) findViewById(R.id.button_back_booking);
         Button button_create_booking = (Button) findViewById(R.id.createBookingButton_id);
@@ -50,13 +51,16 @@ public class BookingActivity extends AppCompatActivity {
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-        editDate.setText(mDay + " - " + (mMonth + 1) + " - " + mYear);
+        String dateText = mDay + " - " + (mMonth + 1) + " - " + mYear;
+        editDate.setText(dateText);
 
         // Get and set Current Time
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
-        editTime.setText(mHour + ":" + mMinute);
+        String timeText = mHour + ":" + mMinute;
+        editTime.setText(timeText);
 
+        // DATE
         editDate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,13 +70,15 @@ public class BookingActivity extends AppCompatActivity {
 
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                editDate.setText(dayOfMonth + " - " + (monthOfYear + 1) + " - " + year);
+                                String date = dayOfMonth + " - " + (monthOfYear + 1) + " - " + year;
+                                editDate.setText(date);
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
             }
         });
 
+        // TIME
         editTime.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,7 +89,8 @@ public class BookingActivity extends AppCompatActivity {
 
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                editTime.setText(hourOfDay + ":" + minute);
+                                String time = hourOfDay + ":" + minute;
+                                editTime.setText(time);
                             }
                         }, mHour, mMinute, false);
                 timePickerDialog.show();
@@ -96,10 +103,10 @@ public class BookingActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String currentDay = mDay + " - " + mMonth + " - " + mYear;
-                String text = "Fyll i namn och antal:";
+                String errorText = "Fyll i namn och antal:";
                 if (editDate.getText().toString().compareTo(currentDay) != 0 ){
                     if (editName.getText().toString().isEmpty() || editAmount.getText().toString().isEmpty()){
-                        error.setText(text);
+                        error.setText(errorText);
                     }
                 }
                 else if (editName.getText().toString().isEmpty() || editAmount.getText().toString().isEmpty() || editTime.getText().toString().isEmpty() || editNote.getText().toString().isEmpty()) {// if the user missed filling a block
