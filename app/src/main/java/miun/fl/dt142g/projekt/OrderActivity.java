@@ -1,6 +1,5 @@
 package miun.fl.dt142g.projekt;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -31,7 +30,6 @@ import miun.fl.dt142g.projekt.json.Carte;
 import miun.fl.dt142g.projekt.json.CarteAPI;
 import miun.fl.dt142g.projekt.json.Dish;
 import miun.fl.dt142g.projekt.json.Employee;
-import miun.fl.dt142g.projekt.json.EmployeeAPI;
 import miun.fl.dt142g.projekt.json.Order;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,8 +85,6 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         carte.setDescription("Lättstekt");
         carte.setPrice(69);
         dish.setCarte(carte);
-        Dish dish2 = new Dish();
-        Carte carte2 = new Carte();
         dish2.setId(2);
         dish2.setName("Kukmacka");
         carte2.setCategory("main");
@@ -122,7 +118,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
         // IF ORDER IS ALREADY STARTED
         if(getIntent().getSerializableExtra("Order") != null) {
-            orderList = (ArrayList<Order>) getIntent().getSerializableExtra("Order");;
+            orderList = (ArrayList<Order>) getIntent().getSerializableExtra("Order");
         }
 
         // BACK ACTIVITY
