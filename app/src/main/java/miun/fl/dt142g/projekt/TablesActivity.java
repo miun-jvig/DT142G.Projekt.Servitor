@@ -37,6 +37,7 @@ public class TablesActivity extends AppCompatActivity {
         booking.setFirstName("Joel");
         booking.setLastName("Viggesjoo");
         booking.setPhoneNumber("0703980483");
+        //--
 
         ArrayList<Booking> allBookings = new ArrayList<>(); // all bookings for the date to be added to this
         allBookings.add(booking); // acting as added from SQL

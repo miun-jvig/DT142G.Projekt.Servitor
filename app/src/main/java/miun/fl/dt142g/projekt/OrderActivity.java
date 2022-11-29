@@ -1,5 +1,6 @@
 package miun.fl.dt142g.projekt;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -20,16 +21,21 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
+import java.util.List;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.Carte;
+import miun.fl.dt142g.projekt.json.CarteAPI;
 import miun.fl.dt142g.projekt.json.Dish;
 import miun.fl.dt142g.projekt.json.Employee;
+import miun.fl.dt142g.projekt.json.EmployeeAPI;
 import miun.fl.dt142g.projekt.json.Order;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Booking booking;
@@ -39,6 +45,8 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     public final Order order = new Order();
     public final Dish dish = new Dish();
     public final Carte carte = new Carte();
+    public final Dish dish2 = new Dish();
+    public final Carte carte2 = new Carte();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,34 +54,33 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_order);
         Button buttonBack = findViewById(R.id.button_back_order);
         employee = (Employee) getIntent().getSerializableExtra("Employee");
-//        String samuel = "10.82.231.15";
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://" + samuel + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        CarteAPI carteAPI = retrofit.create(CarteAPI.class);
-//        Call<List<Carte>> call = carteAPI.getAllCarte();
-//        call.enqueue(new Callback<List<Carte>>() {
-//            @Override
-//            public void onResponse(Call<List<Carte>> call, Response<List<Carte>> response) {
-//                if (!response.isSuccessful()) {
-//                    // dåligt svar
-//                    return;
-//                }
-//                List<Carte> carte = response.body();
-//                for (Carte c : carte) {
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Carte>> call, Throwable t) {
-//                Toast.makeText(getApplicationContext(), "Network error.", Toast.LENGTH_LONG).show();
-//            }
-//        });
 
-        // Temporary exampledishes until SQL is implemented - Will be replaced with something like getAllDishes ...
+        CarteAPI carteAPI = APIClient.getClient().create(CarteAPI.class);
+        Call<List<Carte>> call = carteAPI.getAllCarte();
+        call.enqueue(new Callback<List<Carte>>() {
+            @Override
+            public void onResponse(Call<List<Carte>> call, Response<List<Carte>> response) {
+                if(!response.isSuccessful()) {
+
+                    return;
+                }
+                List<Carte> employee = response.body();
+                if(!employee.isEmpty()) {
+
+                }
+                else{
+
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Carte>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Network error." , Toast.LENGTH_LONG).show();
+
+
+            }
+        });
+
+        // ------- TEMP
         dish.setId(1337);
         dish.setName("Kycklingvingar");
         carte.setCategory("starter");
@@ -291,6 +298,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
         // PROCEED AS REGULAR WITH ADD TO orderList
         orderList.add(order);
+        button.setBackgroundTintList(getResources().getColorStateList(R.color.appBlue));
         return true; // EVENT HAS BEEN HANDLED
     }
 
