@@ -6,6 +6,15 @@ public class Carte implements Serializable {
     private String category;
     private String description;
     private int price;
+    private Dish dish;
+
+    public Dish getDish() {
+        return dish;
+    }
+
+    public void setDish(Dish dish) {
+        this.dish = dish;
+    }
 
     public String getCategory() {
         return category;
