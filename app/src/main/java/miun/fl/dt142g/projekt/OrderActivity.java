@@ -25,10 +25,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+
+import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.Carte;
 import miun.fl.dt142g.projekt.json.CarteAPI;
-import miun.fl.dt142g.projekt.json.Dish;
 import miun.fl.dt142g.projekt.json.Employee;
 import miun.fl.dt142g.projekt.json.Order;
 import retrofit2.Call;
@@ -40,10 +42,6 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     private Employee employee;
     private ArrayList<Order> orderList = new ArrayList<>();
     private final ArrayList<Carte> allItems = new ArrayList<>();
-    public final Dish dish = new Dish();
-    public final Carte carte = new Carte();
-    public final Dish dish2 = new Dish();
-    public final Carte carte2 = new Carte();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +60,8 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
                     return;
                 }
                 List<Carte> carte = response.body();
-                if(!carte.isEmpty()) {
-                    for(Carte c : carte){
-                        allItems.add(c);
-                    }
+                if(!Objects.requireNonNull(carte).isEmpty()) {
+                    allItems.addAll(carte);
                     Comparator<? super Carte> comparator = (Comparator<Carte>) (item1, item2) -> {
                         String category1 = item1.getCategory();
                         String category2 = item2.getCategory();
@@ -78,9 +74,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
             }
             @Override
             public void onFailure(Call<List<Carte>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Network error." , Toast.LENGTH_LONG).show();
-
-
+                Toast.makeText(getApplicationContext(),"Network error, cannot reach DB." , Toast.LENGTH_LONG).show();
             }
         });
 
@@ -134,11 +128,11 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         final double COLUMN_SIZE = Math.ceil(temp);
         int itemCounter = 0;
         // WIDTH = THREE ITEMS
-        final int WIDTH = getResources().getDisplayMetrics().widthPixels/ROW_SIZE;
-        final int HEIGHT = WIDTH;
+        final int SIZE = getResources().getDisplayMetrics().widthPixels/ROW_SIZE;
         final int TEXT_SIZE = 12;
+        final int TEXT_PADDING = SIZE/ROW_SIZE;
         // PARAMETERS FOR THE Button
-        TableRow.LayoutParams params = new TableRow.LayoutParams(WIDTH, HEIGHT);
+        TableRow.LayoutParams params = new TableRow.LayoutParams(SIZE, SIZE);
 
         // CREATE ROW
         for(int i = 0; i < COLUMN_SIZE; i++){
@@ -153,11 +147,13 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
                     // CREATES BUTTON
                     Button button = new Button(this);
                     button.setText(text);
-                    button.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    button.setGravity(Gravity.CENTER_HORIZONTAL);
+                    button.setPadding(0, TEXT_PADDING, 0, 0);
                     button.setTextSize(TEXT_SIZE);
                     button.setBackgroundColor(color);
                     button.setLayoutParams(params);
                     tableRow.addView(button);
+
 
                     // ON BUTTON PRESS, ADD TO ORDER
                     button.setOnClickListener(v -> onItemButtonPress(item, button));
@@ -182,6 +178,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         String selected = (String) parent.getItemAtPosition(pos);
         String category = getTypeOfFood(selected);
         Intent activitySendOrder = new Intent(this, SendOrderActivity.class);
+        Intent activitySummary = new Intent(this, SummaryActivity.class);
 
         switch(selected){
             case "Beställning":
@@ -191,6 +188,11 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
                 break;
             case "Vanliga rätter":
                 createTableRowTableButtons(this.allItems);
+                break;
+            case "Sammanställning":
+                activitySummary.putExtra("Order", orderList);
+                activitySummary.putExtra("Booking", booking);
+                startActivity(activitySummary);
                 break;
             default:
                 ArrayList<Carte> itemsWithSelectedCategory = new ArrayList<>();
@@ -211,11 +213,11 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
     /**
      * Translates from Swedish to English.
-     * @param selected Selected option of the spinner dropdown menu.
+     * @param cat Selected option of the spinner dropdown menu.
      * @return The name of the category of food in English.
      */
-    String getTypeOfFood(String selected){
-        switch(selected){
+    String getTypeOfFood(String cat){
+        switch(cat){
             case "Förrätter":         return "Förrätt";
             case "Varmrätter":        return "Varmrätt";
             case "Efterrätter":       return "Efterrätt";
@@ -227,9 +229,9 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     public int getColorFromCategory(String cat){
         switch(cat){
             case "Förrätt":            return R.color.foodYellow;
-            case "Varmrätt":               return R.color.foodBlue;
-            case "Efterrätt":            return R.color.foodPurple;
-            case "Dryck":           return R.color.foodGreen;
+            case "Varmrätt":           return R.color.foodBlue;
+            case "Efterrätt":          return R.color.foodPurple;
+            case "Dryck":              return R.color.foodGreen;
         }
         return R.color.appRed;
     }

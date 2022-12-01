@@ -13,33 +13,30 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
 import java.util.Calendar;
-
-import miun.fl.dt142g.projekt.json.Booking;
 
 public class BookingActivity extends AppCompatActivity {
     private EditText editName, editAmount, editTime, editDate, editNote;
     private TextView error;
     private int mYear, mMonth, mDay, mHour, mMinute;
-    Booking booking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
 
-        booking = (Booking) getIntent().getSerializableExtra("Booking");
-        TextView current_table = (TextView) findViewById(R.id.booking_current_table);
-        current_table.setText("Bord: "+ booking.getTableNumber());
+        int currentTable = (int) getIntent().getSerializableExtra("CurrentTable");
+        TextView current_table = findViewById(R.id.booking_current_table);
+        String text = "Bord: "+ currentTable;
+        current_table.setText(text);
 
-        Button button_back = (Button) findViewById(R.id.button_back_booking);
-        Button button_create_booking = (Button) findViewById(R.id.createBookingButton_id);
-        editName = (EditText)findViewById(R.id.name_id);
-        editAmount = (EditText)findViewById(R.id.amount_id);
-        editTime = (EditText)findViewById(R.id.time_id);
-        editDate = (EditText)findViewById(R.id.date_id);
-        editNote = (EditText)findViewById(R.id.notes_id);
+        Button button_back = findViewById(R.id.button_back_booking);
+        Button button_create_booking = findViewById(R.id.createBookingButton_id);
+        editName = findViewById(R.id.name_id);
+        editAmount = findViewById(R.id.amount_id);
+        editTime = findViewById(R.id.time_id);
+        editDate = findViewById(R.id.date_id);
+        editNote = findViewById(R.id.notes_id);
         error = findViewById(R.id.testText_id);
 
         // Default values

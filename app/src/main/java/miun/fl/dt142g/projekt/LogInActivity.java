@@ -11,8 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
+import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Employee;
 import miun.fl.dt142g.projekt.json.EmployeeAPI;
 import retrofit2.Call;
@@ -22,8 +25,9 @@ import retrofit2.Response;
 public class LogInActivity extends AppCompatActivity {
     private TextView logInErrorMsg;
     private EditText userInputPn; // USER INPUT PERSONAL NUMBER
-    public static final String PREFS_NAME = "log_in";
-    public final Employee alex = new Employee();
+    private static final String PREFS_NAME = "log_in";
+    private static final String HAS_LOGGED_IN = "has_logged_in";
+    private static final String EMPLOYEE_INFO = "employee_info";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,19 +35,16 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         // SharedPreferences stores value with key PREFS_NAME, works even though app closes
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        boolean hasLoggedIn = settings.getBoolean(PREFS_NAME, false); // default value false
+        boolean hasLoggedIn = settings.getBoolean(HAS_LOGGED_IN, false); // default value false
         Intent activityMain = new Intent(this, MainActivity.class);
-
-        // TEMP
-        alex.setFirstName("Alex");
-        alex.setLastName("Frid");
-        alex.setEmail("alex.frid@hotmail.com");
-        alex.setPhoneNumber("0703911803");
-        alex.setSsn("1337");
 
         // If user has previously logged in, then continue
         if(hasLoggedIn){
-            activityMain.putExtra("Employee", alex); // work to be done
+            // CREATE GSON OBJECT TO RETRIEVE EMPLOYEE FROM SharedPreferences
+            Gson gson = new Gson();
+            String json = settings.getString(EMPLOYEE_INFO, "");
+            Employee obj = gson.fromJson(json, Employee.class);
+            activityMain.putExtra("Employee", obj);
             startActivity(activityMain);
         }
 
@@ -60,8 +61,7 @@ public class LogInActivity extends AppCompatActivity {
     public void log_in(SharedPreferences settings){
         settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(PREFS_NAME, false); // default value false
-        editor.apply();
+        editor.putBoolean(HAS_LOGGED_IN, false).apply(); // default value false
         String userInput = userInputPn.getText().toString();
         String errorMsg = "Personnumret \"" + userInput + "\" finns ej. Kontakta Anders!";
         Intent activityMain = new Intent(this, MainActivity.class);
@@ -77,8 +77,11 @@ public class LogInActivity extends AppCompatActivity {
                 }
                 List<Employee> employee = response.body();
                 if(!employee.isEmpty()) {
-                    editor.putBoolean(PREFS_NAME, true);
-                    editor.apply();
+                    // CREATE A NEW GSON OBJECT TO PUT EMPLOYEE INTO SharedPreferences
+                    Gson gson = new Gson();
+                    String json = gson.toJson(employee.get(0));
+                    editor.putBoolean(HAS_LOGGED_IN, true).apply();
+                    editor.putString(EMPLOYEE_INFO, json).apply();
                     activityMain.putExtra("Employee", employee.get(0));
                     startActivity(activityMain);
                     finish();
@@ -90,16 +93,6 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Employee>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(),"Network error." , Toast.LENGTH_LONG).show();
-
-                // ------- I DETTA FALL HÄMTAS BARA EN EMPLOYEE
-                if(userInput.equals(alex.getSsn())) {
-                    editor.putBoolean(PREFS_NAME, true);
-                    editor.apply();
-                    activityMain.putExtra("Employee", alex);
-                    startActivity(activityMain);
-                    finish();
-                }
-                // -------
             }
         });
     }
