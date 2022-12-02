@@ -108,7 +108,7 @@ public class TablesActivity extends AppCompatActivity {
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-        String dateText = mYear + "-" + (mMonth + 1) + mDay + "-";
+        String dateText = mYear + "-" + (mMonth + 1) + "-" + mDay;
         editDate.setText(dateText);
 
         editDate.setOnClickListener(view -> {
