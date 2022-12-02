@@ -25,7 +25,7 @@ public class APIClient {
         final OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(loggingInterceptor).build();
 
         final Retrofit build = new Retrofit.Builder()
-                .baseUrl("http://" + DB_HEMMA + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/")
+                .baseUrl("http://" + DB_SKOLA + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();

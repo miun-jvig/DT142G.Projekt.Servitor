@@ -1,20 +1,20 @@
 package miun.fl.dt142g.projekt;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import java.util.List;
 import java.util.Objects;
+
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.BookingAPI;
@@ -27,7 +27,6 @@ public class TablesActivity extends AppCompatActivity {
     private final ArrayList<Booking> allBookings = new ArrayList<>(); // all bookings for the date to be added to this
     private EditText editDate;
     private int mYear, mMonth, mDay;
-    private final Booking booking = new Booking();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +54,11 @@ public class TablesActivity extends AppCompatActivity {
             }
         });
         Intent activityBack = new Intent(this, MainActivity.class);
-        Button buttonBack = findViewById(R.id.button_back_summary);
+        Button buttonBack = findViewById(R.id.button_back_tables);
         buttonBack.setOnClickListener(v -> startActivity(activityBack));
     }
 
-    public void createTablesFromBooking(ArrayList<Booking> allBookings){
+    public void createTablesFromBooking(ArrayList<Booking> allBookings) {
         // AMOUNT OF TABLES
         final int TABLES_AMOUNT = 7;
         // PARAMETERS FOR THE Button
@@ -75,7 +74,7 @@ public class TablesActivity extends AppCompatActivity {
          * Creates TABLES_AMOUNT OF tables and add correct text to it. If a booking exists, then
          * add listener for activityOrder, else add listener for activityBooking.
          */
-        for(int i = 1; i <= TABLES_AMOUNT; i++){
+        for (int i = 1; i <= TABLES_AMOUNT; i++) {
             // VARIABLES
             String text = "BORD " + i;
             // CREATES BUTTON
@@ -87,53 +86,41 @@ public class TablesActivity extends AppCompatActivity {
             mainLayout.addView(button);
             Booking booking = getCurrentBooking(allBookings, i);
 
-            if(booking != null){
+            if (booking != null) {
                 button.setBackgroundResource(R.drawable.selected_table);
                 Intent activityOrder = new Intent(this, OrderActivity.class);
                 activityOrder.putExtra("Booking", booking);
                 activityOrder.putExtra("Employee", employee);
                 button.setOnClickListener(v -> startActivity(activityOrder));
-            }
-            else{
+            } else {
                 Intent activityBooking = new Intent(this, BookingActivity.class);
                 activityBooking.putExtra("CurrentTable", i);
                 activityBooking.putExtra("Employee", employee);
                 button.setOnClickListener(v -> startActivity(activityBooking));
             }
         }
-    }
 
         // DATE VIEW
         // variables
-        editDate = (EditText)findViewById(R.id.date_choice); // the chosen date
+        editDate = findViewById(R.id.date_choice); // the chosen date
         // Get and set Current Date
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-        String dateText = mDay + " - " + (mMonth + 1);
+        String dateText = mYear + "-" + (mMonth + 1) + mDay + "-";
         editDate.setText(dateText);
 
-        editDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        editDate.setOnClickListener(view -> {
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(TablesActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                String date = dayOfMonth + " - " + (monthOfYear + 1);
-                                editDate.setText(date);
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-            }
+            DatePickerDialog datePickerDialog = new DatePickerDialog(TablesActivity.this,
+                    (view1, year, monthOfYear, dayOfMonth) -> {
+                        String date = year + "-"  + (monthOfYear + 1) + "-" + dayOfMonth;
+                        editDate.setText(date);
+                    }, mYear, mMonth, mDay);
+            datePickerDialog.show();
         });
-
-        Intent activityBack = new Intent(this, MainActivity.class);
-        Button buttonBack = findViewById(R.id.button_back);
-        buttonBack.setOnClickListener(v -> startActivity(activityBack));
+    }
     public Booking getCurrentBooking(ArrayList<Booking> allBookings, int tableNumber){
         for(Booking booking : allBookings){
             if(booking.getTableNumber() == tableNumber){
@@ -142,4 +129,5 @@ public class TablesActivity extends AppCompatActivity {
         }
         return null;
     }
+
 }
