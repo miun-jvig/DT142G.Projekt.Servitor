@@ -5,15 +5,6 @@ import java.io.Serializable;
 public class Dish implements Serializable {
     private int id;
     private String name;
-    private Carte carte;
-
-    public Carte getCarte() {
-        return carte;
-    }
-
-    public void setCarte(Carte carte) {
-        this.carte = carte;
-    }
 
     public int getId() {
         return id;

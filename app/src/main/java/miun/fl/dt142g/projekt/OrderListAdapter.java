@@ -36,11 +36,13 @@ public class OrderListAdapter extends ArrayAdapter<Order>{
             notifyDataSetChanged();
         });
         textView1.setText(orderList.get(position).getDish().getName());
-        String price = Double.toString(orderList.get(position).getDish().getCarte().getPrice())+"kr";
-        textView2.setText(price);
+        //String price = Double.toString(orderList.get(position).getDish().getCarte().getPrice())+"kr";
+        //textView2.setText(price);
 
-        String note = ("- "+orderList.get(position).getNote());
-        textView3.setText(note);
+        if(orderList.get(position).getNote() != null) {
+            String note = ("- " + orderList.get(position).getNote());
+            textView3.setText(note);
+        }
         return rowView;
     }
 }

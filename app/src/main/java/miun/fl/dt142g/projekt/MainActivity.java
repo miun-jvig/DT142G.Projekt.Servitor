@@ -4,9 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-
 import miun.fl.dt142g.projekt.json.Employee;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button buttonServitor = findViewById(R.id.button_servitor);
         Button buttonKok = findViewById(R.id.button_kok);
-
         buttonServitor.setOnClickListener(v -> startActivity(activityTables));
     }
 }

@@ -25,10 +25,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+
+import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.Carte;
 import miun.fl.dt142g.projekt.json.CarteAPI;
-import miun.fl.dt142g.projekt.json.Dish;
 import miun.fl.dt142g.projekt.json.Employee;
 import miun.fl.dt142g.projekt.json.Order;
 import retrofit2.Call;
@@ -39,12 +41,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     private Booking booking;
     private Employee employee;
     private ArrayList<Order> orderList = new ArrayList<>();
-    private final ArrayList<Dish> allItems = new ArrayList<>();
-    public final Order order = new Order();
-    public final Dish dish = new Dish();
-    public final Carte carte = new Carte();
-    public final Dish dish2 = new Dish();
-    public final Carte carte2 = new Carte();
+    private final ArrayList<Carte> allItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,56 +56,33 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onResponse(Call<List<Carte>> call, Response<List<Carte>> response) {
                 if(!response.isSuccessful()) {
-
+                    Toast.makeText(getApplicationContext(),"Helvete!" , Toast.LENGTH_LONG).show();
                     return;
                 }
-                List<Carte> employee = response.body();
-                if(!employee.isEmpty()) {
-
-                }
-                else{
-
+                List<Carte> carte = response.body();
+                if(!Objects.requireNonNull(carte).isEmpty()) {
+                    allItems.addAll(carte);
+                    Comparator<? super Carte> comparator = (Comparator<Carte>) (item1, item2) -> {
+                        String category1 = item1.getCategory();
+                        String category2 = item2.getCategory();
+                        return category1.compareTo(category2);
+                    };
+                    // Sort allItems to be able to add new items, this will add it in order according to category
+                    Collections.sort(allItems, comparator);
+                    createTableRowTableButtons(allItems);
                 }
             }
             @Override
             public void onFailure(Call<List<Carte>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Network error." , Toast.LENGTH_LONG).show();
-
-
+                Toast.makeText(getApplicationContext(),"Network error, cannot reach DB." , Toast.LENGTH_LONG).show();
             }
         });
 
-        // ------- TEMP
-        dish.setId(1337);
-        dish.setName("Kycklingvingar");
-        carte.setCategory("starter");
-        carte.setDescription("Lättstekt");
-        carte.setPrice(69);
-        dish.setCarte(carte);
-        dish2.setId(2);
-        dish2.setName("Kukmacka");
-        carte2.setCategory("main");
-        carte2.setDescription("Lätt att svälja");
-        carte2.setPrice(999);
-        dish2.setCarte(carte2);
 
-        // CREATE THE ORDER VIEW
-        // Comparator that compares two items categories
-        allItems.add(dish);
-        allItems.add(dish2);
-
-        Comparator<? super Dish> comparator = (Comparator<Dish>) (item1, item2) -> {
-            String category1 = item1.getCarte().getCategory();
-            String category2 = item2.getCarte().getCategory();
-            return category1.compareTo(category2);
-        };
-        // Sort allItems to be able to add new items, this will add it in order according to category
-        Collections.sort(allItems, comparator);
-        /* Creates TableRows with the length 3 (ROW_SIZE) and fill the TableRows with Buttons. The
-        * buttons will have a functionality on item press to add an item to Order, and on button hold
+        //Creates TableRows with the length 3 (ROW_SIZE) and fill the TableRows with Buttons. The
+        /* buttons will have a functionality on item press to add an item to Order, and on button hold
         * add a comment to an item and then add it to Order. Also used in onItemSelected().
         */
-        createTableRowTableButtons(allItems);
 
         // INFO ABOUT TABLE
         booking = (Booking) getIntent().getSerializableExtra("Booking");
@@ -141,7 +115,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
      * Also used in onItemSelected().
      * @param allItems List of all the items/dishes that are available. Taken from database.
      */
-    public void createTableRowTableButtons(ArrayList<Dish> allItems){
+    public void createTableRowTableButtons(ArrayList<Carte> allItems){
         TableLayout tableLayout = findViewById(R.id.table_layout);
         // REMOVES ALL BUTTONS ON CALL TO MAKE DROPDOWN MENU WORK CORRECT
         tableLayout.removeAllViews();
@@ -154,11 +128,11 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         final double COLUMN_SIZE = Math.ceil(temp);
         int itemCounter = 0;
         // WIDTH = THREE ITEMS
-        final int WIDTH = getResources().getDisplayMetrics().widthPixels/3;
-        final int HEIGHT = 400;
+        final int SIZE = getResources().getDisplayMetrics().widthPixels/ROW_SIZE;
         final int TEXT_SIZE = 12;
+        final int TEXT_PADDING = SIZE/ROW_SIZE;
         // PARAMETERS FOR THE Button
-        TableRow.LayoutParams params = new TableRow.LayoutParams(WIDTH, HEIGHT);
+        TableRow.LayoutParams params = new TableRow.LayoutParams(SIZE, SIZE);
 
         // CREATE ROW
         for(int i = 0; i < COLUMN_SIZE; i++){
@@ -167,17 +141,19 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
             for(int j = 0; j < ROW_SIZE; j++) {
                 if(itemCounter < allItems.size()) {
                     // VARIABLES
-                    Dish item = allItems.get(itemCounter++);
-                    String text = item.getName() + "\n" + item.getCarte().getPrice() + ":-";
-                    int color = getResources().getColor(getColorFromCategory(item.getCarte().getCategory()));
+                    Carte item = allItems.get(itemCounter++);
+                    String text = item.getDish().getName() + "\n" + item.getPrice() + ":-";
+                    int color = getResources().getColor(getColorFromCategory(item.getCategory()));
                     // CREATES BUTTON
                     Button button = new Button(this);
                     button.setText(text);
-                    button.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    button.setGravity(Gravity.CENTER_HORIZONTAL);
+                    button.setPadding(0, TEXT_PADDING, 0, 0);
                     button.setTextSize(TEXT_SIZE);
                     button.setBackgroundColor(color);
                     button.setLayoutParams(params);
                     tableRow.addView(button);
+
 
                     // ON BUTTON PRESS, ADD TO ORDER
                     button.setOnClickListener(v -> onItemButtonPress(item, button));
@@ -202,6 +178,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         String selected = (String) parent.getItemAtPosition(pos);
         String category = getTypeOfFood(selected);
         Intent activitySendOrder = new Intent(this, SendOrderActivity.class);
+        Intent activitySummary = new Intent(this, SummaryActivity.class);
 
         switch(selected){
             case "Beställning":
@@ -212,10 +189,15 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
             case "Vanliga rätter":
                 createTableRowTableButtons(this.allItems);
                 break;
+            case "Sammanställning":
+                activitySummary.putExtra("Order", orderList);
+                activitySummary.putExtra("Booking", booking);
+                startActivity(activitySummary);
+                break;
             default:
-                ArrayList<Dish> itemsWithSelectedCategory = new ArrayList<>();
-                for(Dish i : this.allItems) {
-                    String tmp = i.getCarte().getCategory();
+                ArrayList<Carte> itemsWithSelectedCategory = new ArrayList<>();
+                for(Carte i : this.allItems) {
+                    String tmp = i.getCategory();
                     if (tmp.equals(category)) {
                         itemsWithSelectedCategory.add(i);
                     }
@@ -231,27 +213,27 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
     /**
      * Translates from Swedish to English.
-     * @param selected Selected option of the spinner dropdown menu.
+     * @param cat Selected option of the spinner dropdown menu.
      * @return The name of the category of food in English.
      */
-    String getTypeOfFood(String selected){
-        switch(selected){
-            case "Förrätter":         return "starter";
-            case "Varmrätter":        return "main";
-            case "Efterrätter":       return "dessert";
-            case "Dryck":             return "beverage";
+    String getTypeOfFood(String cat){
+        switch(cat){
+            case "Förrätter":         return "Förrätt";
+            case "Varmrätter":        return "Varmrätt";
+            case "Efterrätter":       return "Efterrätt";
+            case "Dryck":             return "Dryck";
         }
         return "Vanliga rätter";
     }
 
     public int getColorFromCategory(String cat){
         switch(cat){
-            case "starter":            return R.color.foodYellow;
-            case "main":               return R.color.foodBlue;
-            case "dessert":            return R.color.foodPurple;
-            case "beverage":           return R.color.foodGreen;
+            case "Förrätt":            return R.color.foodYellow;
+            case "Varmrätt":           return R.color.foodBlue;
+            case "Efterrätt":          return R.color.foodPurple;
+            case "Dryck":              return R.color.foodGreen;
         }
-        return R.color.black;
+        return R.color.appRed;
     }
 
     /**
@@ -261,18 +243,15 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
      * @return returns true as event has been handled
      */
     @SuppressLint("ClickableViewAccessibility")
-    public boolean onItemHoldPress(Dish item, Button button) {
+    public boolean onItemHoldPress(Carte item, Button button) {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View parent = this.getWindow().findViewById(android.R.id.content);
         View popupView = inflater.inflate(R.layout.popup_add_note, (ViewGroup) parent, false);
         EditText noteUser = popupView.findViewById(R.id.popup_add_note);
         TextView titleText = popupView.findViewById(R.id.note_title);
         Button buttonAddNote = popupView.findViewById(R.id.button_add_note);
-        String title = "Notering till beställning \"" + item.getName() + "\".";
-        Order order = new Order();
-        order.setEmployee(employee);
-        order.setBooking(booking);
-        order.setStatus(false);
+        String title = "Notering till beställning \"" + item.getDish().getName() + "\".";
+        Order order = createOrder(item);
 
         // CREATE THE POPUP WINDOW
         final int WIDTH = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -284,7 +263,6 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
         // SHOW TITLE
         titleText.setText(title);
-
 
         // ON BUTTON PRESS, SET NOTE AND DISMISS VIEW
         buttonAddNote.setOnClickListener(v -> {
@@ -299,13 +277,18 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     @SuppressLint("UseCompatLoadingForColorStateLists")
-    public void onItemButtonPress(Dish item, Button button){
+    public void onItemButtonPress(Carte item, Button button){
+        Order order = createOrder(item);
+        orderList.add(order);
+        button.setBackgroundTintList(getResources().getColorStateList(R.color.appBlue));
+    }
+
+    public Order createOrder(Carte item){
         Order order = new Order();
         order.setEmployee(employee);
         order.setBooking(booking);
         order.setStatus(false);
-        order.setDish(item);
-        orderList.add(order);
-        button.setBackgroundTintList(getResources().getColorStateList(R.color.appBlue));
+        order.setDish(item.getDish());
+        return order;
     }
 }

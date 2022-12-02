@@ -1,4 +1,4 @@
-package miun.fl.dt142g.projekt;
+package miun.fl.dt142g.projekt.json;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -16,15 +16,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * </pre>
  */
 public class APIClient {
-    private static final String DB = "10.82.231.15";
+    private static final String DB_SKOLA = "10.82.231.15";
+    private static final String DB_HEMMA = "89.233.229.182";
 
-    static Retrofit getClient(){
+    public static Retrofit getClient(){
         final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         final OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(loggingInterceptor).build();
 
         final Retrofit build = new Retrofit.Builder()
-                .baseUrl("http://" + DB + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/")
+                .baseUrl("http://" + DB_HEMMA + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
