@@ -9,6 +9,7 @@ public class Order implements Serializable {
     private String notes;
     private int id;
     private boolean status;
+    private boolean served;
 
     public String getNote() {
         return notes;
@@ -50,11 +51,19 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public boolean getServed() {
+        return served;
+    }
+
+    public void setServed(boolean status) {
+        this.served = served;
     }
 }
