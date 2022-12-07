@@ -14,18 +14,27 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 import java.util.Stack;
 
+import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.Carte;
+import miun.fl.dt142g.projekt.json.CarteAPI;
 import miun.fl.dt142g.projekt.json.Order;
+import miun.fl.dt142g.projekt.json.OrderAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SendOrderActivity extends AppCompatActivity {
-    private Button button_back;
-    private TextView text;
-    private LinearLayout mLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +43,35 @@ public class SendOrderActivity extends AppCompatActivity {
 
         // LISTVIEW
         ListView list = findViewById(R.id.listView_order);
-        ArrayList<Order> order = (ArrayList<Order>) getIntent().getSerializableExtra("Order");
-        list.setAdapter(new OrderListAdapter(this, order));
+        ArrayList<Order> orderList = (ArrayList<Order>) getIntent().getSerializableExtra("Order");
+        list.setAdapter(new OrderListAdapter(this, orderList));
+
+        Button button = findViewById(R.id.send_order_button);
+        button.setOnClickListener(v -> {
+            OrderAPI orderAPI = APIClient.getClient().create(OrderAPI.class);
+            Call<Order> call = orderAPI.postOrder(orderList.get(0));
+            call.enqueue(new Callback<Order>() {
+                @Override
+                public void onResponse(Call<Order> call, Response<Order> response) {
+                    if(!response.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"Success" , Toast.LENGTH_LONG).show();
+                    }
+                    Order order = response.body();
+                    System.out.println(order.getId());
+                    System.out.println(order.getNote());
+                    System.out.println(order.getBooking().getFirstName());
+                    System.out.println(order.getDish().getName());
+                }
+                @Override
+                public void onFailure(Call<Order> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "DB-connection, failed" , Toast.LENGTH_LONG).show();
+                }
+            });
+        });
 
         // INFO ABOUT TABLE
         Booking booking = (Booking) getIntent().getSerializableExtra("Booking");
@@ -46,7 +82,7 @@ public class SendOrderActivity extends AppCompatActivity {
         // Back button
         Intent activityOrder = new Intent(this, OrderActivity.class);
         activityOrder.putExtra("Booking", booking);
-        activityOrder.putExtra("Order", order);
+        activityOrder.putExtra("Order", orderList);
         Button buttonBack = findViewById(R.id.button_back_listOfOrder);
         buttonBack.setOnClickListener(view -> startActivity(activityOrder));
     }

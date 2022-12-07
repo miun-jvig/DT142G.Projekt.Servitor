@@ -289,6 +289,8 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         order.setBooking(booking);
         order.setStatus(false);
         order.setDish(item.getDish());
+        order.setId(1);
+        order.setNote("Test");
         return order;
     }
 }

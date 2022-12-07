@@ -7,10 +7,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import miun.fl.dt142g.projekt.json.APIClient;
+import miun.fl.dt142g.projekt.json.Carte;
+import miun.fl.dt142g.projekt.json.CarteAPI;
 import miun.fl.dt142g.projekt.json.Order;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OrderListAdapter extends ArrayAdapter<Order>{
 
@@ -36,6 +44,7 @@ public class OrderListAdapter extends ArrayAdapter<Order>{
             notifyDataSetChanged();
         });
         textView1.setText(orderList.get(position).getDish().getName());
+        //String price = getPrice(orderList.get(0));
         //String price = Double.toString(orderList.get(position).getDish().getCarte().getPrice())+"kr";
         //textView2.setText(price);
 
@@ -45,4 +54,28 @@ public class OrderListAdapter extends ArrayAdapter<Order>{
         }
         return rowView;
     }
+    /*int getPrice(Order order){
+        int orderPrice;
+        CarteAPI carteAPI = APIClient.getClient().create(CarteAPI.class);
+        Call<List<Carte>> call = carteAPI.getAllCarte();
+        call.enqueue(new Callback<List<Carte>>() {
+            @Override
+            public void onResponse(Call<List<Carte>> call, Response<List<Carte>> response) {
+                if(!response.isSuccessful()) {
+                    Toast.makeText(context.getApplicationContext(),"Helvete!" , Toast.LENGTH_LONG).show();
+                    return;
+                }
+                List<Carte> carte = response.body();
+                for(Carte c : carte){
+                    if (c.getDish().getId() == order.getDish().getId()){
+                        return c.getPrice();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Carte>> call, Throwable t) {
+                Toast.makeText(context.getApplicationContext(),"Network error, cannot reach DB." , Toast.LENGTH_LONG).show();
+            }
+        });
+    }*/
 }

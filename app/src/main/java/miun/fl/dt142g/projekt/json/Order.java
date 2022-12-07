@@ -6,16 +6,17 @@ public class Order implements Serializable {
     private Booking booking;
     private Dish dish;
     private Employee employee;
-    private String note;
+    private String notes;
     private int id;
     private boolean status;
+    private boolean served;
 
     public String getNote() {
-        return note;
+        return notes;
     }
 
     public void setNote(String note) {
-        this.note = note;
+        this.notes = note;
     }
 
     public Booking getBooking() {
@@ -50,11 +51,19 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public boolean getServed() {
+        return served;
+    }
+
+    public void setServed(boolean status) {
+        this.served = served;
     }
 }
