@@ -90,17 +90,15 @@
         app:layout_constraintTop_toBottomOf="@+id/name_id"
         app:layout_constraintVertical_bias="0.0" />
 
-    <EditText
+    <TextView
         android:id="@+id/date_id"
         android:layout_width="130dp"
         android:layout_height="48dp"
         android:background="@drawable/edit_text_background"
         android:clickable="false"
-        android:cursorVisible="false"
         android:ems="10"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:hint="date"
         android:minHeight="48dp"
         android:paddingStart="@dimen/padding_edit_text"
         android:paddingEnd="@dimen/padding_edit_text"
@@ -189,5 +187,45 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="374dp" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="10dp"
+        android:text="Namn"
+        app:layout_constraintBottom_toTopOf="@+id/name_id"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/topbarLayout"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/numberOfPeople"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="11dp"
+        android:text="Antal gäster"
+        app:layout_constraintBottom_toTopOf="@+id/amount_id"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/name_id"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/dateAndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="8dp"
+        android:text="Datum och tid"
+        app:layout_constraintBottom_toTopOf="@+id/date_id"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toEndOf="@+id/numberOfPeople"
+        app:layout_constraintTop_toBottomOf="@+id/name_id" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

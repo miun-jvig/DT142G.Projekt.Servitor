@@ -9,3 +9,4 @@ public interface BookingAPI {
     @GET("booking")
     Call<List<Booking>> getAllBooking();
 }
+
