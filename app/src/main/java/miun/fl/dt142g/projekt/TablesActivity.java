@@ -44,6 +44,11 @@ public class TablesActivity extends AppCompatActivity {
         mDay = c.get(Calendar.DAY_OF_MONTH);
         dateText = mYear + "-" + (mMonth + 1) + "-" + mDay;
         editDate.setText(dateText);
+
+
+        createListOfBookings(dateText);
+
+
         // Change the date
         editDate.setOnClickListener(view -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(TablesActivity.this,
@@ -55,11 +60,24 @@ public class TablesActivity extends AppCompatActivity {
                         }
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
+
+            createListOfBookings(dateText);
+
         });
         //____________________________________
 
+
+
+        // BACK BUTTON
+        Intent activityBack = new Intent(this, MainActivity.class);
+        Button buttonBack = findViewById(R.id.button_back_tables);
+        buttonBack.setOnClickListener(v -> startActivity(activityBack));
+    }
+
+
+    public void createListOfBookings(String date){
         BookingAPI bookingAPI = APIClient.getClient().create(BookingAPI.class);
-        Call<List<Booking>> call = bookingAPI.getAllBookingWithDate(dateText);
+        Call<List<Booking>> call = bookingAPI.getAllBookingWithDate(date);
         call.enqueue(new Callback<List<Booking>>() {
             @Override
             public void onResponse(Call<List<Booking>> call, Response<List<Booking>> response) {
@@ -78,11 +96,8 @@ public class TablesActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Network error, cannot reach DB." , Toast.LENGTH_LONG).show();
             }
         });
-
-        Intent activityBack = new Intent(this, MainActivity.class);
-        Button buttonBack = findViewById(R.id.button_back_tables);
-        buttonBack.setOnClickListener(v -> startActivity(activityBack));
     }
+
 
     public void createTablesFromBooking(ArrayList<Booking> allBookings) {
 
@@ -96,6 +111,7 @@ public class TablesActivity extends AppCompatActivity {
         params.setMargins(0, 5, 0, 5);
         Employee employee = (Employee) getIntent().getSerializableExtra("Employee");
         LinearLayout mainLayout = findViewById(R.id.button_layout);
+        mainLayout.removeAllViews();
 
         /*
          * Creates TABLES_AMOUNT OF tables and add correct text to it. If a booking exists, then
@@ -123,7 +139,7 @@ public class TablesActivity extends AppCompatActivity {
                 Intent activityBooking = new Intent(this, BookingActivity.class);
                 activityBooking.putExtra("CurrentTable", i);
                 activityBooking.putExtra("Employee", employee);
-                activityBooking.putExtra("date", dateText); // Fix later
+                activityBooking.putExtra("date", dateText);
                 button.setOnClickListener(v -> startActivity(activityBooking));
             }
         }
