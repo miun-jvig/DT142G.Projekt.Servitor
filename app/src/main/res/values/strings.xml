@@ -3,10 +3,15 @@
     <string name="main_title">Antons\nSkafferi</string>
     <string name="button_servitor">Servitörsläge</string>
     <string name="button_kok">Köksläge</string>
+    <string name="nameHint">Anton</string>
+    <string name="amountHint">5</string>
+    <string name="timeHint">Datum</string>
+    <string name="phoneHint">070 123 123 12 12</string>
     <string name="name">NAMN</string>
     <string name="amount">ANTAL</string>
-    <string name="time">ANKOMSTTID</string>
+    <string name="datetime">DATUM OCH TID</string>
     <string name="notes">NOTERING</string>
+    <string name="phone">TELEFON</string>
     <string name="createButton_id">SKAPA BOKNING</string>
     <string name="back">BACK</string>
     <!-- Booking -->

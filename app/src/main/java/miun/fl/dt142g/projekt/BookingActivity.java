@@ -29,8 +29,7 @@ public class BookingActivity extends AppCompatActivity {
 
         int currentTable = (int) getIntent().getSerializableExtra("CurrentTable");
         TextView current_table = findViewById(R.id.booking_current_table);
-        String date = (String) getIntent().getSerializableExtra("date");
-        String text = currentTable + date;
+        String text = "Bord: " + currentTable;
         current_table.setText(text);
 
         Button button_back = findViewById(R.id.button_back_booking);
@@ -46,7 +45,7 @@ public class BookingActivity extends AppCompatActivity {
         error.setText(null);
 
         // Get and set chosen Date
-        //String date = (String) getIntent().getSerializableExtra("date");
+        String date = (String) getIntent().getSerializableExtra("date");
         chosenDate.setText(date);
 
         // Get and set Current Time
