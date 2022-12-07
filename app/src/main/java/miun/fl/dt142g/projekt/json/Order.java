@@ -6,16 +6,16 @@ public class Order implements Serializable {
     private Booking booking;
     private Dish dish;
     private Employee employee;
-    private String note;
+    private String notes;
     private int id;
     private boolean status;
 
     public String getNote() {
-        return note;
+        return notes;
     }
 
     public void setNote(String note) {
-        this.note = note;
+        this.notes = note;
     }
 
     public Booking getBooking() {
