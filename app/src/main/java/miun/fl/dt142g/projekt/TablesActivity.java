@@ -59,6 +59,27 @@ public class TablesActivity extends AppCompatActivity {
     }
 
     public void createTablesFromBooking(ArrayList<Booking> allBookings) {
+
+        // DATE VIEW________________________
+        editDate = findViewById(R.id.date_choice); // the chosen date
+        // Get and set Current Date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        String dateText = mYear + "-" + (mMonth + 1) + "-" + mDay;
+        editDate.setText(dateText);
+        // Change the date
+        editDate.setOnClickListener(view -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(TablesActivity.this,
+                    (view1, year, monthOfYear, dayOfMonth) -> {
+                        String date = year + "-"  + (monthOfYear + 1) + "-" + dayOfMonth;
+                        editDate.setText(date);
+                    }, mYear, mMonth, mDay);
+            datePickerDialog.show();
+        });
+        //____________________________________
+
         // AMOUNT OF TABLES
         final int TABLES_AMOUNT = 7;
         // PARAMETERS FOR THE Button
@@ -96,30 +117,11 @@ public class TablesActivity extends AppCompatActivity {
                 Intent activityBooking = new Intent(this, BookingActivity.class);
                 activityBooking.putExtra("CurrentTable", i);
                 activityBooking.putExtra("Employee", employee);
+                activityBooking.putExtra("Date", dateText);
                 button.setOnClickListener(v -> startActivity(activityBooking));
             }
         }
 
-        // DATE VIEW
-        // variables
-        editDate = findViewById(R.id.date_choice); // the chosen date
-        // Get and set Current Date
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-        String dateText = mYear + "-" + (mMonth + 1) + "-" + mDay;
-        editDate.setText(dateText);
-
-        editDate.setOnClickListener(view -> {
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(TablesActivity.this,
-                    (view1, year, monthOfYear, dayOfMonth) -> {
-                        String date = year + "-"  + (monthOfYear + 1) + "-" + dayOfMonth;
-                        editDate.setText(date);
-                    }, mYear, mMonth, mDay);
-            datePickerDialog.show();
-        });
     }
     public Booking getCurrentBooking(ArrayList<Booking> allBookings, int tableNumber){
         for(Booking booking : allBookings){
