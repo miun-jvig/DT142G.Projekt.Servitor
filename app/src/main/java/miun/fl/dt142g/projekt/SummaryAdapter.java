@@ -1,7 +1,6 @@
 package miun.fl.dt142g.projekt;
 
 import android.content.Context;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miun.fl.dt142g.projekt.json.APIClient;
+import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.Carte;
 import miun.fl.dt142g.projekt.json.CarteAPI;
+import miun.fl.dt142g.projekt.json.CombinedOrders;
 import miun.fl.dt142g.projekt.json.Order;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OrderListAdapter extends ArrayAdapter<OrderContainer>{
+public class SummaryAdapter extends ArrayAdapter<CombinedOrders>{
 
     private final Context context;
-    private final ArrayList<OrderContainer> orderList;
+    private final ArrayList<CombinedOrders> orderList;
 
-    public OrderListAdapter(Context context, ArrayList<OrderContainer> order) {
-        super(context, R.layout.activity_order_list_view, order);
+    public SummaryAdapter(Context context, ArrayList<CombinedOrders> orders) {
+        super(context, R.layout.activity_order_list_view, orders);
         this.context = context;
-        this.orderList = order;
+        this.orderList = orders;
     }
 
     @Override
@@ -40,17 +41,14 @@ public class OrderListAdapter extends ArrayAdapter<OrderContainer>{
         TextView textView2 = rowView.findViewById(R.id.dish_price);
         TextView textView3 = rowView.findViewById(R.id.dish_note);
         Button deleteButton = rowView.findViewById(R.id.delete_button);
-        deleteButton.setOnClickListener(view -> {
-            orderList.remove(position);
-            notifyDataSetChanged();
-        });
-        textView1.setText(orderList.get(position).getOrder().getDish().getName());
+        textView1.setText(orderList.get(position).getDish().getName());
 
-        String price = orderList.get(position).getCarte().getPrice()+"kr";
-        textView2.setText(price);
+        //int price = getPrice(orderList.get(0));
+        //String price = Double.toString(orderList.get(position).getDish().getCarte().getPrice())+"kr";
+        //textView2.setText(price);
 
-        if(orderList.get(position).getOrder().getNote() != null) {
-            String note = ("- " + orderList.get(position).getOrder().getNote());
+        if(orderList.get(position).getNotes() != null) {
+            String note = ("- " + orderList.get(position).getNotes());
             textView3.setText(note);
         }
         return rowView;
