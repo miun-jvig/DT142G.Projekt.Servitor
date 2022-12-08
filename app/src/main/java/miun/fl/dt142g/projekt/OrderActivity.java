@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ import retrofit2.Response;
 public class OrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Booking booking;
     private Employee employee;
-    private ArrayList<Order> orderList = new ArrayList<>();
+    private ArrayList<OrderContainer> orderList = new ArrayList<>();
     private final ArrayList<Carte> allItems = new ArrayList<>();
 
     @Override
@@ -92,7 +93,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
         // IF ORDER IS ALREADY STARTED
         if(getIntent().getSerializableExtra("Order") != null) {
-            orderList = (ArrayList<Order>) getIntent().getSerializableExtra("Order");
+            orderList = (ArrayList<OrderContainer>) getIntent().getSerializableExtra("Order");
         }
 
         // BACK ACTIVITY
@@ -251,7 +252,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         TextView titleText = popupView.findViewById(R.id.note_title);
         Button buttonAddNote = popupView.findViewById(R.id.button_add_note);
         String title = "Notering till beställning \"" + item.getDish().getName() + "\".";
-        Order order = createOrder(item);
+        OrderContainer order = createOrder(item);
 
         // CREATE THE POPUP WINDOW
         final int WIDTH = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -266,7 +267,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
         // ON BUTTON PRESS, SET NOTE AND DISMISS VIEW
         buttonAddNote.setOnClickListener(v -> {
-            order.setNote(noteUser.getText().toString());
+            order.getOrder().setNote(noteUser.getText().toString());
             popupWindow.dismiss();
         });
 
@@ -278,12 +279,12 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
     @SuppressLint("UseCompatLoadingForColorStateLists")
     public void onItemButtonPress(Carte item, Button button){
-        Order order = createOrder(item);
+        OrderContainer order = createOrder(item);
         orderList.add(order);
         button.setBackgroundTintList(getResources().getColorStateList(R.color.appBlue));
     }
 
-    public Order createOrder(Carte item){
+    public OrderContainer createOrder(Carte item){
         Order order = new Order();
         order.setEmployee(employee);
         order.setBooking(booking);
@@ -291,6 +292,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         order.setDish(item.getDish());
         order.setId(1);
         order.setNote("Test");
-        return order;
+        OrderContainer returnOrder = new OrderContainer(order, item);
+        return returnOrder;
     }
 }
