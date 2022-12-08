@@ -49,16 +49,21 @@ public class TablesActivity extends AppCompatActivity {
 
         // Change the date
         editDate.setOnClickListener(view -> {
+            // PICK A DATE
             DatePickerDialog datePickerDialog = new DatePickerDialog(TablesActivity.this,
                     (datePicker, year, month, day) -> {
                         String dateTText = year + "-" + (month + 1) + "-" + day;
                         editDate.setText(dateTText);
+                        createListOfBookings(dateTText);
                     }, mYear, mMonth, mDay);
+
+            // DISPLAY THE DATE
             datePickerDialog.show();
-            String d = editDate.getText().toString();
-            createListOfBookings(d);
 
         });
+
+
+        //
 
         // BACK BUTTON
         Intent activityBack = new Intent(this, MainActivity.class);
