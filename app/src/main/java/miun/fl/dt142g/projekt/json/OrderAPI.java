@@ -16,4 +16,7 @@ public interface OrderAPI {
 
     @GET("orders/booking")
     Call<List<List<Object>>> getAllCombinedOrders(@Query("id") int id);
+
+    @GET("orders")
+    Call<List<Order>> getAllOrdersWithDate(@Query("date") String date);
 }

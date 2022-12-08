@@ -71,7 +71,7 @@
         app:layout_constraintVertical_bias="0.194" />
 
     <EditText
-        android:id="@+id/amount_id"
+        android:id="@+id/numberOfPeople_id"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginTop="36dp"
@@ -101,10 +101,13 @@
         android:minHeight="48dp"
         android:paddingStart="@dimen/padding_edit_text"
         android:paddingEnd="@dimen/padding_edit_text"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:paddingTop="10dp"
         app:layout_constraintBottom_toTopOf="@+id/notes_id"
         app:layout_constraintEnd_toStartOf="@+id/time_id"
         app:layout_constraintHorizontal_bias="0.595"
-        app:layout_constraintStart_toEndOf="@+id/amount_id"
+        app:layout_constraintStart_toEndOf="@+id/numberOfPeople_id"
         app:layout_constraintTop_toBottomOf="@+id/name_id"
         app:layout_constraintVertical_bias="0.485" />
 
@@ -120,14 +123,13 @@
         android:ems="10"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:hint="time"
         android:minHeight="48dp"
         android:paddingStart="@dimen/padding_edit_text"
         android:paddingEnd="@dimen/padding_edit_text"
         app:layout_constraintBottom_toTopOf="@+id/notes_id"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.992"
-        app:layout_constraintStart_toEndOf="@+id/amount_id"
+        app:layout_constraintStart_toEndOf="@+id/numberOfPeople_id"
         app:layout_constraintTop_toBottomOf="@+id/name_id"
         app:layout_constraintVertical_bias="0.311" />
 
@@ -148,7 +150,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/amount_id"
+        app:layout_constraintTop_toBottomOf="@+id/numberOfPeople_id"
         app:layout_constraintVertical_bias="0.100" />
 
     <TextView
@@ -157,7 +159,7 @@
         android:layout_height="wrap_content"
         android:text="@string/error"
         android:textColor="@color/design_default_color_error"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/createBookingButton_id"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -212,7 +214,7 @@
         android:layout_marginBottom="11dp"
         android:text="@string/amount"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/amount_id"
+        app:layout_constraintBottom_toTopOf="@+id/numberOfPeople_id"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -246,7 +248,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/amount_id"
+        app:layout_constraintTop_toBottomOf="@+id/numberOfPeople_id"
         app:layout_constraintVertical_bias="1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

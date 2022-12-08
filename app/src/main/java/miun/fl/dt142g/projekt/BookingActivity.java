@@ -11,12 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Objects;
 
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.BookingAPI;
 import miun.fl.dt142g.projekt.json.Booking;
-import miun.fl.dt142g.projekt.json.Order;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +26,7 @@ public class BookingActivity extends AppCompatActivity {
     private int mHour;
     private int mMinute;
     private int editAmount;
-    private String dateText;
+    private String todaysDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,7 @@ public class BookingActivity extends AppCompatActivity {
         Button button_back = findViewById(R.id.button_back_booking);
         Button button_create_booking = findViewById(R.id.createBookingButton_id);
         editName = findViewById(R.id.name_id);
-        //editAmount = findViewById(R.id.amount_id);
+        //editAmount = findViewById(R.id.numberOfPeople_id);
         editTime = findViewById(R.id.time_id);
         chosenDate = findViewById(R.id.date_id);
         editPhone = findViewById(R.id.notes_id);
@@ -56,6 +54,7 @@ public class BookingActivity extends AppCompatActivity {
 
         // Get and set chosen Date
         String date = (String) getIntent().getSerializableExtra("date");
+        Toast.makeText(getApplicationContext(), date, Toast.LENGTH_LONG).show();
         chosenDate.setText(date);
 
         // Get and set Current Time and Date
@@ -63,7 +62,7 @@ public class BookingActivity extends AppCompatActivity {
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
-        dateText = mYear + "-" + (mMonth + 1) + "-" + mDay;
+        todaysDate = mYear + "-" + (mMonth + 1) + "-" + mDay;
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
         String timeText = mHour + ":" + mMinute;
@@ -82,16 +81,18 @@ public class BookingActivity extends AppCompatActivity {
 
         // inputs from form creates a booking ------------------------------------------------
         button_create_booking.setOnClickListener(v -> {
-            String errorText = "Fyll i fälten!";
-            if (!Objects.equals(dateText, chosenDate.getText().toString())){
-                if (editName.getText().toString().isEmpty()){
-                    error.setText(errorText);
-                }
+
+            // NOT DROP-IN
+            if (!todaysDate.equals(date) && (editName.getText().toString().isEmpty() || editPhone.getText().toString().isEmpty())){
+                // MISSING INFO FROM FORM
+                String errorText = "Fyll i fälten!";
+                error.setText(errorText);
             }
-            else {// if the user fills the details correctly
+            // DROP-IN
+            else {
                 error.setText(null);
                 Booking booking = new Booking();
-                booking.setDate(dateText);
+                booking.setDate(date);
                 booking.setTime(timeText);
                 booking.setId(1);
                 booking.setFirstName(editName.getText().toString());

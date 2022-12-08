@@ -3,6 +3,7 @@ package miun.fl.dt142g.projekt;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -21,12 +22,15 @@ import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.BookingAPI;
 import miun.fl.dt142g.projekt.json.Employee;
+import miun.fl.dt142g.projekt.json.Order;
+import miun.fl.dt142g.projekt.json.OrderAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TablesActivity extends AppCompatActivity {
     private final ArrayList<Booking> allBookingsWithDate = new ArrayList<>(); // all bookings for the date to be added to this
+    private final ArrayList<Order> allOrdersWithDate = new ArrayList<>();
     private TextView editDate;
     private String dateText;
     private int mYear, mMonth, mDay;
@@ -63,6 +67,49 @@ public class TablesActivity extends AppCompatActivity {
             datePickerDialog.show();
         });
 
+        // NOTIFICATION FROM ORDER STATUS
+        final int MILLISECONDS = 1000;
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                OrderAPI OrderAPI = APIClient.getClient().create(OrderAPI.class);
+                Call<List<Order>> call = OrderAPI.getAllOrdersWithDate(dateText);
+
+                call.enqueue(new Callback<List<Order>>() {
+                    @Override
+                    public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
+                        if(!response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldnt process the request.
+                            return;
+                        }
+                        List<Order> orders = response.body();
+                        allOrdersWithDate.clear();
+                        if(!Objects.requireNonNull(orders).isEmpty()) {
+                            allOrdersWithDate.addAll(orders);
+                        }
+                        // WHAT TO DO WITH THE ORDERS FORM TODAY?
+                        // CHECK STATUS ON EVERY ORDER
+
+                        for (Order e : allOrdersWithDate) {
+                            if(e.getStatus()){
+                                Toast.makeText(getApplicationContext(), "Bord " + e.getBooking().getTableNumber() +" har en beställning klar", Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+
+                    }
+                    @Override
+                    public void onFailure(Call<List<Order>> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "DB-connection, failed" , Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                handler.postDelayed(this, MILLISECONDS);
+            }
+        }, MILLISECONDS);
+
         // BACK BUTTON
         Intent activityBack = new Intent(this, MainActivity.class);
         Button buttonBack = findViewById(R.id.button_back_tables);
@@ -80,11 +127,11 @@ public class TablesActivity extends AppCompatActivity {
                     return;
                 }
                 List<Booking> booking = response.body();
+                allBookingsWithDate.clear();
                 if(!Objects.requireNonNull(booking).isEmpty()) {
-                    allBookingsWithDate.clear();
                     allBookingsWithDate.addAll(booking);
-                    createTablesFromBooking(allBookingsWithDate);
                 }
+                createTablesFromBooking(allBookingsWithDate);
             }
             @Override
             public void onFailure(@NonNull Call<List<Booking>> call, Throwable t) {
@@ -138,7 +185,8 @@ public class TablesActivity extends AppCompatActivity {
                 Intent activityBooking = new Intent(this, BookingActivity.class);
                 activityBooking.putExtra("CurrentTable", i);
                 activityBooking.putExtra("Employee", employee);
-                activityBooking.putExtra("date", dateText);
+                String s = editDate.getText().toString();
+                activityBooking.putExtra("date", s);
                 button.setOnClickListener(v -> startActivity(activityBooking));
             }
         }
