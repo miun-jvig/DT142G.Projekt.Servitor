@@ -3,6 +3,7 @@ package miun.fl.dt142g.projekt;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -54,16 +55,13 @@ public class TablesActivity extends AppCompatActivity {
                     (datePicker, year, month, day) -> {
                         String dateTText = year + "-" + (month + 1) + "-" + day;
                         editDate.setText(dateTText);
+                        dateText = dateTText;
                         createListOfBookings(dateTText);
                     }, mYear, mMonth, mDay);
 
             // DISPLAY THE DATE
             datePickerDialog.show();
-
         });
-
-
-        //
 
         // BACK BUTTON
         Intent activityBack = new Intent(this, MainActivity.class);
@@ -103,7 +101,7 @@ public class TablesActivity extends AppCompatActivity {
         // PARAMETERS FOR THE Button
         final int WIDTH = 800;
         final int HEIGHT = 200;
-        final int TEXT_SIZE = 12;
+        final int TEXT_SIZE = 16;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(WIDTH, HEIGHT);
         params.setMargins(0, 5, 0, 5);
         Employee employee = (Employee) getIntent().getSerializableExtra("Employee");
@@ -116,11 +114,13 @@ public class TablesActivity extends AppCompatActivity {
          */
         for (int i = 1; i <= TABLES_AMOUNT; i++) {
             // VARIABLES
-            String text = "BORD " + i;
+            String text = "BORD " + i + ".";
             // CREATES BUTTON
             Button button = new Button(this);
             button.setText(text);
             button.setTextSize(TEXT_SIZE);
+            button.setGravity(Gravity.LEFT);
+            button.setPadding(30, 30 , 0 ,0);
             button.setLayoutParams(params);
             button.setBackgroundResource(R.drawable.button_table);
             mainLayout.addView(button);
@@ -128,6 +128,8 @@ public class TablesActivity extends AppCompatActivity {
 
             if (booking != null) {
                 button.setBackgroundResource(R.drawable.selected_table);
+                String bookedText = text + "   " + booking.getTime() + " - " + booking.getFirstName();
+                button.setText(bookedText);
                 Intent activityOrder = new Intent(this, OrderActivity.class);
                 activityOrder.putExtra("Booking", booking);
                 activityOrder.putExtra("Employee", employee);

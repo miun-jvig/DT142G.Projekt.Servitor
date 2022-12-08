@@ -80,6 +80,7 @@
         android:paddingStart="@dimen/padding_edit_text"
         android:paddingEnd="@dimen/padding_edit_text"
         android:textAlignment="center"
+        android:textSize="26dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.512"
