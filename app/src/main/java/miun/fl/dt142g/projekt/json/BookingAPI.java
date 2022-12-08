@@ -10,8 +10,8 @@ import retrofit2.http.Query;
 
 public interface BookingAPI {
 
-   // @POST("booking")
-   // Call<Booking> postBooking(@Body Booking booking);
+    @POST("booking")
+    Call<Booking> postBooking(@Body Booking booking);
 
     @GET("booking")
     Call<List<Booking>> getAllBooking();

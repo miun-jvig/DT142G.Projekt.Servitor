@@ -93,13 +93,14 @@ public class BookingActivity extends AppCompatActivity {
                 Booking booking = new Booking();
                 booking.setDate(dateText);
                 booking.setTime(timeText);
-                booking.setFirstName(String.valueOf(editName));
-                booking.setLastName(String.valueOf(editName));
+                booking.setId(1);
+                booking.setFirstName(editName.getText().toString());
+                booking.setLastName(editName.getText().toString());
                 booking.setNumberOfPeople(editAmount);
                 booking.setTableNumber(currentTable);
-                booking.setPhoneNumber(String.valueOf(editPhone));
+                booking.setPhoneNumber(editPhone.getText().toString());
 
-               /* BookingAPI BookingAPI = APIClient.getClient().create(miun.fl.dt142g.projekt.json.BookingAPI.class);
+                BookingAPI BookingAPI = APIClient.getClient().create(BookingAPI.class);
                 Call<Booking> call = BookingAPI.postBooking(booking);
 
                 call.enqueue(new Callback<Booking>() {
@@ -115,7 +116,7 @@ public class BookingActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "DB-connection, failed" , Toast.LENGTH_LONG).show();
                     }
                 });
-*/
+
                 String txt = "Bokar bord " + currentTable;
                 Toast.makeText(this, txt, Toast.LENGTH_LONG).show();
                 Intent activityBooking = new Intent(this, BookingActivity.class);
