@@ -3,7 +3,6 @@ package miun.fl.dt142g.projekt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -14,7 +13,13 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Objects;
 
+import miun.fl.dt142g.projekt.json.APIClient;
+import miun.fl.dt142g.projekt.json.BookingAPI;
 import miun.fl.dt142g.projekt.json.Booking;
+import miun.fl.dt142g.projekt.json.Order;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BookingActivity extends AppCompatActivity {
     private EditText editName, editTime, editPhone;
@@ -93,8 +98,26 @@ public class BookingActivity extends AppCompatActivity {
                 booking.setNumberOfPeople(editAmount);
                 booking.setTableNumber(currentTable);
                 booking.setPhoneNumber(String.valueOf(editPhone));
+
+               /* BookingAPI BookingAPI = APIClient.getClient().create(miun.fl.dt142g.projekt.json.BookingAPI.class);
+                Call<Booking> call = BookingAPI.postBooking(booking);
+
+                call.enqueue(new Callback<Booking>() {
+                    @Override
+                    public void onResponse(Call<Booking> call, Response<Booking> response) {
+                        if(!response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldnt process the request.
+                            return;
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Booking> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "DB-connection, failed" , Toast.LENGTH_LONG).show();
+                    }
+                });
+*/
                 String txt = "Bokar bord " + currentTable;
-                Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, txt, Toast.LENGTH_LONG).show();
                 Intent activityBooking = new Intent(this, BookingActivity.class);
                 startActivity(activityBooking);
             }

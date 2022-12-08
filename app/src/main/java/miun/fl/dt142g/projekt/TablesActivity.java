@@ -45,9 +45,7 @@ public class TablesActivity extends AppCompatActivity {
         dateText = mYear + "-" + (mMonth + 1) + "-" + mDay;
         editDate.setText(dateText);
 
-
         createListOfBookings(dateText);
-
 
         // Change the date
         editDate.setOnClickListener(view -> {
