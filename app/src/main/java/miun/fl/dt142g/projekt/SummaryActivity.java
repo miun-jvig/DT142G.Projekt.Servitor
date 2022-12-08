@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,13 +37,14 @@ public class SummaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
         Button buttonBack = findViewById(R.id.button_back_summary);
+        ArrayList<OrderContainer> allOrders = new ArrayList<>();
 
         // LISTVIEW
         ListView list = findViewById(R.id.listView_order);
         Booking booking = (Booking) getIntent().getSerializableExtra("Booking");
 
         OrderAPI OrderAPI = APIClient.getClient().create(OrderAPI.class);
-        Call<List<List<Object>>> call = OrderAPI.getAllCombinedOrders(415);
+        Call<List<List<Object>>> call = OrderAPI.getAllCombinedOrders(booking.getId());
         call.enqueue(new Callback<List<List<Object>>>() {
             @Override
             public void onResponse(Call<List<List<Object>>> call, Response<List<List<Object>>> response) {
@@ -50,8 +53,16 @@ public class SummaryActivity extends AppCompatActivity {
                     return;
                 }
                 List<List<Object>> orders = response.body();
-                allOrders.addAll(orders);
-                Toast.makeText(getApplicationContext(), Integer.toString(orders.size()), Toast.LENGTH_LONG).show();
+                /*for(List<Object> l : orders){
+                    LinkedTreeMap<String, Object> linkedTreeMap = l;
+                    Order order = (Order) l.get(0);
+                    Carte carte = (Carte) l.get(1);
+
+                    OrderContainer a = new OrderContainer(order, carte);
+                    allOrders.add(a);
+                }
+                */
+
             }
             @Override
             public void onFailure(Call<List<List<Object>>> call, Throwable t) {
@@ -59,9 +70,7 @@ public class SummaryActivity extends AppCompatActivity {
                 System.out.println(t.getMessage());
             }
         });
-
-        //list.setAdapter(new SummaryAdapter(this, allOrders));
-
+        list.setAdapter(new SummaryAdapter(this, allOrders));
         // INFO ABOUT TABLE
         TextView currentTable = findViewById(R.id.summary_current_table);
         String currentTableNumber = "Bord: " + booking.getTableNumber();

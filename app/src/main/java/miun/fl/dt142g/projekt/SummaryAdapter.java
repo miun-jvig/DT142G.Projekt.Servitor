@@ -22,12 +22,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SummaryAdapter extends ArrayAdapter<CombinedOrders>{
+public class SummaryAdapter extends ArrayAdapter<OrderContainer>{
 
     private final Context context;
-    private final ArrayList<CombinedOrders> orderList;
+    private final ArrayList<OrderContainer> orderList;
 
-    public SummaryAdapter(Context context, ArrayList<CombinedOrders> orders) {
+    public SummaryAdapter(Context context, ArrayList<OrderContainer> orders) {
         super(context, R.layout.activity_order_list_view, orders);
         this.context = context;
         this.orderList = orders;
@@ -41,14 +41,13 @@ public class SummaryAdapter extends ArrayAdapter<CombinedOrders>{
         TextView textView2 = rowView.findViewById(R.id.dish_price);
         TextView textView3 = rowView.findViewById(R.id.dish_note);
         Button deleteButton = rowView.findViewById(R.id.delete_button);
-        textView1.setText(orderList.get(position).getDish().getName());
+        textView1.setText(orderList.get(position).getOrder().getDish().getName());
 
-        //int price = getPrice(orderList.get(0));
-        //String price = Double.toString(orderList.get(position).getDish().getCarte().getPrice())+"kr";
-        //textView2.setText(price);
+        String price = Double.toString(orderList.get(position).getCarte().getPrice())+"kr";
+        textView2.setText(price);
 
-        if(orderList.get(position).getNotes() != null) {
-            String note = ("- " + orderList.get(position).getNotes());
+        if(orderList.get(position).getOrder().getNote() != null) {
+            String note = ("- " + orderList.get(position).getOrder().getNote());
             textView3.setText(note);
         }
         return rowView;
