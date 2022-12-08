@@ -7,9 +7,11 @@ public class CombinedOrders {
     private int id;
     private String notes;
     private boolean status;
+    private boolean served;
     private String category;
     private String description;
     private int price;
+
 
     public Booking getBooking() {
         return booking;
@@ -77,6 +79,14 @@ public class CombinedOrders {
 
     public int getPrice() {
         return price;
+    }
+
+    public boolean isServed() {
+        return served;
+    }
+
+    public void setServed(boolean served) {
+        this.served = served;
     }
 
     public void setPrice(int price) {

@@ -9,8 +9,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
@@ -22,13 +25,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SummaryAdapter extends ArrayAdapter<OrderContainer>{
+public class SummaryAdapter extends ArrayAdapter<List<Object>>{
 
     private final Context context;
-    private final ArrayList<OrderContainer> orderList;
+    private final ArrayList<List<Object>> orderList;
 
-    public SummaryAdapter(Context context, ArrayList<OrderContainer> orders) {
-        super(context, R.layout.activity_order_list_view, orders);
+    public SummaryAdapter(Context context, ArrayList<List<Object>> orders) {
+        super(context, R.layout.activity_summary_list_view, orders);
         this.context = context;
         this.orderList = orders;
     }
@@ -36,18 +39,23 @@ public class SummaryAdapter extends ArrayAdapter<OrderContainer>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.activity_order_list_view, parent, false);
+        View rowView = inflater.inflate(R.layout.activity_summary_list_view, parent, false);
         TextView textView1 = rowView.findViewById(R.id.dish_name);
         TextView textView2 = rowView.findViewById(R.id.dish_price);
         TextView textView3 = rowView.findViewById(R.id.dish_note);
-        Button deleteButton = rowView.findViewById(R.id.delete_button);
-        textView1.setText(orderList.get(position).getOrder().getDish().getName());
 
-        String price = Double.toString(orderList.get(position).getCarte().getPrice())+"kr";
+        LinkedTreeMap orderL = (LinkedTreeMap) orderList.get(position).get(0);
+        LinkedTreeMap carteL = (LinkedTreeMap) orderList.get(position).get(1);
+
+        LinkedTreeMap dish = (LinkedTreeMap) orderL.get("dish");
+        textView1.setText((String) dish.get("name"));
+
+
+        String price = Double.toString((Double)carteL.get("price"))+"kr";
         textView2.setText(price);
 
-        if(orderList.get(position).getOrder().getNote() != null) {
-            String note = ("- " + orderList.get(position).getOrder().getNote());
+        if(orderL.get("notes") != null) {
+            String note = ("- " + orderL.get("notes"));
             textView3.setText(note);
         }
         return rowView;

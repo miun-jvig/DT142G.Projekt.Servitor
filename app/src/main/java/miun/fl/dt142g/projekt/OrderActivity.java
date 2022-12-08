@@ -291,7 +291,6 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         order.setStatus(false);
         order.setDish(item.getDish());
         order.setId(1);
-        order.setNote("Test");
         OrderContainer returnOrder = new OrderContainer(order, item);
         return returnOrder;
     }
