@@ -4,11 +4,11 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import retrofit2.Response;
 
 public class TablesActivity extends AppCompatActivity {
     private final ArrayList<Booking> allBookingsWithDate = new ArrayList<>(); // all bookings for the date to be added to this
-    private EditText editDate;
+    private TextView editDate;
     private String dateText;
     private int mYear, mMonth, mDay;
 
@@ -52,21 +52,15 @@ public class TablesActivity extends AppCompatActivity {
         // Change the date
         editDate.setOnClickListener(view -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(TablesActivity.this,
-                    new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                            dateText = year + "-" + (month + 1) + "-" + day;
-                            editDate.setText(dateText);
-                        }
+                    (datePicker, year, month, day) -> {
+                        String dateTText = year + "-" + (month + 1) + "-" + day;
+                        editDate.setText(dateTText);
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
-
-            createListOfBookings(dateText);
+            String d = editDate.getText().toString();
+            createListOfBookings(d);
 
         });
-        //____________________________________
-
-
 
         // BACK BUTTON
         Intent activityBack = new Intent(this, MainActivity.class);
@@ -74,25 +68,25 @@ public class TablesActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(v -> startActivity(activityBack));
     }
 
-
     public void createListOfBookings(String date){
         BookingAPI bookingAPI = APIClient.getClient().create(BookingAPI.class);
         Call<List<Booking>> call = bookingAPI.getAllBookingWithDate(date);
         call.enqueue(new Callback<List<Booking>>() {
             @Override
-            public void onResponse(Call<List<Booking>> call, Response<List<Booking>> response) {
+            public void onResponse(@NonNull Call<List<Booking>> call, @NonNull Response<List<Booking>> response) {
                 if(!response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(),"Helvete!" , Toast.LENGTH_LONG).show();
                     return;
                 }
                 List<Booking> booking = response.body();
                 if(!Objects.requireNonNull(booking).isEmpty()) {
+                    allBookingsWithDate.clear();
                     allBookingsWithDate.addAll(booking);
                     createTablesFromBooking(allBookingsWithDate);
                 }
             }
             @Override
-            public void onFailure(Call<List<Booking>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Booking>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(),"Network error, cannot reach DB." , Toast.LENGTH_LONG).show();
             }
         });
@@ -145,6 +139,7 @@ public class TablesActivity extends AppCompatActivity {
         }
 
     }
+
     public Booking getCurrentBooking(ArrayList<Booking> allBookings, int tableNumber){
         for(Booking booking : allBookings){
             if(booking.getTableNumber() == tableNumber){
