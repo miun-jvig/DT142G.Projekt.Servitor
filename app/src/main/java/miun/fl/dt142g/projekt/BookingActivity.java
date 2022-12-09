@@ -54,7 +54,6 @@ public class BookingActivity extends AppCompatActivity {
 
         // Get and set chosen Date
         String date = (String) getIntent().getSerializableExtra("date");
-        Toast.makeText(getApplicationContext(), date, Toast.LENGTH_LONG).show();
         chosenDate.setText(date);
 
         // Get and set Current Time and Date

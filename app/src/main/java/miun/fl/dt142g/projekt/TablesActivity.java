@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,6 +36,7 @@ public class TablesActivity extends AppCompatActivity {
     private TextView editDate;
     private String dateText;
     private int mYear, mMonth, mDay;
+    private static final int NOTIFICATION_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class TablesActivity extends AppCompatActivity {
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
         dateText = mYear + "-" + (mMonth + 1) + "-" + mDay;
+        String today = dateText;
         editDate.setText(dateText);
 
         createListOfBookings(dateText);
@@ -62,26 +66,39 @@ public class TablesActivity extends AppCompatActivity {
                         dateText = dateTText;
                         createListOfBookings(dateTText);
                     }, mYear, mMonth, mDay);
-
             // DISPLAY THE DATE
             datePickerDialog.show();
         });
 
+        /*// CREATE NOTIFICATION
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.notification_icon)
+                .setContentTitle("My Notification")
+                .setContentText("Hello World!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        // Get the NotificationManager
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // Display the notification
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+*/
+
         // NOTIFICATION FROM ORDER STATUS
-        final int MILLISECONDS = 1000;
+        final int MILLISECONDS = 10000;
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
                 OrderAPI OrderAPI = APIClient.getClient().create(OrderAPI.class);
-                Call<List<Order>> call = OrderAPI.getAllOrdersWithDate(dateText);
+                Call<List<Order>> call = OrderAPI.getAllOrdersWithDate(today);
 
                 call.enqueue(new Callback<List<Order>>() {
                     @Override
                     public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
                         if(!response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldnt process the request.
+                            // Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldnt process the request.
                             return;
                         }
                         List<Order> orders = response.body();
@@ -94,7 +111,9 @@ public class TablesActivity extends AppCompatActivity {
 
                         for (Order e : allOrdersWithDate) {
                             if(e.getStatus()){
-                                Toast.makeText(getApplicationContext(), "Bord " + e.getBooking().getTableNumber() +" har en beställning klar", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), "Bord " + e.getBooking().getTableNumber() +" har en beställning klar", Toast.LENGTH_LONG).show();
+
+                                // DISPLAY NOTIFICATION
 
                             }
                         }
@@ -102,7 +121,7 @@ public class TablesActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(Call<List<Order>> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "DB-connection, failed" , Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "DB-connection, failed" , Toast.LENGTH_LONG).show();
                     }
                 });
 
