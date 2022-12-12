@@ -8,8 +8,33 @@ public class Order implements Serializable {
     private Employee employee;
     private String notes;
     private int id;
+    private String time;
     private boolean status;
     private boolean served;
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public boolean isServed() {
+        return served;
+    }
 
     public String getNote() {
         return notes;

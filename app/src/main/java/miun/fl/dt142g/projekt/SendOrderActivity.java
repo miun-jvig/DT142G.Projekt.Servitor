@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
@@ -36,7 +37,12 @@ public class SendOrderActivity extends AppCompatActivity {
 
             Button button = findViewById(R.id.send_order_button);
             button.setOnClickListener(v -> {
+                Calendar c = Calendar.getInstance();
+                int mHour = c.get(Calendar.HOUR_OF_DAY);
+                int mMinute = c.get(Calendar.MINUTE);
+                String time = mHour + ":" + mMinute;
                 for(OrderContainer e : orderList){
+                    e.getOrder().setTime(time);
                     OrderAPI orderAPI = APIClient.getClient().create(OrderAPI.class);
                     Call<Order> call = orderAPI.postOrder(e.getOrder());
                     call.enqueue(new Callback<Order>() {
