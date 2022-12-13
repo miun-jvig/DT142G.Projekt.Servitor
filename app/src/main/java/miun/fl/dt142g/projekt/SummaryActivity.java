@@ -17,20 +17,21 @@ import java.util.List;
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.CombinedOrdersAPI;
+import miun.fl.dt142g.projekt.json.Employee;
 import miun.fl.dt142g.projekt.json.Order;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SummaryActivity extends AppCompatActivity {
-    @Override
+    private Employee employee;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
         Button buttonBack = findViewById(R.id.button_back_summary);
 
         // LISTVIEW
-
+        employee = (Employee) getIntent().getSerializableExtra("Employee");
         Booking booking = (Booking) getIntent().getSerializableExtra("Booking");
 
         CombinedOrdersAPI combinedOrdersAPI = APIClient.getClient().create(CombinedOrdersAPI.class);
@@ -62,6 +63,7 @@ public class SummaryActivity extends AppCompatActivity {
         activityBooking.putExtra("Booking", booking);
         ArrayList<Order> orderList = (ArrayList<Order>) getIntent().getSerializableExtra("Order");
         activityBooking.putExtra("Order",orderList);
+        activityBooking.putExtra("Employee", employee);
         buttonBack.setOnClickListener(v -> startActivity(activityBooking));
     }
     void createList(ArrayList<List<Object>> allOrders){

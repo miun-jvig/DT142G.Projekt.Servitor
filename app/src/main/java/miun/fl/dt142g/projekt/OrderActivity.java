@@ -97,8 +97,9 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         }
 
         // BACK ACTIVITY
-        Intent activityBooking = new Intent(this, TablesActivity.class);
-        buttonBack.setOnClickListener(v -> startActivity(activityBooking));
+        Intent activityTables = new Intent(this, TablesActivity.class);
+        activityTables.putExtra("Employee", employee);
+        buttonBack.setOnClickListener(v -> startActivity(activityTables));
 
         // DROPDOWN
         Spinner spinnerOrder = findViewById(R.id.order_spinner);
@@ -185,6 +186,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
             case "Beställning":
                 activitySendOrder.putExtra("Order", orderList);
                 activitySendOrder.putExtra("Booking", booking);
+                activitySendOrder.putExtra("Employee", employee);
                 startActivity(activitySendOrder);
                 break;
             case "Vanliga rätter":
@@ -193,6 +195,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
             case "Sammanställning":
                 activitySummary.putExtra("Order", orderList);
                 activitySummary.putExtra("Booking", booking);
+                activitySendOrder.putExtra("Employee", employee);
                 startActivity(activitySummary);
                 break;
             default:

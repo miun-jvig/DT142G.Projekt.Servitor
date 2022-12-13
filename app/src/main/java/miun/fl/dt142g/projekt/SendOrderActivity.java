@@ -16,6 +16,7 @@ import java.util.Calendar;
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.Carte;
+import miun.fl.dt142g.projekt.json.Employee;
 import miun.fl.dt142g.projekt.json.Order;
 import miun.fl.dt142g.projekt.json.OrderAPI;
 import retrofit2.Call;
@@ -23,7 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SendOrderActivity extends AppCompatActivity {
-
+    private Employee employee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,8 @@ public class SendOrderActivity extends AppCompatActivity {
                 Calendar c = Calendar.getInstance();
                 int mHour = c.get(Calendar.HOUR_OF_DAY);
                 int mMinute = c.get(Calendar.MINUTE);
-                String time = mHour + ":" + mMinute;
+                int mSecond = c.get(Calendar.SECOND);
+                String time = mHour + ":" + mMinute + ":" + mSecond;
                 for(OrderContainer e : orderList){
                     e.getOrder().setTime(time);
                     OrderAPI orderAPI = APIClient.getClient().create(OrderAPI.class);
@@ -73,6 +75,8 @@ public class SendOrderActivity extends AppCompatActivity {
         Intent activityOrder = new Intent(this, OrderActivity.class);
         activityOrder.putExtra("Booking", booking);
         activityOrder.putExtra("Order", orderList);
+        employee = (Employee) getIntent().getSerializableExtra("Employee");
+        activityOrder.putExtra("Employee", employee);
         Button buttonBack = findViewById(R.id.button_back_listOfOrder);
         buttonBack.setOnClickListener(view -> startActivity(activityOrder));
     }
