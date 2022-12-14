@@ -76,13 +76,14 @@ public class SendOrderActivity extends AppCompatActivity {
         activityOrder.putExtra("Booking", booking);
         activityOrder.putExtra("Order", orderList);
         employee = (Employee) getIntent().getSerializableExtra("Employee");
-        activityOrder.putExtra("Employee", employee);
+
         Button buttonBack = findViewById(R.id.button_back_listOfOrder);
         buttonBack.setOnClickListener(view -> startActivity(activityOrder));
     }
     public void orderSucceded(){
         Toast.makeText(getApplicationContext(), "Beställning skickad" , Toast.LENGTH_LONG).show();
         Intent activityTables = new Intent(this, TablesActivity.class);
+        activityTables.putExtra("Employee", employee);
         startActivity(activityTables);
     }
 }

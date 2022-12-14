@@ -131,6 +131,8 @@ public class TablesActivity extends AppCompatActivity {
 
         // BACK BUTTON
         Intent activityBack = new Intent(this, MainActivity.class);
+        Employee employee = (Employee) getIntent().getSerializableExtra("Employee");
+        activityBack.putExtra("Employee", employee);
         Button buttonBack = findViewById(R.id.button_back_tables);
         buttonBack.setOnClickListener(v -> startActivity(activityBack));
     }
