@@ -133,9 +133,12 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         final int SIZE = getResources().getDisplayMetrics().widthPixels/ROW_SIZE;
         final int TEXT_SIZE = 12;
         final int TEXT_PADDING = SIZE/ROW_SIZE;
+        final int MARGIN = (int) getResources().getDimension(R.dimen.margin);
+        final int MARGIN_SIZE = MARGIN * ROW_SIZE * 2;
+        final int HEIGHT = (getResources().getDisplayMetrics().widthPixels  - MARGIN_SIZE) / ROW_SIZE;
         // PARAMETERS FOR THE Button
-        TableRow.LayoutParams params = new TableRow.LayoutParams(SIZE, SIZE);
-
+        TableRow.LayoutParams params = new TableRow.LayoutParams(HEIGHT, HEIGHT);
+        params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
         // CREATE ROW
         for(int i = 0; i < COLUMN_SIZE; i++){
             TableRow tableRow = new TableRow(this);
