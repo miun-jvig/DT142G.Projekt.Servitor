@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -28,7 +27,6 @@ import java.util.Vector;
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.BookingAPI;
-import miun.fl.dt142g.projekt.json.Carte;
 import miun.fl.dt142g.projekt.json.Employee;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +37,7 @@ public class TablesActivity extends AppCompatActivity {
     private TextView editDate;
     private String dateText;
     private int mYear, mMonth, mDay;
+    private Integer table;
     private static final int NOTIFICATION_ID = 1;
     private final Vector<Integer> tableNumbers = new Vector<>();
 
@@ -48,7 +47,7 @@ public class TablesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tables);
 
         // fill the vector tableNumbers
-        for (int i = 1; i <= 7; i++){
+        for (Integer i = 1; i <= 7; i++){
             tableNumbers.add(i);
         }
 
@@ -185,9 +184,10 @@ public class TablesActivity extends AppCompatActivity {
          * Creates TABLES_AMOUNT OF tables and add correct text to it. If a booking exists, then
          * add listener for activityOrder, else add listener for activityBooking.
          */
-        for (int i : tableNumbers) {
+        for (int index : tableNumbers) {
             // VARIABLES
-            String text = "BORD " + i + ".";
+            String text = "BORD " + index + ".";
+            table = tableNumbers.get(index);
             // CREATES BUTTON
             Button button = new Button(this);
             button.setText(text);
@@ -197,7 +197,7 @@ public class TablesActivity extends AppCompatActivity {
             button.setLayoutParams(params);
             button.setBackgroundResource(R.drawable.button_table);
             mainLayout.addView(button);
-            Booking booking = getCurrentBooking(allBookings, i);
+            Booking booking = getCurrentBooking(allBookings, index);
 
             if (booking != null) {
                 button.setBackgroundResource(R.drawable.selected_table);
@@ -210,7 +210,7 @@ public class TablesActivity extends AppCompatActivity {
                 button.setOnLongClickListener(v -> onItemHoldPress(booking));
             } else {
                 Intent activityBooking = new Intent(this, BookingActivity.class);
-                activityBooking.putExtra("CurrentTable", i);
+                activityBooking.putExtra("CurrentTable", table);
                 activityBooking.putExtra("Employee", employee);
                 String s = editDate.getText().toString();
                 activityBooking.putExtra("date", s);

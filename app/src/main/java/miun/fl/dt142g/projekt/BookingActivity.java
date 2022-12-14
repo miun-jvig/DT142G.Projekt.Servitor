@@ -20,12 +20,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BookingActivity extends AppCompatActivity {
-    private EditText editName, editTime, editPhone;
+    private EditText editName, editTime, editPhone, editNumberOfPeople;
     private TextView chosenDate;
     private TextView error;
     private int mHour;
     private int mMinute;
-    private int editAmount;
+    private int numberOfPeople_int;
+    private String numberOfPeople_str;
     private String todaysDate;
 
     @Override
@@ -33,7 +34,7 @@ public class BookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
 
-        int currentTable = (int) getIntent().getSerializableExtra("CurrentTable");
+        int currentTable = (Integer) getIntent().getSerializableExtra("CurrentTable");
         TextView current_table = findViewById(R.id.booking_current_table);
         String text = "Bord: " + currentTable;
         current_table.setText(text);
@@ -41,13 +42,11 @@ public class BookingActivity extends AppCompatActivity {
         Button button_back = findViewById(R.id.button_back_booking);
         Button button_create_booking = findViewById(R.id.createBookingButton_id);
         editName = findViewById(R.id.name_id);
-        //editAmount = findViewById(R.id.numberOfPeople_id);
+        editNumberOfPeople = findViewById(R.id.numberOfPeople_id);
         editTime = findViewById(R.id.time_id);
         chosenDate = findViewById(R.id.date_id);
         editPhone = findViewById(R.id.notes_id);
         error = findViewById(R.id.testText_id);
-
-        editAmount = 2;
 
         // Default values
         error.setText(null);
@@ -81,6 +80,10 @@ public class BookingActivity extends AppCompatActivity {
         // inputs from form creates a booking ------------------------------------------------
         button_create_booking.setOnClickListener(v -> {
 
+            // Convert text to integer NUMBER OF PEOPLE
+            numberOfPeople_str = editNumberOfPeople.getText().toString();
+            numberOfPeople_int = Integer.parseInt(numberOfPeople_str);
+
             // NOT DROP-IN
             if (!todaysDate.equals(date) && (editName.getText().toString().isEmpty() || editPhone.getText().toString().isEmpty())){
                 // MISSING INFO FROM FORM
@@ -96,7 +99,7 @@ public class BookingActivity extends AppCompatActivity {
                 booking.setId(1);
                 booking.setFirstName(editName.getText().toString());
                 booking.setLastName(editName.getText().toString());
-                booking.setNumberOfPeople(editAmount);
+                booking.setNumberOfPeople(numberOfPeople_int);
                 booking.setTableNumber(currentTable);
                 booking.setPhoneNumber(editPhone.getText().toString());
 
@@ -117,8 +120,6 @@ public class BookingActivity extends AppCompatActivity {
                     }
                 });
 
-                String txt = "Bokar bord " + currentTable;
-                Toast.makeText(this, txt, Toast.LENGTH_LONG).show();
                 Intent activityBooking = new Intent(this, BookingActivity.class);
                 startActivity(activityBooking);
             }
