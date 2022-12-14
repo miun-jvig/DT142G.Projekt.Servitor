@@ -132,7 +132,7 @@ public class BookingActivity extends AppCompatActivity {
         // Back button
         Intent activity_tables = new Intent(this, TablesActivity.class);
         Employee employee = (Employee)getIntent().getSerializableExtra("Employee");
-        activity_tables.putExtra("Employee", employee);
+        activity_tables.putExtra("Employee", employee); //Also sending employee
         button_back.setOnClickListener(v -> startActivity(activity_tables));
     }
 
