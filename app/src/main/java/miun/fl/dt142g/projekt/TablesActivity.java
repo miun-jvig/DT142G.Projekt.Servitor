@@ -3,7 +3,6 @@ package miun.fl.dt142g.projekt;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -12,36 +11,38 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.Vector;
 
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.BookingAPI;
 import miun.fl.dt142g.projekt.json.Employee;
-import miun.fl.dt142g.projekt.json.Order;
-import miun.fl.dt142g.projekt.json.OrderAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TablesActivity extends AppCompatActivity {
     private final ArrayList<Booking> allBookingsWithDate = new ArrayList<>(); // all bookings for the date to be added to this
-    private final ArrayList<Order> allOrdersWithDate = new ArrayList<>();
     private TextView editDate;
     private String dateText;
     private int mYear, mMonth, mDay;
     private static final int NOTIFICATION_ID = 1;
+    private final Vector<Integer> tableNumbers = new Vector<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tables);
+
+        // fill the vector tableNumbers
+        for (int i = 0; i <= 7; i++){
+            tableNumbers.add(i);
+        }
 
         // DATE VIEW________________________
         editDate = findViewById(R.id.date_choice); // the chosen date
@@ -51,7 +52,6 @@ public class TablesActivity extends AppCompatActivity {
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
         dateText = mYear + "-" + (mMonth + 1) + "-" + mDay;
-        String today = dateText;
         editDate.setText(dateText);
 
         createListOfBookings(dateText);
@@ -163,8 +163,6 @@ public class TablesActivity extends AppCompatActivity {
 
     public void createTablesFromBooking(ArrayList<Booking> allBookings) {
 
-        // AMOUNT OF TABLES
-        final int TABLES_AMOUNT = 7;
         // PARAMETERS FOR THE Button
         final int WIDTH = 800;
         final int HEIGHT = 200;
@@ -179,7 +177,7 @@ public class TablesActivity extends AppCompatActivity {
          * Creates TABLES_AMOUNT OF tables and add correct text to it. If a booking exists, then
          * add listener for activityOrder, else add listener for activityBooking.
          */
-        for (int i = 1; i <= TABLES_AMOUNT; i++) {
+        for (int i : tableNumbers) {
             // VARIABLES
             String text = "BORD " + i + ".";
             // CREATES BUTTON
