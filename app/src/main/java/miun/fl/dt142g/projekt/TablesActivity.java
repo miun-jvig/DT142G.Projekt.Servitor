@@ -37,7 +37,6 @@ public class TablesActivity extends AppCompatActivity {
     private TextView editDate;
     private String dateText;
     private int mYear, mMonth, mDay;
-    private Integer table;
     private static final int NOTIFICATION_ID = 1;
     private final Vector<Integer> tableNumbers = new Vector<>();
 
@@ -187,7 +186,6 @@ public class TablesActivity extends AppCompatActivity {
         for (int index : tableNumbers) {
             // VARIABLES
             String text = "BORD " + index + ".";
-            table = tableNumbers.get(index);
             // CREATES BUTTON
             Button button = new Button(this);
             button.setText(text);
@@ -210,7 +208,7 @@ public class TablesActivity extends AppCompatActivity {
                 button.setOnLongClickListener(v -> onItemHoldPress(booking));
             } else {
                 Intent activityBooking = new Intent(this, BookingActivity.class);
-                activityBooking.putExtra("CurrentTable", table);
+                activityBooking.putExtra("CurrentTable", index);
                 activityBooking.putExtra("Employee", employee);
                 String s = editDate.getText().toString();
                 activityBooking.putExtra("date", s);

@@ -15,6 +15,7 @@ import java.util.Calendar;
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.BookingAPI;
 import miun.fl.dt142g.projekt.json.Booking;
+import miun.fl.dt142g.projekt.json.Employee;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +35,10 @@ public class BookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
 
-        int currentTable = (Integer) getIntent().getSerializableExtra("CurrentTable");
+        int currentTable = (int)getIntent().getSerializableExtra("CurrentTable");
+        if (currentTable == 0){
+            Toast.makeText(getApplicationContext(), "0" , Toast.LENGTH_LONG).show();
+        }
         TextView current_table = findViewById(R.id.booking_current_table);
         String text = "Bord: " + currentTable;
         current_table.setText(text);
@@ -120,13 +124,15 @@ public class BookingActivity extends AppCompatActivity {
                     }
                 });
 
-                Intent activityBooking = new Intent(this, BookingActivity.class);
-                startActivity(activityBooking);
+                Intent activityTables = new Intent(this, TablesActivity.class);
+                startActivity(activityTables);
             }
         });
 
         // Back button
         Intent activity_tables = new Intent(this, TablesActivity.class);
+        Employee employee = (Employee)getIntent().getSerializableExtra("Employee");
+        activity_tables.putExtra("Employee", employee);
         button_back.setOnClickListener(v -> startActivity(activity_tables));
     }
 
