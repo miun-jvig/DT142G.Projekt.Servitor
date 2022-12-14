@@ -5,32 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.internal.LinkedTreeMap;
+import miun.fl.dt142g.projekt.json.CombinedOrders;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
-import miun.fl.dt142g.projekt.json.APIClient;
-import miun.fl.dt142g.projekt.json.Booking;
-import miun.fl.dt142g.projekt.json.Carte;
-import miun.fl.dt142g.projekt.json.CarteAPI;
-import miun.fl.dt142g.projekt.json.CombinedOrders;
-import miun.fl.dt142g.projekt.json.Order;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class SummaryAdapter extends ArrayAdapter<List<Object>>{
+public class SummaryAdapter extends ArrayAdapter<CombinedOrders>{
 
     private final Context context;
-    private final ArrayList<List<Object>> orderList;
+    private final ArrayList<CombinedOrders> orderList;
 
-    public SummaryAdapter(Context context, ArrayList<List<Object>> orders) {
+    public SummaryAdapter(Context context, ArrayList<CombinedOrders> orders) {
         super(context, R.layout.activity_summary_list_view, orders);
         this.context = context;
         this.orderList = orders;
@@ -44,18 +30,13 @@ public class SummaryAdapter extends ArrayAdapter<List<Object>>{
         TextView textView2 = rowView.findViewById(R.id.dish_price);
         TextView textView3 = rowView.findViewById(R.id.dish_note);
 
-        LinkedTreeMap orderL = (LinkedTreeMap) orderList.get(position).get(0);
-        LinkedTreeMap carteL = (LinkedTreeMap) orderList.get(position).get(1);
+        String name = orderList.get(position).getDish().getName();
+        int price = orderList.get(position).getPrice();
+        textView1.setText(name);
+        textView2.setText(Integer.toString(price));
 
-        LinkedTreeMap dish = (LinkedTreeMap) orderL.get("dish");
-        textView1.setText((String) dish.get("name"));
-
-
-        String price = Double.toString((Double)carteL.get("price"))+"kr";
-        textView2.setText(price);
-
-        if(orderL.get("notes") != null) {
-            String note = ("- " + orderL.get("notes"));
+        if(orderList.get(position).getNotes() != null) {
+            String note = orderList.get(position).getNotes();
             textView3.setText(note);
         }
         return rowView;

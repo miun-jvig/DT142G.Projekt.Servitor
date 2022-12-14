@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.internal.LinkedTreeMap;
+import miun.fl.dt142g.projekt.json.CombinedOrders;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,20 +35,20 @@ public class SummaryActivity extends AppCompatActivity {
         Booking booking = (Booking) getIntent().getSerializableExtra("Booking");
 
         CombinedOrdersAPI combinedOrdersAPI = APIClient.getClient().create(CombinedOrdersAPI.class);
-        Call<List<List<Object>>> call = combinedOrdersAPI.getAllCombinedOrders(booking.getId());
-        call.enqueue(new Callback<List<List<Object>>>() {
+        Call<List<CombinedOrders>> call = combinedOrdersAPI.getAllCombinedOrders(booking.getId());
+        call.enqueue(new Callback<List<CombinedOrders>>() {
             @Override
-            public void onResponse(Call<List<List<Object>>> call, Response<List<List<Object>>> response) {
+            public void onResponse(Call<List<CombinedOrders>> call, Response<List<CombinedOrders>> response) {
                 if(!response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show();
                     return;
                 }
-                List<List<Object>> resp = response.body();
-                ArrayList<List<Object>> allOrders = (ArrayList<List<Object>>) resp; //Castar responsen till en ArrayList som ArrayAdapter kan använda
+                List<CombinedOrders> resp = response.body();
+                ArrayList<CombinedOrders> allOrders = (ArrayList<CombinedOrders>) resp; //Castar responsen till en ArrayList som ArrayAdapter kan använda
                 createList(allOrders);
             }
             @Override
-            public void onFailure(Call<List<List<Object>>> call, Throwable t) {
+            public void onFailure(Call<List<CombinedOrders>> call, Throwable t) {
                 //Toast.makeText(getApplicationContext(),"Network error, cannot reach DB." , Toast.LENGTH_LONG).show();
                 System.out.println(t.getMessage());
             }
@@ -66,7 +66,7 @@ public class SummaryActivity extends AppCompatActivity {
         activityBooking.putExtra("Employee", employee);
         buttonBack.setOnClickListener(v -> startActivity(activityBooking));
     }
-    void createList(ArrayList<List<Object>> allOrders){
+    void createList(ArrayList<CombinedOrders> allOrders){
         ListView list = findViewById(R.id.listView_order);
         list.setAdapter(new SummaryAdapter(this, allOrders));
     }
