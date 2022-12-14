@@ -1,11 +1,18 @@
 package miun.fl.dt142g.projekt;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +28,7 @@ import java.util.Vector;
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.BookingAPI;
+import miun.fl.dt142g.projekt.json.Carte;
 import miun.fl.dt142g.projekt.json.Employee;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +48,7 @@ public class TablesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tables);
 
         // fill the vector tableNumbers
-        for (int i = 0; i <= 7; i++){
+        for (int i = 1; i <= 7; i++){
             tableNumbers.add(i);
         }
 
@@ -199,6 +207,7 @@ public class TablesActivity extends AppCompatActivity {
                 activityOrder.putExtra("Booking", booking);
                 activityOrder.putExtra("Employee", employee);
                 button.setOnClickListener(v -> startActivity(activityOrder));
+                button.setOnLongClickListener(v -> onItemHoldPress(booking));
             } else {
                 Intent activityBooking = new Intent(this, BookingActivity.class);
                 activityBooking.putExtra("CurrentTable", i);
@@ -218,6 +227,37 @@ public class TablesActivity extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    public boolean onItemHoldPress(Booking item) {
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View parent = this.getWindow().findViewById(android.R.id.content);
+        View popupView = inflater.inflate(R.layout.popup_booking_info, (ViewGroup) parent, false);
+        TextView bookingInfo = popupView.findViewById(R.id.popup_display_info);
+        TextView titleText = popupView.findViewById(R.id.note_title);
+        Button buttonOK = popupView.findViewById(R.id.button_back);
+        String title = "Info om bord " + item.getTableNumber() + ".";
+        String info = "<b>Namn</b>:    " + item.getFirstName() + " " + item.getLastName() + "<br>"
+                + "<b>Tid:</b>         " + item.getTime() + "<br>"
+                + "<b>Antal</b>:       " + item.getNumberOfPeople() + "<br>"
+                + "<b>Telefon:</b>     " + item.getPhoneNumber();
+
+        // CREATE THE POPUP WINDOW
+        final int WIDTH = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final int HEIGHT = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final PopupWindow popupWindow = new PopupWindow(popupView, WIDTH, HEIGHT, true);
+
+        // SHOW THE POPUP WINDOW
+        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+
+        // SHOW TITLE
+        titleText.setText(title);
+        bookingInfo.setText(Html.fromHtml(info));
+
+        // ON BUTTON PRESS, DISMISS VIEW
+        buttonOK.setOnClickListener(v -> {popupWindow.dismiss();} );
+
+        return true; // EVENT HAS BEEN HANDLED
     }
 
 }

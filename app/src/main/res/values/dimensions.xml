@@ -3,8 +3,11 @@
     <dimen name="padding_log_in">10dp</dimen>
     <dimen name="padding_edit_text">10dp</dimen>
     <dimen name="horizontal_margin_order">5dp</dimen>
-    <!-- POPUP -->
+    <!-- POPUP add note to order -->
     <dimen name="padding_popup">100dp</dimen>
     <dimen name="padding_popup_text">10dp</dimen>
     <dimen name="padding_popup_title">2dp</dimen>
+    <!-- POPUP booking info -->
+    <dimen name="height_popup_BI">20dp</dimen>
+    <dimen name="popup_text_size">22dp</dimen>
 </resources>

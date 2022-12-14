@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/popup_display_info"
+        android:layout_width="343dp"
+        android:layout_height="130dp"
+        android:layout_gravity="start|center_vertical"
+        android:layout_margin="30dp"
+        android:background="@drawable/pop_up"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:minWidth="@dimen/padding_popup"
+        android:minHeight="@dimen/height_popup_BI"
+        android:paddingStart="@dimen/padding_popup_text"
+        android:paddingEnd="@dimen/padding_popup_text"
+        android:textSize="@dimen/popup_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right3"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="342dp"
+        android:layout_height="51dp"
+        android:text="@string/popup_button_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right3"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left3"
+        app:layout_constraintTop_toBottomOf="@+id/popup_display_info"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="30dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="374dp" />
+
+    <TextView
+        android:id="@+id/note_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/pop_up_title"
+        android:paddingHorizontal="@dimen/padding_popup_text"
+        android:paddingVertical="@dimen/padding_popup_title"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/popup_display_info"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right3"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
