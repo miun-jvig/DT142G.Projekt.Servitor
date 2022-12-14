@@ -82,7 +82,7 @@ public class TablesActivity extends AppCompatActivity {
 
         // Display the notification
         notificationManager.notify(NOTIFICATION_ID, builder.build());
-*/
+
 
         // NOTIFICATION FROM ORDER STATUS
         final int MILLISECONDS = 10000;
@@ -117,7 +117,6 @@ public class TablesActivity extends AppCompatActivity {
 
                             }
                         }
-
                     }
                     @Override
                     public void onFailure(Call<List<Order>> call, Throwable t) {
@@ -127,7 +126,7 @@ public class TablesActivity extends AppCompatActivity {
 
                 handler.postDelayed(this, MILLISECONDS);
             }
-        }, MILLISECONDS);
+        }, MILLISECONDS);*/
 
         // BACK BUTTON
         Intent activityBack = new Intent(this, MainActivity.class);
