@@ -33,6 +33,7 @@ public class LogInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
         // SharedPreferences stores value with key PREFS_NAME, works even though app closes
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         boolean hasLoggedIn = settings.getBoolean(HAS_LOGGED_IN, false); // default value false
@@ -59,7 +60,6 @@ public class LogInActivity extends AppCompatActivity {
      *  Function to log in only once using SharedPreferences.
      */
     public void log_in(SharedPreferences settings){
-        settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(HAS_LOGGED_IN, false).apply(); // default value false
         String userInput = userInputPn.getText().toString();

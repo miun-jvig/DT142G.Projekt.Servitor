@@ -12,7 +12,8 @@
     <color name="appOrange">#F8A236</color>
     <color name="appRed">#EB0D00</color>
     <color name="appYellow">#E6B741</color>
-    <color name="appDarkBlue">#2066D0</color>
+    <color name="appLightGreen">#C6FEC6</color>
+    <color name="appLightYellow">#FEFE90</color>
     <!-- FOOD -->
     <color name="foodYellow">#F4D66A</color>
     <color name="foodBlue">#5CE0E5</color>

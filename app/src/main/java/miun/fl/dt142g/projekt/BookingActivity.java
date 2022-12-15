@@ -22,29 +22,29 @@ import retrofit2.Response;
 
 public class BookingActivity extends AppCompatActivity {
     private EditText editName, editTime, editPhone, editNumberOfPeople;
-    private TextView chosenDate;
-    private TextView error;
+    private TextView error; //Displays the errormessage if the user is not inserting the right values.
     private int mHour;
     private int mMinute;
     private int numberOfPeople_int;
     private String numberOfPeople_str;
-    private String todaysDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
-
+    //Variables
+        TextView chosenDate;
         int currentTable = (int)getIntent().getSerializableExtra("CurrentTable");
-        if (currentTable == 0){
-            Toast.makeText(getApplicationContext(), "0" , Toast.LENGTH_LONG).show();
-        }
-        TextView current_table = findViewById(R.id.booking_current_table);
-        String text = "Bord: " + currentTable;
-        current_table.setText(text);
-
         Button button_back = findViewById(R.id.button_back_booking);
         Button button_create_booking = findViewById(R.id.createBookingButton_id);
+        TextView current_table = findViewById(R.id.booking_current_table);
+        String text = "Bord: " + currentTable;
+
+        Calendar c = Calendar.getInstance();
+        int mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
+
         editName = findViewById(R.id.name_id);
         editNumberOfPeople = findViewById(R.id.numberOfPeople_id);
         editTime = findViewById(R.id.time_id);
@@ -52,25 +52,22 @@ public class BookingActivity extends AppCompatActivity {
         editPhone = findViewById(R.id.notes_id);
         error = findViewById(R.id.testText_id);
 
-        // Default values
+    //Default values
         error.setText(null);
+        current_table.setText(text);
 
-        // Get and set chosen Date
+    //Get and set chosen Date
         String date = (String) getIntent().getSerializableExtra("date");
         chosenDate.setText(date);
 
-        // Get and set Current Time and Date
-        final Calendar c = Calendar.getInstance();
-        int mYear = c.get(Calendar.YEAR);
-        int mMonth = c.get(Calendar.MONTH);
-        int mDay = c.get(Calendar.DAY_OF_MONTH);
-        todaysDate = mYear + "-" + (mMonth + 1) + "-" + mDay;
+    //Get and set Current Time and Date
+        String todaysDate = mYear + "-" + (mMonth + 1) + "-" + mDay;
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
         String timeText = mHour + ":" + mMinute;
         editTime.setText(timeText);
 
-        // TIME
+    //Time
         editTime.setOnClickListener(view -> {
             // Launch Time Picker Dialog
             TimePickerDialog timePickerDialog = new TimePickerDialog(BookingActivity.this,
@@ -81,20 +78,22 @@ public class BookingActivity extends AppCompatActivity {
             timePickerDialog.show();
         });
 
-        // inputs from form creates a booking ------------------------------------------------
+    //inputs from form creates a booking
         button_create_booking.setOnClickListener(v -> {
 
             // Convert text to integer NUMBER OF PEOPLE
             numberOfPeople_str = editNumberOfPeople.getText().toString();
             numberOfPeople_int = Integer.parseInt(numberOfPeople_str);
-
-            // NOT DROP-IN
+    /*
+    *   Creating a booking does not require all fields if the guests are booking the same day. AKA a "Drop in".
+    * */
+        // NOT DROP-IN
             if (!todaysDate.equals(date) && (editName.getText().toString().isEmpty() || editPhone.getText().toString().isEmpty())){
                 // MISSING INFO FROM FORM
                 String errorText = "Fyll i fälten!";
                 error.setText(errorText);
             }
-            // DROP-IN
+        //DROP-IN
             else {
                 error.setText(null);
                 Booking booking = new Booking();
@@ -115,7 +114,6 @@ public class BookingActivity extends AppCompatActivity {
                     public void onResponse(Call<Booking> call, Response<Booking> response) {
                         if(!response.isSuccessful()) {
                             Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldnt process the request.
-                            return;
                         }
                     }
                     @Override
@@ -129,7 +127,7 @@ public class BookingActivity extends AppCompatActivity {
             }
         });
 
-        // Back button
+    //Back button
         Intent activity_tables = new Intent(this, TablesActivity.class);
         Employee employee = (Employee)getIntent().getSerializableExtra("Employee");
         activity_tables.putExtra("Employee", employee); //Also sending employee

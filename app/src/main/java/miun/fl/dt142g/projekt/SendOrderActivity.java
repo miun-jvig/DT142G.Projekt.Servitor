@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,7 +14,6 @@ import java.util.Calendar;
 
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
-import miun.fl.dt142g.projekt.json.Carte;
 import miun.fl.dt142g.projekt.json.Employee;
 import miun.fl.dt142g.projekt.json.Order;
 import miun.fl.dt142g.projekt.json.OrderAPI;
@@ -31,38 +29,37 @@ public class SendOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_order);
 
-        // LISTVIEW
+    //LISTVIEW
         ListView list = findViewById(R.id.listView_order);
         ArrayList<OrderContainer> orderList = (ArrayList<OrderContainer>) getIntent().getSerializableExtra("Order");
         list.setAdapter(new OrderListAdapter(this, orderList));
 
-            Button button = findViewById(R.id.send_order_button);
-            button.setOnClickListener(v -> {
-                Calendar c = Calendar.getInstance();
-                int mHour = c.get(Calendar.HOUR_OF_DAY);
-                int mMinute = c.get(Calendar.MINUTE);
-                int mSecond = c.get(Calendar.SECOND);
-                String time = mHour + ":" + mMinute + ":" + mSecond;
-                for(OrderContainer e : orderList){
-                    e.getOrder().setTime(time);
-                    OrderAPI orderAPI = APIClient.getClient().create(OrderAPI.class);
-                    Call<Order> call = orderAPI.postOrder(e.getOrder());
-                    call.enqueue(new Callback<Order>() {
-                        @Override
-                        public void onResponse(Call<Order> call, Response<Order> response) {
-                            if(!response.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldnt process the request.
-                                return;
-                            }
+        Button button = findViewById(R.id.send_order_button);
+        button.setOnClickListener(v -> {
+            Calendar c = Calendar.getInstance();
+            int mHour = c.get(Calendar.HOUR_OF_DAY);
+            int mMinute = c.get(Calendar.MINUTE);
+            int mSecond = c.get(Calendar.SECOND);
+            String time = mHour + ":" + mMinute + ":" + mSecond;
+            for(OrderContainer e : orderList){
+                e.getOrder().setTime(time);
+                OrderAPI orderAPI = APIClient.getClient().create(OrderAPI.class);
+                Call<Order> call = orderAPI.postOrder(e.getOrder());
+                call.enqueue(new Callback<Order>() {
+                    @Override
+                    public void onResponse(Call<Order> call, Response<Order> response) {
+                        if(!response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldnt process the request.
                         }
-                        @Override
-                        public void onFailure(Call<Order> call, Throwable t) {
-                            Toast.makeText(getApplicationContext(), "DB-connection, failed" , Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-                orderSucceded();
-            });
+                    }
+                    @Override
+                    public void onFailure(Call<Order> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "DB-connection, failed" , Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            orderSucceded();
+        });
 
 
         // INFO ABOUT TABLE

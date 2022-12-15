@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
-import java.util.Vector;
 
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
@@ -38,17 +37,11 @@ public class TablesActivity extends AppCompatActivity {
     private String dateText;
     private int mYear, mMonth, mDay;
     private static final int NOTIFICATION_ID = 1;
-    private final Vector<Integer> tableNumbers = new Vector<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tables);
-
-        // fill the vector tableNumbers
-        for (Integer i = 1; i <= 7; i++){
-            tableNumbers.add(i);
-        }
 
         // DATE VIEW________________________
         editDate = findViewById(R.id.date_choice); // the chosen date
@@ -183,19 +176,20 @@ public class TablesActivity extends AppCompatActivity {
          * Creates TABLES_AMOUNT OF tables and add correct text to it. If a booking exists, then
          * add listener for activityOrder, else add listener for activityBooking.
          */
-        for (int index : tableNumbers) {
+        // fill the vector tableNumbers
+        for (int i = 1; i <= 7; i++) {
             // VARIABLES
-            String text = "BORD " + index + ".";
+            String text = "BORD " + i + ".";
             // CREATES BUTTON
             Button button = new Button(this);
             button.setText(text);
             button.setTextSize(TEXT_SIZE);
-            button.setGravity(Gravity.LEFT);
+            button.setGravity(Gravity.START);
             button.setPadding(30, 30 , 0 ,0);
             button.setLayoutParams(params);
             button.setBackgroundResource(R.drawable.button_table);
             mainLayout.addView(button);
-            Booking booking = getCurrentBooking(allBookings, index);
+            Booking booking = getCurrentBooking(allBookings, i);
 
             if (booking != null) {
                 button.setBackgroundResource(R.drawable.selected_table);
@@ -208,7 +202,7 @@ public class TablesActivity extends AppCompatActivity {
                 button.setOnLongClickListener(v -> onItemHoldPress(booking));
             } else {
                 Intent activityBooking = new Intent(this, BookingActivity.class);
-                activityBooking.putExtra("CurrentTable", index);
+                activityBooking.putExtra("CurrentTable", i);
                 activityBooking.putExtra("Employee", employee);
                 String s = editDate.getText().toString();
                 activityBooking.putExtra("date", s);
@@ -253,7 +247,7 @@ public class TablesActivity extends AppCompatActivity {
         bookingInfo.setText(Html.fromHtml(info));
 
         // ON BUTTON PRESS, DISMISS VIEW
-        buttonOK.setOnClickListener(v -> {popupWindow.dismiss();} );
+        buttonOK.setOnClickListener(v -> popupWindow.dismiss());
 
         return true; // EVENT HAS BEEN HANDLED
     }

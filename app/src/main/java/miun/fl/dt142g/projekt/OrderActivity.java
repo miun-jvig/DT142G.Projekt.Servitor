@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,10 +79,10 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         });
 
 
-        //Creates TableRows with the length 3 (ROW_SIZE) and fill the TableRows with Buttons. The
-        /* buttons will have a functionality on item press to add an item to Order, and on button hold
-        * add a comment to an item and then add it to Order. Also used in onItemSelected().
-        */
+    //Creates TableRows with the length 3 (ROW_SIZE) and fill the TableRows with Buttons. The
+    /* buttons will have a functionality on item press to add an item to Order, and on button hold
+    * add a comment to an item and then add it to Order. Also used in onItemSelected().
+    */
 
         // INFO ABOUT TABLE
         booking = (Booking) getIntent().getSerializableExtra("Booking");
@@ -215,13 +214,12 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
-        //Toast.makeText(getApplicationContext(),"OnNothingSelected" , Toast.LENGTH_LONG).show();
     }
 
     /**
      * Translates from Swedish to English.
      * @param cat Selected option of the spinner dropdown menu.
-     * @return The name of the category of food in English.
+     * @return The database name for the selected category
      */
     String getTypeOfFood(String cat){
         switch(cat){
@@ -232,7 +230,11 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         }
         return "Vanliga rätter";
     }
-
+    /**
+     * Selecting colors for the diffrent categorys
+     * @param cat Selected option of the spinner dropdown menu.
+     * @return The color used for the specific category
+     */
     public int getColorFromCategory(String cat){
         switch(cat){
             case "Förrätt":            return R.color.foodYellow;
@@ -249,7 +251,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
      * @param button The button that was pressed.
      * @return returns true as event has been handled
      */
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "UseCompatLoadingForColorStateLists"})
     public boolean onItemHoldPress(Carte item, Button button) {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View parent = this.getWindow().findViewById(android.R.id.content);
@@ -297,7 +299,6 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         order.setStatus(false);
         order.setDish(item.getDish());
         order.setId(1);
-        OrderContainer returnOrder = new OrderContainer(order, item);
-        return returnOrder;
+        return new OrderContainer(order, item);
     }
 }

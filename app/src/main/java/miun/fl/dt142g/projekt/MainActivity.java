@@ -22,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
         activityTables.putExtra("Employee", employee);
 
         Button buttonServitor = findViewById(R.id.button_servitor);
-        Button buttonKok = findViewById(R.id.button_kok);
         buttonServitor.setOnClickListener(v -> startActivity(activityTables));
+
+    //Hoppa över första sidan. Onödig?
+        startActivity(activityTables);
     }
 }

@@ -1,25 +1,14 @@
 package miun.fl.dt142g.projekt;
 
 import android.content.Context;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import miun.fl.dt142g.projekt.json.APIClient;
-import miun.fl.dt142g.projekt.json.Carte;
-import miun.fl.dt142g.projekt.json.CarteAPI;
-import miun.fl.dt142g.projekt.json.Order;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class OrderListAdapter extends ArrayAdapter<OrderContainer>{
 
@@ -44,11 +33,12 @@ public class OrderListAdapter extends ArrayAdapter<OrderContainer>{
             orderList.remove(position);
             notifyDataSetChanged();
         });
+    // Sets Name
         textView1.setText(orderList.get(position).getOrder().getDish().getName());
-
+    // Sets Price
         String price = orderList.get(position).getCarte().getPrice()+"kr";
         textView2.setText(price);
-
+    //Sets Note
         if(orderList.get(position).getOrder().getNote() != null) {
             String note = ("- " + orderList.get(position).getOrder().getNote());
             textView3.setText(note);

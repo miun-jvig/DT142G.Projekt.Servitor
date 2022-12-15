@@ -24,14 +24,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SummaryActivity extends AppCompatActivity {
-    private Employee employee;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
         Button buttonBack = findViewById(R.id.button_back_summary);
 
         // LISTVIEW
-        employee = (Employee) getIntent().getSerializableExtra("Employee");
+        Employee employee = (Employee) getIntent().getSerializableExtra("Employee");
         Booking booking = (Booking) getIntent().getSerializableExtra("Booking");
 
         CombinedOrdersAPI combinedOrdersAPI = APIClient.getClient().create(CombinedOrdersAPI.class);
@@ -69,5 +68,13 @@ public class SummaryActivity extends AppCompatActivity {
     void createList(ArrayList<CombinedOrders> allOrders){
         ListView list = findViewById(R.id.listView_order);
         list.setAdapter(new SummaryAdapter(this, allOrders));
+
+        double totalPrice = 0;
+        for(CombinedOrders order : allOrders){
+            totalPrice += order.getPrice();
+        }
+        TextView priceDisplay = findViewById(R.id.summary_total_price);
+        String priceString = "Totalt:" + totalPrice + "kr";
+        priceDisplay.setText(priceString);
     }
 }
