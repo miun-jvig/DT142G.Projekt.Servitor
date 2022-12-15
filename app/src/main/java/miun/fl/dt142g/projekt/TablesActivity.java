@@ -177,7 +177,8 @@ public class TablesActivity extends AppCompatActivity {
          * add listener for activityOrder, else add listener for activityBooking.
          */
         // fill the vector tableNumbers
-        for (int i = 1; i <= 7; i++) {
+        int NUMBER_OF_TABLES = 6;
+        for (int i = 1; i <= NUMBER_OF_TABLES; i++) {
             // VARIABLES
             String text = "BORD " + i + ".";
             // CREATES BUTTON
