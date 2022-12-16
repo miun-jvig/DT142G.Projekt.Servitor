@@ -21,7 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BookingActivity extends AppCompatActivity {
-    private EditText editName, editTime, editPhone, editNumberOfPeople;
+    private EditText editFirstName, editLastName, editTime, editPhone, editNumberOfPeople;
     private TextView error; //Displays the errormessage if the user is not inserting the right values.
     private int mHour;
     private int mMinute;
@@ -45,7 +45,8 @@ public class BookingActivity extends AppCompatActivity {
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        editName = findViewById(R.id.name_id);
+        editFirstName = findViewById(R.id.first_name_id);
+        editLastName = findViewById(R.id.last_name_id);
         editNumberOfPeople = findViewById(R.id.numberOfPeople_id);
         editTime = findViewById(R.id.time_id);
         chosenDate = findViewById(R.id.date_id);
@@ -88,7 +89,7 @@ public class BookingActivity extends AppCompatActivity {
     *   Creating a booking does not require all fields if the guests are booking the same day. AKA a "Drop in".
     * */
         // NOT DROP-IN
-            if (!todaysDate.equals(date) && (editName.getText().toString().isEmpty() || editPhone.getText().toString().isEmpty())){
+            if (!todaysDate.equals(date) && (editFirstName.getText().toString().isEmpty() || editPhone.getText().toString().isEmpty())){
                 // MISSING INFO FROM FORM
                 String errorText = "Fyll i fälten!";
                 error.setText(errorText);
@@ -100,8 +101,8 @@ public class BookingActivity extends AppCompatActivity {
                 booking.setDate(date);
                 booking.setTime(timeText);
                 booking.setId(1);
-                booking.setFirstName(editName.getText().toString());
-                booking.setLastName(editName.getText().toString());
+                booking.setFirstName(editFirstName.getText().toString());
+                booking.setLastName(editLastName.getText().toString());
                 booking.setNumberOfPeople(numberOfPeople_int);
                 booking.setTableNumber(currentTable);
                 booking.setPhoneNumber(editPhone.getText().toString());

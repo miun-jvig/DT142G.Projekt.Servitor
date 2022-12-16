@@ -12,7 +12,7 @@
         android:layout_height="53dp"
         android:layout_marginBottom="92dp"
         android:background="@color/appBlue"
-        app:layout_constraintBottom_toTopOf="@+id/name_id"
+        app:layout_constraintBottom_toTopOf="@+id/last_name_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
-        android:id="@+id/name_id"
+        android:id="@+id/last_name_id"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:background="@drawable/edit_text_background"
@@ -71,7 +71,7 @@
         app:layout_constraintVertical_bias="0.327" />
 
     <EditText
-        android:id="@+id/name_id3"
+        android:id="@+id/first_name_id"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:background="@drawable/edit_text_background"
@@ -106,7 +106,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/name_id"
+        app:layout_constraintTop_toBottomOf="@+id/last_name_id"
         app:layout_constraintVertical_bias="0.075" />
 
     <TextView
@@ -127,7 +127,7 @@
         app:layout_constraintEnd_toStartOf="@+id/time_id"
         app:layout_constraintHorizontal_bias="0.595"
         app:layout_constraintStart_toEndOf="@+id/numberOfPeople_id"
-        app:layout_constraintTop_toBottomOf="@+id/name_id"
+        app:layout_constraintTop_toBottomOf="@+id/last_name_id"
         app:layout_constraintVertical_bias="0.485" />
 
     <EditText
@@ -149,7 +149,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.992"
         app:layout_constraintStart_toEndOf="@+id/numberOfPeople_id"
-        app:layout_constraintTop_toBottomOf="@+id/name_id"
+        app:layout_constraintTop_toBottomOf="@+id/last_name_id"
         app:layout_constraintVertical_bias="0.311" />
 
     <EditText
@@ -218,7 +218,7 @@
         android:layout_marginBottom="10dp"
         android:text="@string/nameL"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/name_id"
+        app:layout_constraintBottom_toTopOf="@+id/last_name_id"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -233,7 +233,7 @@
         android:layout_marginBottom="10dp"
         android:text="@string/nameF"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/name_id"
+        app:layout_constraintBottom_toTopOf="@+id/last_name_id"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -252,7 +252,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/name_id"
+        app:layout_constraintTop_toBottomOf="@+id/last_name_id"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
@@ -267,7 +267,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toEndOf="@+id/numberOfPeople"
-        app:layout_constraintTop_toBottomOf="@+id/name_id"
+        app:layout_constraintTop_toBottomOf="@+id/last_name_id"
         app:layout_constraintVertical_bias="1" />
 
     <TextView
