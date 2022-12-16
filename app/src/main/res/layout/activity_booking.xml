@@ -57,7 +57,7 @@
         android:layout_height="48dp"
         android:background="@drawable/edit_text_background"
         android:ems="10"
-        android:hint="@string/nameHint"
+        android:hint="@string/nameLHint"
         android:importantForAutofill="no"
         android:inputType="text"
         android:minHeight="48dp"
@@ -68,7 +68,26 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.194" />
+        app:layout_constraintVertical_bias="0.327" />
+
+    <EditText
+        android:id="@+id/name_id3"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@drawable/edit_text_background"
+        android:ems="10"
+        android:hint="@string/nameHint"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:paddingStart="@dimen/padding_edit_text"
+        android:paddingEnd="@dimen/padding_edit_text"
+        app:layout_constraintBottom_toTopOf="@+id/name"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.92" />
 
     <EditText
         android:id="@+id/numberOfPeople_id"
@@ -197,7 +216,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
-        android:text="@string/name"
+        android:text="@string/nameL"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/name_id"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
@@ -205,6 +224,21 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toBottomOf="@+id/topbarLayout"
         app:layout_constraintVertical_bias="1" />
+
+    <TextView
+        android:id="@+id/name2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/nameF"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/name_id"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/topbarLayout"
+        app:layout_constraintVertical_bias="0.271" />
 
     <TextView
         android:id="@+id/numberOfPeople"

@@ -1,9 +1,14 @@
 package miun.fl.dt142g.projekt;
 
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,6 +22,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,14 +34,17 @@ import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.BookingAPI;
 import miun.fl.dt142g.projekt.json.Employee;
+import miun.fl.dt142g.projekt.json.Order;
+import miun.fl.dt142g.projekt.json.OrderAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TablesActivity extends AppCompatActivity {
     private final ArrayList<Booking> allBookingsWithDate = new ArrayList<>(); // all bookings for the date to be added to this
+    private final ArrayList<Order> allOrdersWithDate = new ArrayList<>();
     private TextView editDate;
-    private String dateText;
+    private String dateText, today;
     private int mYear, mMonth, mDay;
     private static final int NOTIFICATION_ID = 1;
 
@@ -51,6 +61,7 @@ public class TablesActivity extends AppCompatActivity {
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
         dateText = mYear + "-" + (mMonth + 1) + "-" + mDay;
+        today = dateText;
         editDate.setText(dateText);
 
         createListOfBookings(dateText);
@@ -69,7 +80,7 @@ public class TablesActivity extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        /*// CREATE NOTIFICATION
+        // CREATE NOTIFICATION
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.notification_icon)
                 .setContentTitle("My Notification")
@@ -90,7 +101,8 @@ public class TablesActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                OrderAPI OrderAPI = APIClient.getClient().create(OrderAPI.class);
+                OrderAPI OrderAPI;
+                OrderAPI = APIClient.getClient().create(OrderAPI.class);
                 Call<List<Order>> call = OrderAPI.getAllOrdersWithDate(today);
 
                 call.enqueue(new Callback<List<Order>>() {
@@ -125,7 +137,7 @@ public class TablesActivity extends AppCompatActivity {
 
                 handler.postDelayed(this, MILLISECONDS);
             }
-        }, MILLISECONDS);*/
+        }, MILLISECONDS);
 
         // BACK BUTTON
         Intent activityBack = new Intent(this, MainActivity.class);
@@ -158,7 +170,6 @@ public class TablesActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void createTablesFromBooking(ArrayList<Booking> allBookings) {
 
