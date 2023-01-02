@@ -6,6 +6,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -42,11 +45,10 @@ import retrofit2.Response;
 
 public class TablesActivity extends AppCompatActivity {
     private final ArrayList<Booking> allBookingsWithDate = new ArrayList<>(); // all bookings for the date to be added to this
-    private final ArrayList<Order> allOrdersWithDate = new ArrayList<>();
+    private final ArrayList<Order> allOrdersReady = new ArrayList<>();
     private TextView editDate;
-    private String dateText, today;
+    private String dateText;
     private int mYear, mMonth, mDay;
-    private static final int NOTIFICATION_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,6 @@ public class TablesActivity extends AppCompatActivity {
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
         dateText = mYear + "-" + (mMonth + 1) + "-" + mDay;
-        today = dateText;
         editDate.setText(dateText);
 
         createListOfBookings(dateText);
@@ -80,20 +81,6 @@ public class TablesActivity extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        // CREATE NOTIFICATION
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.notification_icon)
-                .setContentTitle("My Notification")
-                .setContentText("Hello World!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        // Get the NotificationManager
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-        // Display the notification
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
-
-
         // NOTIFICATION FROM ORDER STATUS
         final int MILLISECONDS = 10000;
         Handler handler = new Handler();
@@ -103,35 +90,29 @@ public class TablesActivity extends AppCompatActivity {
 
                 OrderAPI OrderAPI;
                 OrderAPI = APIClient.getClient().create(OrderAPI.class);
-                Call<List<Order>> call = OrderAPI.getAllOrdersWithDate(today);
+                Call<List<Order>> call = OrderAPI.getAllOrdersReady();
 
                 call.enqueue(new Callback<List<Order>>() {
                     @Override
-                    public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
+                    public void onResponse(@NonNull Call<List<Order>> call, @NonNull Response<List<Order>> response) {
                         if(!response.isSuccessful()) {
-                            // Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldnt process the request.
+                            Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldnt process the request.
                             return;
                         }
                         List<Order> orders = response.body();
-                        allOrdersWithDate.clear();
+                        allOrdersReady.clear();
                         if(!Objects.requireNonNull(orders).isEmpty()) {
-                            allOrdersWithDate.addAll(orders);
+                            allOrdersReady.addAll(orders);
                         }
-                        // WHAT TO DO WITH THE ORDERS FORM TODAY?
-                        // CHECK STATUS ON EVERY ORDER
 
-                        for (Order e : allOrdersWithDate) {
-                            if(e.getStatus()){
-                                //Toast.makeText(getApplicationContext(), "Bord " + e.getBooking().getTableNumber() +" har en beställning klar", Toast.LENGTH_LONG).show();
-
-                                // DISPLAY NOTIFICATION
-
-                            }
+                        for (Order e : allOrdersReady) {
+                            createNotificationChannel();
+                            sendNotification(e.getBooking().getTableNumber());
                         }
                     }
                     @Override
-                    public void onFailure(Call<List<Order>> call, Throwable t) {
-                        //Toast.makeText(getApplicationContext(), "DB-connection, failed" , Toast.LENGTH_LONG).show();
+                    public void onFailure(@NonNull Call<List<Order>> call, @NonNull Throwable t) {
+                        Toast.makeText(getApplicationContext(), "DB-connection, failed" , Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -165,7 +146,7 @@ public class TablesActivity extends AppCompatActivity {
                 createTablesFromBooking(allBookingsWithDate);
             }
             @Override
-            public void onFailure(@NonNull Call<List<Booking>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Booking>> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(),"Network error, cannot reach DB." , Toast.LENGTH_LONG).show();
             }
         });
@@ -263,5 +244,43 @@ public class TablesActivity extends AppCompatActivity {
 
         return true; // EVENT HAS BEEN HANDLED
     }
+
+    private static final String CHANNEL_ID = "new_channel";
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void sendNotification(int tableNumber) {
+        // Create an explicit intent for an Activity in your app
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .setContentTitle("Beställning redo att serveras!")
+                .setContentText("Bord: " + tableNumber)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(tableNumber, builder.build());
+    }
+
 
 }

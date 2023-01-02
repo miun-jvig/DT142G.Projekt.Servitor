@@ -11,6 +11,6 @@ public interface OrderAPI {
     @POST("orders")
     Call<Order> postOrder(@Body Order order);
 
-    @GET("orders")
-    Call<List<Order>> getAllOrdersWithDate(@Query("date") String date);
+    @GET("orders/ready")
+    Call<List<Order>> getAllOrdersReady();
 }
