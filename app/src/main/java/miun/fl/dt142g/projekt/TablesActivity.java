@@ -6,8 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,18 +19,14 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
-
 import miun.fl.dt142g.projekt.json.APIClient;
 import miun.fl.dt142g.projekt.json.Booking;
 import miun.fl.dt142g.projekt.json.BookingAPI;
@@ -49,6 +43,10 @@ public class TablesActivity extends AppCompatActivity {
     private TextView editDate;
     private String dateText;
     private int mYear, mMonth, mDay;
+    private final int DELAY_MS = 10000;
+    private final Handler HANDLER = new Handler();
+    private final String NON_SUCCESSFUL_RESPONSE = "Something went wrong.";
+    private final String FAILED_DB_CONNECTION = "Network error, cannot reach database.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +80,9 @@ public class TablesActivity extends AppCompatActivity {
         });
 
         // NOTIFICATION FROM ORDER STATUS
-        final int MILLISECONDS = 10000;
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        HANDLER.postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 OrderAPI OrderAPI;
                 OrderAPI = APIClient.getClient().create(OrderAPI.class);
                 Call<List<Order>> call = OrderAPI.getAllOrdersReady();
@@ -96,7 +91,7 @@ public class TablesActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<List<Order>> call, @NonNull Response<List<Order>> response) {
                         if(!response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldnt process the request.
+                            Toast.makeText(getApplicationContext(), NON_SUCCESSFUL_RESPONSE, Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldn't process the request.
                             return;
                         }
                         List<Order> orders = response.body();
@@ -112,13 +107,13 @@ public class TablesActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(@NonNull Call<List<Order>> call, @NonNull Throwable t) {
-                        Toast.makeText(getApplicationContext(), "DB-connection, failed" , Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), FAILED_DB_CONNECTION, Toast.LENGTH_LONG).show();
                     }
                 });
 
-                handler.postDelayed(this, MILLISECONDS);
+                HANDLER.postDelayed(this, DELAY_MS);
             }
-        }, MILLISECONDS);
+        }, DELAY_MS);
 
         // BACK BUTTON
         Intent activityBack = new Intent(this, MainActivity.class);
@@ -135,7 +130,7 @@ public class TablesActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<List<Booking>> call, @NonNull Response<List<Booking>> response) {
                 if(!response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(),"Helvete!" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), NON_SUCCESSFUL_RESPONSE, Toast.LENGTH_LONG).show();
                     return;
                 }
                 List<Booking> booking = response.body();
@@ -147,13 +142,12 @@ public class TablesActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(@NonNull Call<List<Booking>> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(),"Network error, cannot reach DB." , Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), FAILED_DB_CONNECTION, Toast.LENGTH_LONG).show();
             }
         });
     }
 
     public void createTablesFromBooking(ArrayList<Booking> allBookings) {
-
         // PARAMETERS FOR THE Button
         final int WIDTH = 800;
         final int HEIGHT = 200;
@@ -281,6 +275,4 @@ public class TablesActivity extends AppCompatActivity {
         // notificationId is a unique int for each notification that you must define
         notificationManager.notify(tableNumber, builder.build());
     }
-
-
 }

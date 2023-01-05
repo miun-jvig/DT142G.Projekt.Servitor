@@ -65,7 +65,7 @@ public class BookingActivity extends AppCompatActivity {
         String todaysDate = mYear + "-" + (mMonth + 1) + "-" + mDay;
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
-        String timeText = mHour + ":" + mMinute;
+        String timeText = changeTime(mHour, mMinute);
         editTime.setText(timeText);
 
     //Time
@@ -73,7 +73,7 @@ public class BookingActivity extends AppCompatActivity {
             // Launch Time Picker Dialog
             TimePickerDialog timePickerDialog = new TimePickerDialog(BookingActivity.this,
                     (view1, hourOfDay, minute) -> {
-                        String time = hourOfDay + ":" + minute;
+                        String time = changeTime(hourOfDay, minute);
                         editTime.setText(time);
                     }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -99,7 +99,7 @@ public class BookingActivity extends AppCompatActivity {
                 error.setText(null);
                 Booking booking = new Booking();
                 booking.setDate(date);
-                booking.setTime(timeText);
+                booking.setTime(editTime.getText().toString());
                 booking.setId(1);
                 booking.setFirstName(editFirstName.getText().toString());
                 booking.setLastName(editLastName.getText().toString());
@@ -135,4 +135,18 @@ public class BookingActivity extends AppCompatActivity {
         button_back.setOnClickListener(v -> startActivity(activity_tables));
     }
 
+    public String changeTime(int hour, int minute){
+        String sHour = Integer.toString(hour);
+        String sMinute = Integer.toString(minute);
+        String full;
+
+        if(hour < 10){
+            sHour = "0" + hour;
+        }
+        if(minute < 10){
+            sMinute = "0" + minute;
+        }
+        full = sHour + ":" + sMinute;
+        return full;
+    }
 }

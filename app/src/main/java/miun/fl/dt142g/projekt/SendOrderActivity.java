@@ -40,7 +40,8 @@ public class SendOrderActivity extends AppCompatActivity {
             int mHour = c.get(Calendar.HOUR_OF_DAY);
             int mMinute = c.get(Calendar.MINUTE);
             int mSecond = c.get(Calendar.SECOND);
-            String time = mHour + ":" + mMinute + ":" + mSecond;
+            String time = changeTime(mHour, mMinute, mSecond);
+
             for(OrderContainer e : orderList){
                 e.getOrder().setTime(time);
                 OrderAPI orderAPI = APIClient.getClient().create(OrderAPI.class);
@@ -77,6 +78,26 @@ public class SendOrderActivity extends AppCompatActivity {
         Button buttonBack = findViewById(R.id.button_back_listOfOrder);
         buttonBack.setOnClickListener(view -> startActivity(activityOrder));
     }
+
+    public String changeTime(int hour, int minute, int second){
+        String sHour = Integer.toString(hour);
+        String sMinute = Integer.toString(minute);
+        String sSecond = Integer.toString(second);
+        String full;
+
+        if(hour < 10){
+            sHour = "0" + hour;
+        }
+        if(minute < 10){
+            sMinute = "0" + minute;
+        }
+        if(second < 10){
+            sSecond = "0" + second;
+        }
+        full = sHour + ":" + sMinute + ":" + sSecond;
+        return full;
+    }
+
     public void orderSucceded(){
         Toast.makeText(getApplicationContext(), "Beställning skickad" , Toast.LENGTH_LONG).show();
         Intent activityTables = new Intent(this, TablesActivity.class);
