@@ -45,6 +45,8 @@ public class TablesActivity extends AppCompatActivity {
     private int mYear, mMonth, mDay;
     private final int DELAY_MS = 10000;
     private final Handler HANDLER = new Handler();
+    private final OrderAPI ORDER_API = APIClient.getClient().create(OrderAPI.class);
+    private final BookingAPI BOOKING_API = APIClient.getClient().create(BookingAPI.class);
     private final String NON_SUCCESSFUL_RESPONSE = "Something went wrong.";
     private final String FAILED_DB_CONNECTION = "Network error, cannot reach database.";
 
@@ -60,7 +62,7 @@ public class TablesActivity extends AppCompatActivity {
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-        dateText = mYear + "-" + (mMonth + 1) + "-" + mDay;
+        dateText = changeDate(mYear, mMonth, mDay);
         editDate.setText(dateText);
 
         createListOfBookings(dateText);
@@ -70,7 +72,7 @@ public class TablesActivity extends AppCompatActivity {
             // PICK A DATE
             DatePickerDialog datePickerDialog = new DatePickerDialog(TablesActivity.this,
                     (datePicker, year, month, day) -> {
-                        String dateTText = year + "-" + (month + 1) + "-" + day;
+                        String dateTText = changeDate(year, month, day);
                         editDate.setText(dateTText);
                         dateText = dateTText;
                         createListOfBookings(dateTText);
@@ -83,9 +85,7 @@ public class TablesActivity extends AppCompatActivity {
         HANDLER.postDelayed(new Runnable() {
             @Override
             public void run() {
-                OrderAPI OrderAPI;
-                OrderAPI = APIClient.getClient().create(OrderAPI.class);
-                Call<List<Order>> call = OrderAPI.getAllOrdersReady();
+                Call<List<Order>> call = ORDER_API.getAllOrdersReady();
 
                 call.enqueue(new Callback<List<Order>>() {
                     @Override
@@ -114,18 +114,26 @@ public class TablesActivity extends AppCompatActivity {
                 HANDLER.postDelayed(this, DELAY_MS);
             }
         }, DELAY_MS);
+    }
 
-        // BACK BUTTON
-        Intent activityBack = new Intent(this, MainActivity.class);
-        Employee employee = (Employee) getIntent().getSerializableExtra("Employee");
-        activityBack.putExtra("Employee", employee);
-        Button buttonBack = findViewById(R.id.button_back_tables);
-        buttonBack.setOnClickListener(v -> startActivity(activityBack));
+    public String changeDate(int year, int month, int date){
+        month = month + 1;
+        String sMonth = Integer.toString(month);
+        String sDate = Integer.toString(date);
+        String full;
+
+        if(month < 10){
+            sMonth = "0" + month;
+        }
+        if(date < 10){
+            sDate = "0" + date;
+        }
+        full = year + "-" + sMonth + "-" + sDate;
+        return full;
     }
 
     public void createListOfBookings(String date){
-        BookingAPI bookingAPI = APIClient.getClient().create(BookingAPI.class);
-        Call<List<Booking>> call = bookingAPI.getAllBookingWithDate(date);
+        Call<List<Booking>> call = BOOKING_API.getAllBookingWithDate(date);
         call.enqueue(new Callback<List<Booking>>() {
             @Override
             public void onResponse(@NonNull Call<List<Booking>> call, @NonNull Response<List<Booking>> response) {
