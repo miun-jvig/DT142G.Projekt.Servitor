@@ -83,8 +83,11 @@ public class BookingActivity extends AppCompatActivity {
         button_create_booking.setOnClickListener(v -> {
 
             // Convert text to integer NUMBER OF PEOPLE
-            numberOfPeople_str = editNumberOfPeople.getText().toString();
-            numberOfPeople_int = Integer.parseInt(numberOfPeople_str);
+
+                numberOfPeople_str = editNumberOfPeople.getText().toString();
+            if(!numberOfPeople_str.isEmpty()){
+                numberOfPeople_int = Integer.parseInt(numberOfPeople_str);
+            }
     /*
     *   Creating a booking does not require all fields if the guests are booking the same day. AKA a "Drop in".
     * */
@@ -113,9 +116,7 @@ public class BookingActivity extends AppCompatActivity {
                 call.enqueue(new Callback<Booking>() {
                     @Override
                     public void onResponse(Call<Booking> call, Response<Booking> response) {
-                        if(!response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(),response.message() , Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldnt process the request.
-                        }
+                            Toast.makeText(getApplicationContext(), "Bokning skapad" , Toast.LENGTH_LONG).show(); //DB-connection succeeded but couldnt process the request.
                     }
                     @Override
                     public void onFailure(Call<Booking> call, Throwable t) {
