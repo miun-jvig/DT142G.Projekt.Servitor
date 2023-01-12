@@ -62,7 +62,7 @@ public class BookingActivity extends AppCompatActivity {
         chosenDate.setText(date);
 
     //Get and set Current Time and Date
-        String todaysDate = mYear + "-" + (mMonth + 1) + "-" + mDay;
+        String todaysDate = changeDate(mYear, mMonth, mDay);
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
         String timeText = changeTime(mHour, mMinute);
@@ -134,6 +134,22 @@ public class BookingActivity extends AppCompatActivity {
         Employee employee = (Employee)getIntent().getSerializableExtra("Employee");
         activity_tables.putExtra("Employee", employee); //Also sending employee
         button_back.setOnClickListener(v -> startActivity(activity_tables));
+    }
+
+    public String changeDate(int year, int month, int date){
+        month = month + 1;
+        String sMonth = Integer.toString(month);
+        String sDate = Integer.toString(date);
+        String full;
+
+        if(month < 10){
+            sMonth = "0" + month;
+        }
+        if(date < 10){
+            sDate = "0" + date;
+        }
+        full = year + "-" + sMonth + "-" + sDate;
+        return full;
     }
 
     public String changeTime(int hour, int minute){

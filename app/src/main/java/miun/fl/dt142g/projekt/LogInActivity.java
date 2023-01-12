@@ -46,7 +46,7 @@ public class LogInActivity extends AppCompatActivity {
             String json = settings.getString(EMPLOYEE_INFO, "");
             Employee obj = gson.fromJson(json, Employee.class);
             activityMain.putExtra("Employee", obj);
-            startActivity(activityMain);
+           // startActivity(activityMain);
         }
 
         // VIEWS
